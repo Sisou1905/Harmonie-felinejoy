@@ -4,27 +4,38 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: 40 20% 98%;
-  --foreground: 150 27% 14%;
-  --card: 0 0% 100%;
-  --card-foreground: 150 27% 14%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 150 27% 14%;
-  --primary: 168 24% 50%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 195 54% 78%;
-  --secondary-foreground: 150 27% 14%;
-  --muted: 40 10% 93%;
-  --muted-foreground: 150 10% 40%;
-  --accent: 5 68% 86%;
-  --accent-foreground: 0 33% 27%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 40 10% 90%;
-  --input: 40 10% 90%;
-  --ring: 168 24% 50%;
-  --radius: 1rem;
+@layer base {
+  :root {
+    --background: 40 20% 98%;
+    --foreground: 150 27% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 150 27% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 27% 14%;
+    --primary: 168 24% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 195 54% 78%;
+    --secondary-foreground: 150 27% 14%;
+    --muted: 40 10% 93%;
+    --muted-foreground: 150 10% 40%;
+    --accent: 5 68% 86%;
+    --accent-foreground: 0 33% 27%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 10% 90%;
+    --input: 40 10% 90%;
+    --ring: 168 24% 50%;
+    --radius: 1rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 * {
@@ -39,8 +50,6 @@ html {
 
 body {
   font-family: 'Manrope', sans-serif;
-  background-color: #FAFAF9;
-  color: #1A2F23;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
@@ -124,13 +133,6 @@ h1, h2, h3, h4, h5, h6 {
   animation: fade-in-up 0.6s ease-out forwards;
 }
 
-/* Stagger Animation Delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
-
 /* Glass Effect */
 .glass {
   background: rgba(255, 255, 255, 0.7);
@@ -144,6 +146,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Noise Overlay */
+.noise-overlay {
+  position: relative;
+}
+
 .noise-overlay::before {
   content: '';
   position: absolute;
@@ -189,21 +195,6 @@ h1, h2, h3, h4, h5, h6 {
 .article-content strong {
   color: #1A2F23;
   font-weight: 600;
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-@layer base {
-  [data-debug-wrapper="true"] {
-    display: contents !important;
-  }
 }
 
 /* Utility Classes */
@@ -279,4 +270,12 @@ h1, h2, h3, h4, h5, h6 {
 .card-hover:hover {
   box-shadow: 0 20px 40px rgba(95, 160, 152, 0.1);
   transform: translateY(-4px);
+}
+
+.shadow-soft {
+  box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+}
+
+.shadow-float {
+  box-shadow: 0 20px 40px rgba(95,160,152,0.1);
 }
