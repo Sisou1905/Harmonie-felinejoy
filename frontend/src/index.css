@@ -279,3 +279,67 @@ h1, h2, h3, h4, h5, h6 {
 .shadow-float {
   box-shadow: 0 20px 40px rgba(95,160,152,0.1);
 }
+
+/* Hide Google Translate elements */
+.goog-te-banner-frame,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-te-spinner-pos,
+.goog-te-gadget,
+.skiptranslate {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* RTL Support for Arabic */
+html.rtl {
+  direction: rtl;
+}
+
+html.rtl .container-custom {
+  direction: rtl;
+}
+
+html.rtl .flex {
+  flex-direction: row-reverse;
+}
+
+html.rtl .flex-col {
+  flex-direction: column;
+}
+
+html.rtl .text-left {
+  text-align: right;
+}
+
+html.rtl .text-right {
+  text-align: left;
+}
+
+html.rtl .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+html.rtl .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+html.rtl .pl-4 {
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+html.rtl .pr-4 {
+  padding-right: 0;
+  padding-left: 1rem;
+}
