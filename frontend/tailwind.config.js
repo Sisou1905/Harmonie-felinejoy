@@ -13,7 +13,8 @@ module.exports = {
         'ui': ['Quicksand', 'sans-serif'],
       },
       colors: {
-        background: '#FAFAF9',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         surface: '#FFFFFF',
         primary: {
           DEFAULT: '#5FA098',
@@ -37,7 +38,7 @@ module.exports = {
           muted: '#5C6B64',
           light: '#8E9E96',
         },
-        border: '#E8E8E6',
+        border: 'hsl(var(--border))',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))'
