@@ -5,21 +5,26 @@
 @tailwind utilities;
 
 :root {
-  --background: #FAFAF9;
-  --surface: #FFFFFF;
-  --primary: #5FA098;
-  --primary-light: #D1E8E2;
-  --primary-dark: #3A6E68;
-  --secondary: #A9D6E5;
-  --secondary-light: #E0F2F7;
-  --secondary-dark: #6B9EB0;
-  --accent: #F4C7C3;
-  --accent-hover: #EAB0AC;
-  --text-main: #1A2F23;
-  --text-muted: #5C6B64;
-  --text-light: #8E9E96;
-  --border: #E8E8E6;
-  --radius: 0.5rem;
+  --background: 40 20% 98%;
+  --foreground: 150 27% 14%;
+  --card: 0 0% 100%;
+  --card-foreground: 150 27% 14%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 150 27% 14%;
+  --primary: 168 24% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 195 54% 78%;
+  --secondary-foreground: 150 27% 14%;
+  --muted: 40 10% 93%;
+  --muted-foreground: 150 10% 40%;
+  --accent: 5 68% 86%;
+  --accent-foreground: 0 33% 27%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 40 10% 90%;
+  --input: 40 10% 90%;
+  --ring: 168 24% 50%;
+  --radius: 1rem;
 }
 
 * {
@@ -34,8 +39,8 @@ html {
 
 body {
   font-family: 'Manrope', sans-serif;
-  background-color: var(--background);
-  color: var(--text-main);
+  background-color: #FAFAF9;
+  color: #1A2F23;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
@@ -43,14 +48,14 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Fraunces', serif;
-  color: var(--text-main);
+  color: #1A2F23;
   line-height: 1.2;
 }
 
 /* Custom Selection */
 ::selection {
-  background-color: var(--primary-light);
-  color: var(--text-main);
+  background-color: #D1E8E2;
+  color: #1A2F23;
 }
 
 /* Scrollbar Styling */
@@ -60,16 +65,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: #FAFAF9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-light);
+  background: #D1E8E2;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background: #5FA098;
 }
 
 /* ReactFlow Custom Styles */
@@ -156,19 +161,19 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.75rem;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
-  color: var(--primary-dark);
+  color: #3A6E68;
 }
 
 .article-content h3 {
   font-size: 1.35rem;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
-  color: var(--text-main);
+  color: #1A2F23;
 }
 
 .article-content p {
   margin-bottom: 1.25rem;
-  color: var(--text-muted);
+  color: #5C6B64;
 }
 
 .article-content ul, .article-content ol {
@@ -178,38 +183,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .article-content li {
   margin-bottom: 0.5rem;
-  color: var(--text-muted);
+  color: #5C6B64;
 }
 
 .article-content strong {
-  color: var(--text-main);
+  color: #1A2F23;
   font-weight: 600;
-}
-
-/* Shadcn overrides for theme */
-@layer base {
-  :root {
-    --background: 40 20% 98%;
-    --foreground: 150 27% 14%;
-    --card: 0 0% 100%;
-    --card-foreground: 150 27% 14%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 150 27% 14%;
-    --primary: 168 24% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 195 54% 78%;
-    --secondary-foreground: 150 27% 14%;
-    --muted: 40 10% 93%;
-    --muted-foreground: 150 10% 40%;
-    --accent: 5 68% 86%;
-    --accent-foreground: 0 33% 27%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 40 10% 90%;
-    --input: 40 10% 90%;
-    --ring: 168 24% 50%;
-    --radius: 1rem;
-  }
 }
 
 @layer base {
@@ -221,23 +200,83 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+@layer base {
+  [data-debug-wrapper="true"] {
+    display: contents !important;
+  }
+}
+
 /* Utility Classes */
 .container-custom {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
 .section-spacing {
-  @apply py-16 md:py-24;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
 }
 
 .btn-primary {
-  @apply bg-[#5FA098] text-white hover:bg-[#4D857E] rounded-full px-8 py-3 font-medium transition-all duration-300 hover:shadow-lg active:scale-95;
+  background-color: #5FA098;
+  color: white;
+  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #4D857E;
+  box-shadow: 0 10px 25px rgba(95, 160, 152, 0.2);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
 }
 
 .btn-secondary {
-  @apply bg-[#D1E8E2] hover:bg-[#A9D6E5] text-[#1A2F23] rounded-full px-8 py-3 font-medium transition-all duration-300;
+  background-color: #D1E8E2;
+  color: #1A2F23;
+  border-radius: 9999px;
+  padding: 0.75rem 2rem;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #A9D6E5;
 }
 
 .card-hover {
-  @apply transition-all duration-300 hover:shadow-[0_20px_40px_rgb(95,160,152,0.1)] hover:-translate-y-1;
+  transition: all 0.3s;
+}
+
+.card-hover:hover {
+  box-shadow: 0 20px 40px rgba(95, 160, 152, 0.1);
+  transform: translateY(-4px);
 }
