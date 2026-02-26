@@ -1,0 +1,177 @@
+{
+  "identity": {
+    "name": "Harmonie Féline & Humaine",
+    "tone": "Apaisant, Holistique, Joyeux, Scientifique",
+    "archetype": "Organic & Earthy + Pastel Soft",
+    "theme_mode": "light"
+  },
+  "typography": {
+    "fonts": {
+      "headings": "Fraunces, serif",
+      "body": "Manrope, sans-serif",
+      "ui": "Quicksand, sans-serif"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-6xl font-semibold tracking-tight leading-tight",
+      "h2": "text-3xl md:text-4xl font-medium tracking-tight",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body_lg": "text-lg md:text-xl leading-relaxed text-stone-700",
+      "body": "text-base leading-relaxed text-stone-600",
+      "caption": "text-sm text-stone-500 font-medium"
+    },
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;400;500;600&family=Manrope:wght@400;500;600&family=Quicksand:wght@400;500;600&display=swap"
+  },
+  "colors": {
+    "palette": {
+      "background": "#FAFAF9",
+      "surface": "#FFFFFF",
+      "primary": {
+        "DEFAULT": "#5FA098",
+        "light": "#D1E8E2",
+        "dark": "#3A6E68",
+        "foreground": "#FFFFFF"
+      },
+      "secondary": {
+        "DEFAULT": "#A9D6E5",
+        "light": "#E0F2F7",
+        "dark": "#6B9EB0",
+        "foreground": "#1A2F23"
+      },
+      "accent": {
+        "DEFAULT": "#F4C7C3",
+        "hover": "#EAB0AC",
+        "foreground": "#5D2E2E"
+      },
+      "text": {
+        "main": "#1A2F23",
+        "muted": "#5C6B64",
+        "light": "#8E9E96"
+      },
+      "border": "#E8E8E6"
+    },
+    "usage": {
+      "body_bg": "bg-[#FAFAF9]",
+      "card_bg": "bg-white",
+      "text_main": "text-[#1A2F23]",
+      "text_muted": "text-[#5C6B64]",
+      "primary_btn": "bg-[#5FA098] hover:bg-[#3A6E68] text-white shadow-sm hover:shadow-md transition-all duration-300",
+      "secondary_btn": "bg-[#D1E8E2] hover:bg-[#A9D6E5] text-[#1A2F23]",
+      "accent_badge": "bg-[#F4C7C3] text-[#5D2E2E]"
+    }
+  },
+  "visual_enhancers": {
+    "radius": {
+      "default": "rounded-2xl",
+      "button": "rounded-full",
+      "card": "rounded-3xl"
+    },
+    "shadows": {
+      "soft": "shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+      "float": "shadow-[0_20px_40px_rgb(95,160,152,0.1)]",
+      "inner": "shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"
+    },
+    "gradients": {
+      "subtle_mesh": "bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-50 via-stone-50 to-blue-50",
+      "glow": "bg-gradient-to-tr from-[#D1E8E2] to-[#A9D6E5]"
+    },
+    "glassmorphism": {
+      "header": "bg-white/70 backdrop-blur-xl border-b border-white/20",
+      "card": "bg-white/60 backdrop-blur-lg border border-white/40 shadow-sm"
+    }
+  },
+  "layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_spacing": "py-24 md:py-32",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8",
+    "article": "max-w-2xl mx-auto"
+  },
+  "components": {
+    "buttons": {
+      "style": "h-11 px-8 rounded-full font-medium transition-transform active:scale-95",
+      "primary": "bg-[#5FA098] text-white hover:bg-[#4D857E]",
+      "ghost": "hover:bg-[#D1E8E2]/30 text-[#1A2F23]"
+    },
+    "mind_map": {
+      "container": "h-[600px] w-full bg-[#F5F7F6] rounded-[2.5rem] border-4 border-white shadow-inner overflow-hidden",
+      "node": {
+        "base": "px-6 py-4 rounded-2xl shadow-sm border-2 border-white min-w-[150px] text-center font-medium",
+        "root": "bg-[#5FA098] text-white text-lg",
+        "branch": "bg-[#A9D6E5] text-[#1A2F23]",
+        "leaf": "bg-white text-[#5C6B64] border-[#D1E8E2]"
+      },
+      "edge": {
+        "stroke": "#B0C4DE",
+        "strokeWidth": 2,
+        "animated": true
+      }
+    },
+    "product_card": {
+      "wrapper": "group relative bg-white rounded-3xl p-4 transition-all hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] border border-transparent hover:border-[#D1E8E2]",
+      "image": "aspect-square rounded-2xl bg-stone-50 object-cover mix-blend-multiply",
+      "badge": "absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-[#5FA098]"
+    }
+  },
+  "image_urls": {
+    "hero": [
+      {
+        "url": "https://images.pexels.com/photos/5357527/pexels-photo-5357527.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Woman meditating in nature with flowers",
+        "category": "hero_human"
+      },
+      {
+         "url": "https://images.unsplash.com/photo-1704572958353-9e0a476cb687?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHw0fHxjdXRlJTIwY2F0JTIwc2xlZXBpbmclMjBvbiUyMHNvZnQlMjBibGFua2V0fGVufDB8fHx8MTc3MjE0NzIzMXww&ixlib=rb-4.1.0&q=85",
+         "alt": "Cute gray and white cat sleeping on soft blanket",
+         "category": "hero_animal"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1672312123315-8a4808e1027e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzOTB8MHwxfHNlYXJjaHw0fHx3b21hbiUyMGhvbGRpbmclMjBjYXQlMjBhZmZlY3Rpb25hdGUlMjBwYXN0ZWx8ZW58MHx8fHwxNzcyMTQ3MjMyfDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Woman holding cat tenderly",
+        "category": "hero_connection"
+      }
+    ],
+    "human_wellness": [
+      {
+        "url": "https://images.unsplash.com/photo-1556383689-b86b57bac7a0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHw0fHxoZWFsdGh5JTIwaGVyYmFsJTIwdGVhJTIwYW5kJTIwYm9va3MlMjBhZXN0aGV0aWN8ZW58MHx8fHwxNzcyMTQ3MjMzfDA&ixlib=rb-4.1.0&q=85",
+        "alt": "Herbal tea and books",
+        "category": "article_thumb"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1642030443232-70e8efc1fac5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNzl8MHwxfHNlYXJjaHwzfHx3b21hbiUyMG1lZGl0YXRpbmclMjBpbiUyMG5hdHVyZSUyMHBhc3RlbCUyMGFlc3RoZXRpY3xlbnwwfHx8fDE3NzIxNDcyMjl8MA&ixlib=rb-4.1.0&q=85",
+        "alt": "Woman walking in forest",
+        "category": "mind_map_bg"
+      }
+    ],
+    "animal_wellness": [
+      {
+        "url": "https://images.pexels.com/photos/675463/pexels-photo-675463.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Calico cat playing",
+        "category": "cat_play"
+      },
+      {
+        "url": "https://images.pexels.com/photos/31712398/pexels-photo-31712398.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "alt": "Kitten sleeping on quilted spread",
+        "category": "cat_sleep"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "1. THEME SETUP: Implement the 'Fraunces' and 'Manrope' fonts immediately. This is critical for the 'Soft Wellness' identity.",
+    "2. REACT FLOW: When building mind maps, use custom node components. Do not use default rectangular nodes. Use the styles defined in 'components.mind_map'.",
+    "3. SHOP INTEGRATION: Create a 'ProductSpotlight' component that can be embedded in articles. Use a subtle, non-intrusive design. Link to 'www.felinejoycamy.myshopify.com' and 'https://www.zinzino.com/2020929659'.",
+    "4. ANIMATION: Use 'framer-motion' for page transitions. Pages should 'fade in and float up' gently (y: 20 -> y: 0).",
+    "5. ACQUISITION: The Newsletter component should be 'Sticky' but gentle. Maybe a bottom-right floating pill or a soft banner at the end of articles.",
+    "6. AUTH: Ensure the Google Login button is styled to match the theme (White pill with shadow, not standard blue/black).",
+    "7. COMMENTS: Use a clean, threaded design for comments. Avatars should be circles with pastel placeholders if no image.",
+    "8. SEO: Ensure every page has a dynamic title using React Helmet or similar.",
+    "9. UNIVERSAL: Avoid pure black. Use #1A2F23 for all main text."
+  ],
+  "universal_guidelines": [
+    "Don't make generic centered layouts.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters.",
+    "Every interaction needs micro-animations.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Subtle grain textures, noise overlays, custom cursors.",
+    "Never use pure black or default gray."
+  ]
+}
