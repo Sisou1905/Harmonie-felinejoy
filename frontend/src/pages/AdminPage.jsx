@@ -316,10 +316,6 @@ const AdminPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>Administration | Harmonie Féline & Humaine</title>
-      </Helmet>
-
       <div className="min-h-screen bg-background" data-testid="admin-page">
         <div className="container-custom py-8">
           <motion.div
