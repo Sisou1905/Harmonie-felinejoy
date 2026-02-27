@@ -65,6 +65,11 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
     - Bien-être Animal : alimentation bio chat, chat anxieux solutions, jeux enrichissement chat, soins dentaires chat
     - La Connexion : bienfaits animaux santé mentale, adopter chat guide, méditation avec animal, **aquarium bienfaits mental**
   - Total : **15 landing pages SEO** optimisées
+  - **9 articles générés par IA** (Claude Sonnet) :
+    - Bien-être Humain : respiration consciente, routine matinale, gratitude
+    - Bien-être Animal : langage corporel chat, plantes non toxiques, déménagement avec chat
+    - La Connexion : ronronnement thérapeutique, rituel relaxation avec animal, vivre l'instant présent
+  - Total articles dans la base : **20 articles**
 
 ## Prioritized Backlog
 
