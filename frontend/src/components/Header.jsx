@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../App";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, User, LogOut, Bookmark, ChevronDown } from "lucide-react";
+import { Menu, X, User, LogOut, Bookmark, ChevronDown, Search, Settings } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -18,6 +18,7 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { user, login, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Accueil", path: "/" },
