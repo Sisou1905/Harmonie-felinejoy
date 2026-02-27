@@ -79,8 +79,8 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
 - [x] Google Analytics
 
 ### P2 (Medium)
-- [ ] Intégration email réelle (SendGrid/Resend) pour newsletters
-- [ ] Intégration LLM avancée pour génération d'articles (GPT, Claude)
+- [x] Intégration email Resend pour newsletters - FAIT
+- [x] Intégration Claude Sonnet 4.5 pour génération d'articles - FAIT
 - [ ] Analytics personnalisés (dashboard interne)
 - [ ] Export des abonnés newsletter en CSV
 
@@ -90,7 +90,7 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
 - [ ] Intégration réseaux sociaux
 
 ## Next Tasks
-1. Intégrer un service d'envoi d'emails (SendGrid ou Resend) pour les campagnes newsletter
-2. Ajouter un système de modération des commentaires
-3. Implémenter des analytics pour suivre le trafic
-4. Créer plus de landing pages SEO ciblées
+1. Configurer Google Analytics avec le vrai Measurement ID (remplacer placeholder dans index.html)
+2. Créer plus de landing pages SEO ciblées
+3. Analytics personnalisés internes
+4. Export CSV des abonnés
