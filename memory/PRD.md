@@ -77,7 +77,7 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
 - [ ] Intégration réseaux sociaux
 
 ## Next Tasks
-1. Créer un panel admin pour ajouter des articles régulièrement
-2. Implémenter la recherche d'articles
-3. Ajouter des landing pages SEO ciblées
-4. Intégrer un système d'analytics
+1. Intégrer un service d'envoi d'emails (SendGrid ou Resend) pour les campagnes newsletter
+2. Ajouter un système de modération des commentaires
+3. Implémenter des analytics pour suivre le trafic
+4. Créer plus de landing pages SEO ciblées
