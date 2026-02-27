@@ -79,6 +79,60 @@ const ArticlePage = () => {
     }
   }, [article, fetchInteractionStatus]);
 
+  // Update document title and meta tags
+  useEffect(() => {
+    if (article) {
+      document.title = `${article.title} | Harmonie Féline & Humaine`;
+      
+      // Set meta description
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute("content", article.excerpt || "");
+      }
+      
+      // Set meta keywords
+      let metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (!metaKeywords) {
+        metaKeywords = document.createElement('meta');
+        metaKeywords.name = "keywords";
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute("content", article.tags?.join(", ") || "");
+      
+      // Set Open Graph tags
+      let ogTitle = document.querySelector('meta[property="og:title"]');
+      if (!ogTitle) {
+        ogTitle = document.createElement('meta');
+        ogTitle.setAttribute("property", "og:title");
+        document.head.appendChild(ogTitle);
+      }
+      ogTitle.setAttribute("content", article.title);
+      
+      let ogDesc = document.querySelector('meta[property="og:description"]');
+      if (!ogDesc) {
+        ogDesc = document.createElement('meta');
+        ogDesc.setAttribute("property", "og:description");
+        document.head.appendChild(ogDesc);
+      }
+      ogDesc.setAttribute("content", article.excerpt || "");
+      
+      let ogImage = document.querySelector('meta[property="og:image"]');
+      if (!ogImage) {
+        ogImage = document.createElement('meta');
+        ogImage.setAttribute("property", "og:image");
+        document.head.appendChild(ogImage);
+      }
+      ogImage.setAttribute("content", article.image_url || "");
+    } else if (loading) {
+      document.title = "Chargement... | Harmonie Féline & Humaine";
+    }
+    
+    // Cleanup
+    return () => {
+      document.title = "Harmonie Féline & Humaine | Blog Bien-être";
+    };
+  }, [article, loading]);
+
   const handleLike = async () => {
     if (!user) {
       toast.error("Connectez-vous pour aimer cet article");
