@@ -42,6 +42,9 @@ const LandingPage = () => {
   if (!pageData) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+        <Helmet>
+          <title>Page non trouvée | Harmonie</title>
+        </Helmet>
         <h1 className="font-heading text-2xl text-text-main mb-4">Page non trouvée</h1>
         <Link to="/">
           <Button className="btn-primary">Retour à l'accueil</Button>
@@ -55,6 +58,10 @@ const LandingPage = () => {
     animal: "/bien-etre-animal",
     connection: "/connexion"
   };
+
+  const pageTitle = pageData.meta_title || "Guide | Harmonie";
+  const pageDescription = pageData.meta_description || "";
+  const pageKeywords = pageData.keywords?.join(", ") || "";
 
   const renderContentBlock = (block, index) => {
     switch (block.type) {
