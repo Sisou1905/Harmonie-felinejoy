@@ -4,7 +4,7 @@ import { ExternalLink, Star, ShoppingCart, Heart } from "lucide-react";
 import { Button } from "./ui/button";
 
 // Amazon affiliate products - Replace AFFILIATE_ID with your Amazon Associates ID
-const AMAZON_AFFILIATE_ID = "harmoniefel-21"; // Placeholder - à remplacer
+const AMAZON_AFFILIATE_ID = "sissoulily-21"; // Votre ID Amazon Associates
 
 const AmazonProducts = ({ category = "all" }) => {
   const [activeCategory, setActiveCategory] = useState(category === "all" ? "cats" : category);

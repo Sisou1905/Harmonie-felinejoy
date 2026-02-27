@@ -3,7 +3,7 @@ import { useEffect } from "react";
 // Google AdSense Component
 // Replace ca-pub-XXXXXXXXXX with your AdSense publisher ID
 
-const ADSENSE_CLIENT = "ca-pub-XXXXXXXXXX"; // Placeholder - à remplacer avec votre ID
+const ADSENSE_CLIENT = "ca-pub-2771964189463944"; // Votre ID AdSense
 
 const AdSense = ({ 
   slot, 
@@ -24,7 +24,7 @@ const AdSense = ({
   }, []);
 
   // In development, show placeholder
-  if (process.env.NODE_ENV !== "production" || ADSENSE_CLIENT === "ca-pub-XXXXXXXXXX") {
+  if (process.env.NODE_ENV !== "production") {
     return (
       <div 
         className={`bg-gradient-to-r from-gray-100 to-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center text-center p-4 ${className}`}
