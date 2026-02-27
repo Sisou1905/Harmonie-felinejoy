@@ -6,7 +6,6 @@ import { ArrowRight, CheckCircle, BookOpen, Sparkles } from "lucide-react";
 import { Button } from "../components/ui/button";
 import ArticleCard from "../components/ArticleCard";
 import ProductSpotlight from "../components/ProductSpotlight";
-import Newsletter from "../components/Newsletter";
 import { API } from "../App";
 
 const LandingPage = () => {
@@ -31,37 +30,11 @@ const LandingPage = () => {
     fetchLandingPage();
   }, [slug]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <div className="animate-pulse text-primary text-xl font-heading">Chargement...</div>
-      </div>
-    );
-  }
-
-  if (!pageData) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-        <Helmet>
-          <title>Page non trouvée | Harmonie</title>
-        </Helmet>
-        <h1 className="font-heading text-2xl text-text-main mb-4">Page non trouvée</h1>
-        <Link to="/">
-          <Button className="btn-primary">Retour à l'accueil</Button>
-        </Link>
-      </div>
-    );
-  }
-
   const categoryPaths = {
     human: "/bien-etre-humain",
     animal: "/bien-etre-animal",
     connection: "/connexion"
   };
-
-  const pageTitle = pageData.meta_title || "Guide | Harmonie";
-  const pageDescription = pageData.meta_description || "";
-  const pageKeywords = pageData.keywords?.join(", ") || "";
 
   const renderContentBlock = (block, index) => {
     switch (block.type) {
@@ -137,16 +110,45 @@ const LandingPage = () => {
     }
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <Helmet>
+          <title>Chargement... | Harmonie</title>
+        </Helmet>
+        <div className="animate-pulse text-primary text-xl font-heading">Chargement...</div>
+      </div>
+    );
+  }
+
+  if (!pageData) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+        <Helmet>
+          <title>Page non trouvée | Harmonie</title>
+        </Helmet>
+        <h1 className="font-heading text-2xl text-text-main mb-4">Page non trouvée</h1>
+        <Link to="/">
+          <Button className="btn-primary">Retour à l'accueil</Button>
+        </Link>
+      </div>
+    );
+  }
+
+  // Safely compute these AFTER we know pageData exists
+  const metaTitle = String(pageData.meta_title || "Guide | Harmonie");
+  const metaDescription = String(pageData.meta_description || "");
+  const metaKeywords = pageData.keywords ? pageData.keywords.join(", ") : "";
+
   return (
     <>
       <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-        <meta name="keywords" content={pageKeywords} />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta name="keywords" content={metaKeywords} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="article" />
-        <link rel="canonical" href={`https://wellness-hub-693.preview.emergentagent.com/guide/${pageData.slug}`} />
       </Helmet>
 
       <div className="min-h-screen" data-testid="landing-page">
@@ -171,7 +173,7 @@ const LandingPage = () => {
                 {pageData.hero_subtitle}
               </p>
 
-              <Link to={categoryPaths[pageData.related_category]}>
+              <Link to={categoryPaths[pageData.related_category] || "/"}>
                 <Button className="btn-primary text-lg h-14 px-8">
                   {pageData.cta_text}
                   <ArrowRight className="h-5 w-5 ml-2" />
@@ -215,7 +217,7 @@ const LandingPage = () => {
               </div>
 
               <div className="text-center mt-10">
-                <Link to={categoryPaths[pageData.related_category]}>
+                <Link to={categoryPaths[pageData.related_category] || "/"}>
                   <Button className="btn-secondary">
                     Voir tous les articles
                     <ArrowRight className="h-4 w-4 ml-2" />
