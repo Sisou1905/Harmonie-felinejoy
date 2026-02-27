@@ -90,6 +90,10 @@ const AdminPage = () => {
       return;
     }
     fetchData();
+    document.title = "Administration | Harmonie Féline & Humaine";
+    return () => {
+      document.title = "Harmonie Féline & Humaine | Blog Bien-être";
+    };
   }, [user, navigate, fetchData]);
 
   const generateSlug = (title) => {
