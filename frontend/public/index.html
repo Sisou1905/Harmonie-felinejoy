@@ -30,13 +30,21 @@
     
     <title>Harmonie Féline & Humaine | Blog Bien-être</title>
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <!-- Google Analytics 4 -->
+    <!-- INSTRUCTIONS: Remplacez 'G-XXXXXXXXXX' par votre ID de mesure Google Analytics -->
+    <!-- Pour obtenir votre ID: 
+         1. Allez sur https://analytics.google.com
+         2. Créez une propriété pour ce site
+         3. Allez dans Admin > Flux de données > Ajouter un flux > Web
+         4. Copiez l'ID de mesure (format: G-XXXXXXXXXX)
+    -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'GA_MEASUREMENT_ID');
+      // Remplacez 'G-XXXXXXXXXX' ci-dessous par votre ID de mesure
+      gtag('config', 'G-XXXXXXXXXX');
     </script>
   </head>
   <body>
