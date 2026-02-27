@@ -961,9 +961,71 @@ class AIArticleRequest(BaseModel):
     tone: str = "informatif"  # informatif, inspirant, pratique
     length: str = "medium"  # short, medium, long
 
+async def generate_with_claude(topic: str, category: str, tone: str) -> dict:
+    """Generate article content using Claude Sonnet 4.5 via Emergent LLM"""
+    from emergentintegrations.llm.anthropic import AnthropicClient
+    
+    category_names = {
+        "human": "bien-être humain (méditation, nutrition, sommeil, gestion du stress)",
+        "animal": "bien-être animal et félin (santé du chat, comportement, alimentation)",
+        "connection": "la connexion entre humains et animaux (zoothérapie, lien émotionnel)"
+    }
+    
+    tone_instructions = {
+        "informatif": "un ton informatif et éducatif, basé sur des faits scientifiques",
+        "inspirant": "un ton inspirant et motivant, qui encourage le lecteur à agir",
+        "pratique": "un ton pratique avec des conseils concrets et applicables immédiatement"
+    }
+    
+    prompt = f"""Tu es un expert en bien-être qui écrit pour le blog "Harmonie Féline & Humaine".
+    
+Écris un article complet en français sur le sujet suivant : "{topic}"
+Catégorie : {category_names.get(category, category_names['human'])}
+Ton souhaité : {tone_instructions.get(tone, tone_instructions['informatif'])}
+
+L'article doit :
+- Avoir un titre accrocheur
+- Commencer par une introduction engageante
+- Inclure 3-4 sections principales avec des sous-titres (utilise ## pour les titres de section)
+- Contenir des conseils pratiques sous forme de listes à puces
+- Se terminer par une conclusion encourageante
+- Faire environ 800-1000 mots
+
+Réponds UNIQUEMENT avec un JSON valide au format suivant (sans markdown autour) :
+{{
+    "title": "Le titre de l'article",
+    "excerpt": "Un résumé de 2-3 phrases qui donne envie de lire l'article",
+    "content": "Le contenu complet de l'article en markdown",
+    "tags": ["tag1", "tag2", "tag3", "tag4", "tag5"]
+}}"""
+
+    try:
+        client = AnthropicClient()
+        response = await client.chat(
+            model="claude-sonnet-4-5-20241022",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=4000
+        )
+        
+        # Parse the JSON response
+        import json
+        # Clean the response - remove potential markdown code blocks
+        response_text = response.strip()
+        if response_text.startswith("```"):
+            response_text = response_text.split("```")[1]
+            if response_text.startswith("json"):
+                response_text = response_text[4:]
+        response_text = response_text.strip()
+        
+        result = json.loads(response_text)
+        return result
+    except Exception as e:
+        logger.error(f"Claude generation error: {e}")
+        return None
+
 @api_router.post("/admin/articles/generate")
 async def generate_article_with_ai(req: AIArticleRequest, request: Request):
-    """Admin: Generate an article using AI (template-based for now, can be enhanced with LLM)"""
+    """Admin: Generate an article using Claude Sonnet 4.5 AI"""
     user = await require_admin(request)
     
     # Generate slug from topic
@@ -976,102 +1038,94 @@ async def generate_article_with_ai(req: AIArticleRequest, request: Request):
     if existing:
         slug = f"{slug}-{uuid.uuid4().hex[:6]}"
     
-    # Template-based content generation
-    category_themes = {
-        "human": {
-            "intro": "Le bien-être humain est au cœur d'une vie équilibrée.",
-            "topics": ["méditation", "nutrition", "sommeil", "exercice", "gestion du stress"],
-            "sources": [
-                {"title": "Harvard Health", "url": "https://www.health.harvard.edu/"},
-                {"title": "WHO Guidelines", "url": "https://www.who.int/"}
-            ]
-        },
-        "animal": {
-            "intro": "Prendre soin de nos compagnons félins est essentiel pour leur bonheur.",
-            "topics": ["alimentation", "comportement", "santé", "jeux", "environnement"],
-            "sources": [
-                {"title": "Cornell Feline Health Center", "url": "https://www.vet.cornell.edu/"},
-                {"title": "ASPCA", "url": "https://www.aspca.org/"}
-            ]
-        },
-        "connection": {
-            "intro": "Le lien entre humains et animaux enrichit nos vies de manière profonde.",
-            "topics": ["zoothérapie", "communication", "bienfaits mutuels", "empathie"],
-            "sources": [
-                {"title": "Human-Animal Bond Research", "url": "https://habri.org/"},
-                {"title": "NIH Studies", "url": "https://www.nih.gov/"}
-            ]
-        }
+    # Try to generate with Claude
+    ai_content = await generate_with_claude(req.topic, req.category, req.tone)
+    
+    # Fallback sources based on category
+    category_sources = {
+        "human": [
+            {"title": "Harvard Health", "url": "https://www.health.harvard.edu/"},
+            {"title": "WHO Guidelines", "url": "https://www.who.int/"}
+        ],
+        "animal": [
+            {"title": "Cornell Feline Health Center", "url": "https://www.vet.cornell.edu/"},
+            {"title": "ASPCA", "url": "https://www.aspca.org/"}
+        ],
+        "connection": [
+            {"title": "Human-Animal Bond Research", "url": "https://habri.org/"},
+            {"title": "NIH Studies", "url": "https://www.nih.gov/"}
+        ]
     }
     
-    theme = category_themes.get(req.category, category_themes["human"])
+    # Category-based images
+    category_images = {
+        "human": "https://images.pexels.com/photos/5357527/pexels-photo-5357527.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "animal": "https://images.pexels.com/photos/675463/pexels-photo-675463.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "connection": "https://images.unsplash.com/photo-1672312123315-8a4808e1027e?auto=compress&cs=srgb&fm=jpg&w=940"
+    }
     
-    # Generate content based on topic
-    content = f"""
-## Introduction
+    if ai_content:
+        # Use AI-generated content
+        article_data = {
+            "article_id": f"art_{uuid.uuid4().hex[:12]}",
+            "title": ai_content.get("title", f"{req.topic.title()} : Guide Complet"),
+            "slug": slug,
+            "excerpt": ai_content.get("excerpt", f"Découvrez tout sur {req.topic}."),
+            "content": ai_content.get("content", ""),
+            "category": req.category,
+            "image_url": category_images.get(req.category, category_images["human"]),
+            "author": user.name,
+            "sources": category_sources.get(req.category, category_sources["human"]),
+            "tags": ai_content.get("tags", [req.topic.lower(), "bien-être"]),
+            "likes_count": 0,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "ai_generated": True,
+            "ai_model": "claude-sonnet-4.5"
+        }
+    else:
+        # Fallback to template if Claude fails
+        content = f"""## Introduction
 
-{theme['intro']} Découvrez dans cet article tout ce que vous devez savoir sur {req.topic}.
+Le sujet de {req.topic} est au cœur des préoccupations actuelles en matière de bien-être. Découvrez dans cet article les informations essentielles et des conseils pratiques.
 
 ## Pourquoi c'est important
 
-{req.topic.capitalize()} joue un rôle crucial dans notre quotidien. Les recherches scientifiques montrent des bénéfices significatifs pour la santé physique et mentale.
-
-## Les points clés à retenir
-
-### 1. Comprendre les bases
-Avant de se lancer, il est essentiel de bien comprendre les fondamentaux de {req.topic}. Cela permet d'adopter les bonnes pratiques dès le départ.
-
-### 2. Les bienfaits prouvés
-De nombreuses études ont démontré les effets positifs de {req.topic} sur le bien-être général. Ces bénéfices incluent une meilleure qualité de vie et une réduction du stress.
-
-### 3. Comment commencer
-Pour débuter, commencez par des petits pas. La régularité est plus importante que l'intensité au début.
+{req.topic.capitalize()} joue un rôle crucial dans notre quotidien. Les recherches scientifiques montrent des bénéfices significatifs.
 
 ## Conseils pratiques
 
-- **Soyez patient** : Les résultats prennent du temps
-- **Restez régulier** : La constance est la clé du succès
-- **Écoutez-vous** : Adaptez les conseils à votre situation
+- Commencez progressivement
+- Soyez régulier dans votre pratique
+- Adaptez les conseils à votre situation personnelle
+- N'hésitez pas à demander conseil à un professionnel
 
 ## Conclusion
 
-{req.topic.capitalize()} peut transformer positivement votre quotidien. N'hésitez pas à explorer nos autres articles pour approfondir vos connaissances.
-    """
-    
-    # Create excerpt
-    excerpt = f"Découvrez tout ce que vous devez savoir sur {req.topic}. Un guide complet avec des conseils pratiques et des informations scientifiques."
-    
-    # Generate tags
-    tags = [req.topic.lower(), "bien-être", "santé", "conseils"]
-    if req.category == "animal":
-        tags.extend(["chat", "félin"])
-    elif req.category == "human":
-        tags.extend(["humain", "lifestyle"])
-    else:
-        tags.extend(["connexion", "relation"])
-    
-    # Create article
-    article_data = {
-        "article_id": f"art_{uuid.uuid4().hex[:12]}",
-        "title": f"{req.topic.title()} : Guide Complet",
-        "slug": slug,
-        "excerpt": excerpt,
-        "content": content.strip(),
-        "category": req.category,
-        "image_url": "https://images.pexels.com/photos/5357527/pexels-photo-5357527.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-        "author": user.name,
-        "sources": theme["sources"],
-        "tags": list(set(tags)),
-        "likes_count": 0,
-        "created_at": datetime.now(timezone.utc).isoformat(),
-        "updated_at": datetime.now(timezone.utc).isoformat(),
-        "ai_generated": True
-    }
+{req.topic.capitalize()} peut transformer positivement votre quotidien. Explorez nos autres articles pour approfondir vos connaissances.
+"""
+        article_data = {
+            "article_id": f"art_{uuid.uuid4().hex[:12]}",
+            "title": f"{req.topic.title()} : Guide Complet",
+            "slug": slug,
+            "excerpt": f"Découvrez tout ce que vous devez savoir sur {req.topic}.",
+            "content": content,
+            "category": req.category,
+            "image_url": category_images.get(req.category, category_images["human"]),
+            "author": user.name,
+            "sources": category_sources.get(req.category, category_sources["human"]),
+            "tags": [req.topic.lower(), "bien-être", "santé"],
+            "likes_count": 0,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+            "ai_generated": True,
+            "ai_model": "template-fallback"
+        }
     
     await db.articles.insert_one(article_data)
     
     return {
-        "message": "Article generated successfully",
+        "message": "Article généré avec succès par Claude Sonnet 4.5" if ai_content else "Article généré (mode template)",
         "article": article_data,
         "note": "Vous pouvez modifier cet article dans le panel admin avant publication"
     }
