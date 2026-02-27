@@ -82,8 +82,8 @@ const ConnectionPage = () => {
                 <div className="absolute -top-6 -left-6 w-32 h-32 bg-secondary rounded-full blur-3xl opacity-40" />
                 <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-accent rounded-full blur-2xl opacity-40" />
                 <img
-                  src="https://images.unsplash.com/photo-1631270275663-b9606b854141?crop=entropy&cs=srgb&fm=jpg&w=940"
-                  alt="Femme souriante avec son chat roux - connexion humain-animal"
+                  src="https://images.unsplash.com/photo-1695727526803-a70a8eb59aa5?crop=entropy&cs=srgb&fm=jpg&w=940"
+                  alt="Femme embrassant tendrement son chat - connexion humain-animal"
                   className="rounded-3xl shadow-float object-cover w-full max-w-md mx-auto aspect-[4/5]"
                 />
               </div>
