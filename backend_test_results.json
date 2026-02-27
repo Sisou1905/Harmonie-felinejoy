@@ -1,154 +1,154 @@
 {
   "summary": {
     "total_tests": 24,
-    "passed_tests": 20,
-    "success_rate": 83.33333333333334,
-    "timestamp": "2026-02-27T00:07:34.028357"
+    "passed_tests": 24,
+    "success_rate": 100.0,
+    "timestamp": "2026-02-27T00:08:20.588407"
   },
   "detailed_results": [
     {
       "test": "Health Check",
       "success": true,
       "details": "Status: 200, Response: {'status': 'healthy'}",
-      "timestamp": "2026-02-27T00:07:25.379840"
+      "timestamp": "2026-02-27T00:08:12.256619"
     },
     {
       "test": "Root Endpoint",
       "success": true,
       "details": "Status: 200, Message: Harmonie F\u00e9line & Humaine API",
-      "timestamp": "2026-02-27T00:07:25.755872"
+      "timestamp": "2026-02-27T00:08:12.631962"
     },
     {
       "test": "Seed Data",
       "success": true,
       "details": "Status: 200, Response: Data already seeded",
-      "timestamp": "2026-02-27T00:07:26.130408"
+      "timestamp": "2026-02-27T00:08:13.003673"
     },
     {
       "test": "Get Articles",
       "success": true,
       "details": "Status: 200, Articles count: 6, First article: Comment Votre \u00c9tat \u00c9motionnel ...",
-      "timestamp": "2026-02-27T00:07:26.516765"
+      "timestamp": "2026-02-27T00:08:13.370385"
     },
     {
       "test": "Get Articles - Human",
       "success": true,
       "details": "Status: 200, Category: human, Count: 2",
-      "timestamp": "2026-02-27T00:07:26.894890"
+      "timestamp": "2026-02-27T00:08:13.738843"
     },
     {
       "test": "Get Articles - Animal",
       "success": true,
       "details": "Status: 200, Category: animal, Count: 2",
-      "timestamp": "2026-02-27T00:07:27.273817"
+      "timestamp": "2026-02-27T00:08:14.106093"
     },
     {
       "test": "Get Articles - Connection",
       "success": true,
       "details": "Status: 200, Category: connection, Count: 2",
-      "timestamp": "2026-02-27T00:07:27.650484"
+      "timestamp": "2026-02-27T00:08:14.475863"
     },
     {
       "test": "Get Article by Slug",
       "success": true,
       "details": "Status: 200, Slug: etat-emotionnel-affecte-chat, Title: Comment Votre \u00c9tat \u00c9motionnel ...",
-      "timestamp": "2026-02-27T00:07:28.026602"
+      "timestamp": "2026-02-27T00:08:14.845770"
     },
     {
       "test": "Search API - Search for 'm\u00e9ditation'",
       "success": true,
       "details": "Status: 200, Search for 'm\u00e9ditation', Results: 1",
-      "timestamp": "2026-02-27T00:07:28.401262"
+      "timestamp": "2026-02-27T00:08:15.214754"
     },
     {
       "test": "Search API - Search for 'chat'",
       "success": true,
       "details": "Status: 200, Search for 'chat', Results: 4",
-      "timestamp": "2026-02-27T00:07:28.776808"
+      "timestamp": "2026-02-27T00:08:15.580220"
     },
     {
       "test": "Search API - Filter by human category",
-      "success": false,
-      "details": "Status: 422, Filter by human category",
-      "timestamp": "2026-02-27T00:07:29.153862"
+      "success": true,
+      "details": "Status: 200, Filter by human category, Results: 2",
+      "timestamp": "2026-02-27T00:08:15.949553"
     },
     {
       "test": "Search API - Filter by animal category",
-      "success": false,
-      "details": "Status: 422, Filter by animal category",
-      "timestamp": "2026-02-27T00:07:29.527857"
+      "success": true,
+      "details": "Status: 200, Filter by animal category, Results: 2",
+      "timestamp": "2026-02-27T00:08:16.317061"
     },
     {
       "test": "Search API - Filter by connection category",
-      "success": false,
-      "details": "Status: 422, Filter by connection category",
-      "timestamp": "2026-02-27T00:07:29.904484"
+      "success": true,
+      "details": "Status: 200, Filter by connection category, Results: 2",
+      "timestamp": "2026-02-27T00:08:16.678438"
     },
     {
       "test": "Search API - Filter by tags",
-      "success": false,
-      "details": "Status: 422, Filter by tags",
-      "timestamp": "2026-02-27T00:07:30.281137"
+      "success": true,
+      "details": "Status: 200, Filter by tags, Results: 3",
+      "timestamp": "2026-02-27T00:08:17.026678"
     },
     {
       "test": "Tags API",
       "success": true,
       "details": "Status: 200, Tags count: 22, Sample tag: bien-\u00eatre (2)",
-      "timestamp": "2026-02-27T00:07:30.662187"
+      "timestamp": "2026-02-27T00:08:17.370933"
     },
     {
       "test": "Landing Page - meditation-debutant",
       "success": true,
       "details": "Status: 200, Slug: meditation-debutant, Related articles: 2",
-      "timestamp": "2026-02-27T00:07:31.028640"
+      "timestamp": "2026-02-27T00:08:17.719825"
     },
     {
       "test": "Landing Page - sante-chat-senior",
       "success": true,
       "details": "Status: 200, Slug: sante-chat-senior, Related articles: 2",
-      "timestamp": "2026-02-27T00:07:31.409751"
+      "timestamp": "2026-02-27T00:08:18.079350"
     },
     {
       "test": "Landing Page - zootherapie-bienfaits",
       "success": true,
       "details": "Status: 200, Slug: zootherapie-bienfaits, Related articles: 2",
-      "timestamp": "2026-02-27T00:07:31.784591"
+      "timestamp": "2026-02-27T00:08:18.426644"
     },
     {
       "test": "Admin Stats (Unauthenticated)",
       "success": true,
       "details": "Status: 401 (Expected 401 for unauthenticated request)",
-      "timestamp": "2026-02-27T00:07:32.160464"
+      "timestamp": "2026-02-27T00:08:18.770517"
     },
     {
       "test": "Newsletter Subscription",
       "success": true,
-      "details": "Status: 200, Email: test_1772150852@example.com, Response: Subscribed successfully",
-      "timestamp": "2026-02-27T00:07:32.544040"
+      "details": "Status: 200, Email: test_1772150898@example.com, Response: Subscribed successfully",
+      "timestamp": "2026-02-27T00:08:19.134881"
     },
     {
       "test": "Auth Me (No Session)",
       "success": true,
       "details": "Status: 401 (expected 401)",
-      "timestamp": "2026-02-27T00:07:32.904170"
+      "timestamp": "2026-02-27T00:08:19.483246"
     },
     {
       "test": "Like Status (No Auth)",
       "success": true,
       "details": "Status: 200, Response: {'liked': False}",
-      "timestamp": "2026-02-27T00:07:33.279623"
+      "timestamp": "2026-02-27T00:08:19.841163"
     },
     {
       "test": "Bookmark Status (No Auth)",
       "success": true,
       "details": "Status: 200, Response: {'bookmarked': False}",
-      "timestamp": "2026-02-27T00:07:33.652635"
+      "timestamp": "2026-02-27T00:08:20.204792"
     },
     {
       "test": "Get Comments",
       "success": true,
       "details": "Status: 200, Article ID: art_d79e1bc4ff1d, Comments count: 0",
-      "timestamp": "2026-02-27T00:07:34.028222"
+      "timestamp": "2026-02-27T00:08:20.588222"
     }
   ]
 }
