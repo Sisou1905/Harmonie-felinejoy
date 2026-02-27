@@ -745,9 +745,37 @@ const AdminPage = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   {/* Subscribers */}
                   <div className="bg-white rounded-2xl p-6 shadow-soft">
-                    <h2 className="font-heading text-xl font-semibold text-text-main mb-4">
-                      Abonnés ({subscribers.length})
-                    </h2>
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="font-heading text-xl font-semibold text-text-main">
+                        Abonnés ({subscribers.length})
+                      </h2>
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={async () => {
+                          try {
+                            const response = await fetch(`${API}/admin/newsletter/test`, {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              credentials: "include",
+                              body: JSON.stringify({ email: user?.email })
+                            });
+                            if (response.ok) {
+                              toast.success("Email de test envoyé !");
+                            } else {
+                              const err = await response.json();
+                              toast.error(err.detail || "Erreur d'envoi");
+                            }
+                          } catch (e) {
+                            toast.error("Erreur de connexion");
+                          }
+                        }}
+                        data-testid="test-email-btn"
+                      >
+                        <Send className="h-4 w-4 mr-2" />
+                        Test
+                      </Button>
+                    </div>
                     <div className="space-y-2 max-h-80 overflow-y-auto">
                       {subscribers.map((sub, index) => (
                         <div key={index} className="flex items-center justify-between p-3 bg-background rounded-lg">
@@ -777,15 +805,45 @@ const AdminPage = () => {
                     <div className="space-y-3">
                       {campaigns.map((campaign) => (
                         <div key={campaign.campaign_id} className="p-4 bg-background rounded-xl">
-                          <div className="flex items-center justify-between">
+                          <div className="flex items-center justify-between mb-2">
                             <h3 className="font-medium text-text-main text-sm">{campaign.subject}</h3>
                             {campaign.sent_at ? (
-                              <Badge className="bg-green-100 text-green-700">Envoyée</Badge>
+                              <Badge className="bg-green-100 text-green-700">
+                                Envoyée ({campaign.sent_count || 0})
+                              </Badge>
                             ) : (
-                              <Badge className="bg-yellow-100 text-yellow-700">Brouillon</Badge>
+                              <div className="flex items-center gap-2">
+                                <Badge className="bg-yellow-100 text-yellow-700">Brouillon</Badge>
+                                <Button
+                                  size="sm"
+                                  className="bg-primary hover:bg-primary-dark text-white h-7 px-3"
+                                  onClick={async () => {
+                                    if (!confirm(`Envoyer la newsletter à ${subscribers.length} abonnés ?`)) return;
+                                    try {
+                                      const response = await fetch(`${API}/admin/newsletter/campaigns/${campaign.campaign_id}/send`, {
+                                        method: "POST",
+                                        credentials: "include"
+                                      });
+                                      const data = await response.json();
+                                      if (response.ok) {
+                                        toast.success(data.message);
+                                        fetchData();
+                                      } else {
+                                        toast.error(data.detail || "Erreur d'envoi");
+                                      }
+                                    } catch (e) {
+                                      toast.error("Erreur de connexion");
+                                    }
+                                  }}
+                                  data-testid={`send-campaign-${campaign.campaign_id}`}
+                                >
+                                  <Send className="h-3 w-3 mr-1" />
+                                  Envoyer
+                                </Button>
+                              </div>
                             )}
                           </div>
-                          <p className="text-xs text-text-light mt-1">
+                          <p className="text-xs text-text-light">
                             {new Date(campaign.created_at).toLocaleDateString('fr-FR')}
                           </p>
                         </div>
@@ -794,9 +852,12 @@ const AdminPage = () => {
                         <p className="text-text-muted text-center py-4">Aucune campagne</p>
                       )}
                     </div>
-                    <p className="text-xs text-text-light mt-4">
-                      Note: Pour envoyer réellement les emails, intégrez un service comme SendGrid ou Resend.
-                    </p>
+                    <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                      <p className="text-xs text-green-700 flex items-center gap-2">
+                        <Check className="h-4 w-4" />
+                        Resend configuré - Les emails seront envoyés automatiquement
+                      </p>
+                    </div>
                   </div>
                 </div>
               </TabsContent>
