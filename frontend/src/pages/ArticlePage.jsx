@@ -391,14 +391,29 @@ const ArticlePage = () => {
               </motion.div>
             )}
 
-            {/* Product Spotlight */}
+            {/* In-Article Ad */}
+            <div className="mt-12">
+              <AdInArticle />
+            </div>
+
+            {/* Affiliate Banner */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="mt-12"
             >
-              <ProductSpotlight type={article.category === "animal" ? "cats" : "supplements"} />
+              <AffiliateBanner type={article.category === "animal" ? "felinejoy" : "zinzino"} />
+            </motion.div>
+
+            {/* Amazon Products */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-12"
+            >
+              <AmazonProducts category={article.category === "animal" ? "cats" : "wellness"} />
             </motion.div>
 
             {/* Comments */}
