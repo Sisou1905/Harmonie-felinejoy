@@ -115,11 +115,11 @@ const Footer = () => {
             <h4 className="font-heading text-base font-semibold text-text-main mb-6">Contact</h4>
             <div className="space-y-4">
               <a
-                href="mailto:contact@harmonie-feline-humaine.com"
+                href="mailto:contact@felinejoy.com"
                 className="flex items-center gap-3 text-text-muted hover:text-primary transition-colors text-sm"
               >
                 <Mail className="h-5 w-5" />
-                contact@harmonie.com
+                contact@felinejoy.com
               </a>
             </div>
           </div>
