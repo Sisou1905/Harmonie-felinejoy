@@ -871,6 +871,205 @@ async def get_newsletter_subscribers(request: Request):
     subscribers = await db.newsletter.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return subscribers
 
+# ==================== COMMENT MODERATION ROUTES ====================
+
+@api_router.get("/admin/comments")
+async def get_all_comments_admin(request: Request, status: Optional[str] = None):
+    """Admin: Get all comments with optional status filter"""
+    user = await require_admin(request)
+    
+    query = {}
+    if status:
+        query["status"] = status
+    
+    comments = await db.comments.find(query, {"_id": 0}).sort("created_at", -1).to_list(500)
+    
+    # Enrich with article titles
+    for comment in comments:
+        article = await db.articles.find_one({"article_id": comment["article_id"]}, {"title": 1})
+        comment["article_title"] = article["title"] if article else "Article supprimé"
+    
+    return comments
+
+@api_router.get("/admin/comments/pending")
+async def get_pending_comments(request: Request):
+    """Admin: Get all pending comments for moderation"""
+    user = await require_admin(request)
+    
+    comments = await db.comments.find({"status": "pending"}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    
+    # Enrich with article titles
+    for comment in comments:
+        article = await db.articles.find_one({"article_id": comment["article_id"]}, {"title": 1})
+        comment["article_title"] = article["title"] if article else "Article supprimé"
+    
+    return comments
+
+@api_router.put("/admin/comments/{comment_id}/approve")
+async def approve_comment(comment_id: str, request: Request):
+    """Admin: Approve a comment"""
+    user = await require_admin(request)
+    
+    result = await db.comments.update_one(
+        {"comment_id": comment_id},
+        {"$set": {"status": "approved"}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    
+    return {"message": "Comment approved", "comment_id": comment_id}
+
+@api_router.put("/admin/comments/{comment_id}/reject")
+async def reject_comment(comment_id: str, request: Request):
+    """Admin: Reject a comment"""
+    user = await require_admin(request)
+    
+    result = await db.comments.update_one(
+        {"comment_id": comment_id},
+        {"$set": {"status": "rejected"}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    
+    return {"message": "Comment rejected", "comment_id": comment_id}
+
+@api_router.delete("/admin/comments/{comment_id}")
+async def admin_delete_comment(comment_id: str, request: Request):
+    """Admin: Delete a comment permanently"""
+    user = await require_admin(request)
+    
+    result = await db.comments.delete_one({"comment_id": comment_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    
+    return {"message": "Comment deleted"}
+
+# ==================== AI ARTICLE GENERATION ====================
+
+class AIArticleRequest(BaseModel):
+    topic: str
+    category: str  # human, animal, connection
+    tone: str = "informatif"  # informatif, inspirant, pratique
+    length: str = "medium"  # short, medium, long
+
+@api_router.post("/admin/articles/generate")
+async def generate_article_with_ai(req: AIArticleRequest, request: Request):
+    """Admin: Generate an article using AI (template-based for now, can be enhanced with LLM)"""
+    user = await require_admin(request)
+    
+    # Generate slug from topic
+    slug = req.topic.lower()
+    slug = ''.join(c if c.isalnum() or c == ' ' else '' for c in slug)
+    slug = '-'.join(slug.split())[:50]
+    
+    # Check if slug exists
+    existing = await db.articles.find_one({"slug": slug})
+    if existing:
+        slug = f"{slug}-{uuid.uuid4().hex[:6]}"
+    
+    # Template-based content generation
+    category_themes = {
+        "human": {
+            "intro": "Le bien-être humain est au cœur d'une vie équilibrée.",
+            "topics": ["méditation", "nutrition", "sommeil", "exercice", "gestion du stress"],
+            "sources": [
+                {"title": "Harvard Health", "url": "https://www.health.harvard.edu/"},
+                {"title": "WHO Guidelines", "url": "https://www.who.int/"}
+            ]
+        },
+        "animal": {
+            "intro": "Prendre soin de nos compagnons félins est essentiel pour leur bonheur.",
+            "topics": ["alimentation", "comportement", "santé", "jeux", "environnement"],
+            "sources": [
+                {"title": "Cornell Feline Health Center", "url": "https://www.vet.cornell.edu/"},
+                {"title": "ASPCA", "url": "https://www.aspca.org/"}
+            ]
+        },
+        "connection": {
+            "intro": "Le lien entre humains et animaux enrichit nos vies de manière profonde.",
+            "topics": ["zoothérapie", "communication", "bienfaits mutuels", "empathie"],
+            "sources": [
+                {"title": "Human-Animal Bond Research", "url": "https://habri.org/"},
+                {"title": "NIH Studies", "url": "https://www.nih.gov/"}
+            ]
+        }
+    }
+    
+    theme = category_themes.get(req.category, category_themes["human"])
+    
+    # Generate content based on topic
+    content = f"""
+## Introduction
+
+{theme['intro']} Découvrez dans cet article tout ce que vous devez savoir sur {req.topic}.
+
+## Pourquoi c'est important
+
+{req.topic.capitalize()} joue un rôle crucial dans notre quotidien. Les recherches scientifiques montrent des bénéfices significatifs pour la santé physique et mentale.
+
+## Les points clés à retenir
+
+### 1. Comprendre les bases
+Avant de se lancer, il est essentiel de bien comprendre les fondamentaux de {req.topic}. Cela permet d'adopter les bonnes pratiques dès le départ.
+
+### 2. Les bienfaits prouvés
+De nombreuses études ont démontré les effets positifs de {req.topic} sur le bien-être général. Ces bénéfices incluent une meilleure qualité de vie et une réduction du stress.
+
+### 3. Comment commencer
+Pour débuter, commencez par des petits pas. La régularité est plus importante que l'intensité au début.
+
+## Conseils pratiques
+
+- **Soyez patient** : Les résultats prennent du temps
+- **Restez régulier** : La constance est la clé du succès
+- **Écoutez-vous** : Adaptez les conseils à votre situation
+
+## Conclusion
+
+{req.topic.capitalize()} peut transformer positivement votre quotidien. N'hésitez pas à explorer nos autres articles pour approfondir vos connaissances.
+    """
+    
+    # Create excerpt
+    excerpt = f"Découvrez tout ce que vous devez savoir sur {req.topic}. Un guide complet avec des conseils pratiques et des informations scientifiques."
+    
+    # Generate tags
+    tags = [req.topic.lower(), "bien-être", "santé", "conseils"]
+    if req.category == "animal":
+        tags.extend(["chat", "félin"])
+    elif req.category == "human":
+        tags.extend(["humain", "lifestyle"])
+    else:
+        tags.extend(["connexion", "relation"])
+    
+    # Create article
+    article_data = {
+        "article_id": f"art_{uuid.uuid4().hex[:12]}",
+        "title": f"{req.topic.title()} : Guide Complet",
+        "slug": slug,
+        "excerpt": excerpt,
+        "content": content.strip(),
+        "category": req.category,
+        "image_url": "https://images.pexels.com/photos/5357527/pexels-photo-5357527.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "author": user.name,
+        "sources": theme["sources"],
+        "tags": list(set(tags)),
+        "likes_count": 0,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+        "ai_generated": True
+    }
+    
+    await db.articles.insert_one(article_data)
+    
+    return {
+        "message": "Article generated successfully",
+        "article": article_data,
+        "note": "Vous pouvez modifier cet article dans le panel admin avant publication"
+    }
+
 # ==================== SEARCH ROUTES ====================
 
 @api_router.get("/search")
