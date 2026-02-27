@@ -70,7 +70,23 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Shop Links */}
+          {/* SEO Guide Links */}
+          <div>
+            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Guides Pratiques</h4>
+            <ul className="space-y-3">
+              {guideLinks.map((link) => (
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className="text-text-muted hover:text-primary transition-colors text-sm"
+                    data-testid={`footer-guide-${link.path.split('/').pop()}`}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div>
             <h4 className="font-heading text-base font-semibold text-text-main mb-6">Nos Boutiques</h4>
             <ul className="space-y-4">
