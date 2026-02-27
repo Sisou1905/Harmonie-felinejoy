@@ -14,6 +14,9 @@ import ArticlePage from "./pages/ArticlePage";
 import DashboardPage from "./pages/DashboardPage";
 import LoginPage from "./pages/LoginPage";
 import AuthCallback from "./pages/AuthCallback";
+import AdminPage from "./pages/AdminPage";
+import SearchPage from "./pages/SearchPage";
+import LandingPage from "./pages/LandingPage";
 
 // Components
 import Header from "./components/Header";
