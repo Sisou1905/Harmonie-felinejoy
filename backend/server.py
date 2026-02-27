@@ -311,7 +311,7 @@ async def get_comments(article_id: str):
 
 @api_router.post("/comments", response_model=dict)
 async def create_comment(comment: CommentCreate, request: Request):
-    """Create a comment (requires authentication)"""
+    """Create a comment (requires authentication) - status pending for moderation"""
     user = await require_auth(request)
     
     comment_obj = Comment(
@@ -319,13 +319,17 @@ async def create_comment(comment: CommentCreate, request: Request):
         user_id=user.user_id,
         user_name=user.name,
         user_picture=user.picture,
-        content=comment.content
+        content=comment.content,
+        status="pending"  # All new comments require moderation
     )
     
     doc = comment_obj.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     
     await db.comments.insert_one(doc)
+    
+    # Return with a note about moderation
+    doc['moderation_note'] = "Votre commentaire sera visible après modération."
     return doc
 
 @api_router.delete("/comments/{comment_id}")
