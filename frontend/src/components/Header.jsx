@@ -66,6 +66,17 @@ const Header = () => {
 
           {/* Right Section */}
           <div className="flex items-center gap-2">
+            {/* Search Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/search")}
+              className="rounded-full hover:bg-primary-light/30 text-text-muted"
+              data-testid="search-btn"
+            >
+              <Search className="h-4 w-4" />
+            </Button>
+
             {/* Language Selector */}
             <LanguageSelector />
 
@@ -94,6 +105,12 @@ const Header = () => {
                     <Link to="/dashboard" className="flex items-center gap-2" data-testid="dashboard-link">
                       <Bookmark className="h-4 w-4" />
                       Mes favoris
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="flex items-center gap-2" data-testid="admin-link">
+                      <Settings className="h-4 w-4" />
+                      Administration
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
