@@ -101,6 +101,17 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
 
 ## Next Tasks
 1. Configurer Google Analytics avec le vrai Measurement ID (remplacer placeholder dans index.html)
-2. Ajouter plus de contenu/articles pour chaque catégorie
+2. Ajouter plus de contenu/articles pour chaque catégorie  
 3. Analytics personnalisés internes
 4. Export CSV des abonnés
+
+## Recent Design Update (Déc 2025)
+- **Nouveau design attractif et apaisant** avec :
+  - Animations ludiques (floating emojis, blob shapes, micro-interactions)
+  - Navigation avec icônes/emojis dans le header
+  - Cartes d'articles avec effets hover améliorés
+  - Section Newsletter redessinée avec badges et confettis
+  - Footer modernisé avec cartes de boutiques
+  - Couleurs pastel cohérentes (vert sauge, bleu ciel, terracotta)
+  - Typographie: Fraunces (headings), Manrope (body)
+  - Effets glass-morphism et gradients subtils
