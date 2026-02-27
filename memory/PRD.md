@@ -52,8 +52,14 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
   - API de statistiques admin
   - **Génération d'articles avec IA** (template-based)
   - **Modération des commentaires** (pending/approved/rejected)
-  - **Google Analytics** intégré
+  - **Google Analytics** intégré (placeholder ID - user à configurer)
   - Email contact mis à jour: contact@felinejoy.com
+
+- **Déc 2025**: Phase 3 - Intégrations IA et Email
+  - **Claude Sonnet 4.5** intégré pour génération d'articles IA (via emergentintegrations)
+  - **Resend** intégré pour envoi de newsletters (API key configurée)
+  - Bug react-helmet-async CORRIGÉ sur ArticlePage.jsx et AdminPage.jsx (useEffect pattern)
+  - Interface Admin Newsletter complète (créer, envoyer, test)
 
 ## Prioritized Backlog
 
