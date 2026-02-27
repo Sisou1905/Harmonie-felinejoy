@@ -1414,7 +1414,7 @@ async def create_newsletter_campaign(request: Request):
 
 @api_router.post("/admin/newsletter/campaigns/{campaign_id}/send")
 async def send_newsletter_campaign(campaign_id: str, request: Request):
-    """Admin: Mark campaign as sent (actual email sending would require email service integration)"""
+    """Admin: Send newsletter campaign to all subscribers via Resend"""
     user = await require_admin(request)
     
     campaign = await db.newsletter_campaigns.find_one({"campaign_id": campaign_id})
@@ -1427,20 +1427,81 @@ async def send_newsletter_campaign(campaign_id: str, request: Request):
     # Get all subscribers
     subscribers = await db.newsletter.find({}, {"_id": 0}).to_list(10000)
     
+    if not subscribers:
+        raise HTTPException(status_code=400, detail="No subscribers to send to")
+    
+    # Send emails via Resend
+    sent_count = 0
+    failed_emails = []
+    
+    for subscriber in subscribers:
+        try:
+            params = {
+                "from": f"Harmonie Féline & Humaine <{SENDER_EMAIL}>",
+                "to": [subscriber["email"]],
+                "subject": campaign["subject"],
+                "html": campaign["content"]
+            }
+            resend.Emails.send(params)
+            sent_count += 1
+        except Exception as e:
+            logger.error(f"Failed to send to {subscriber['email']}: {e}")
+            failed_emails.append(subscriber["email"])
+    
     # Mark as sent
     await db.newsletter_campaigns.update_one(
         {"campaign_id": campaign_id},
-        {"$set": {"sent_at": datetime.now(timezone.utc).isoformat()}}
+        {"$set": {
+            "sent_at": datetime.now(timezone.utc).isoformat(),
+            "sent_count": sent_count,
+            "failed_count": len(failed_emails)
+        }}
     )
     
-    # Note: Actual email sending would require an email service like SendGrid, Resend, etc.
-    # This is a placeholder that marks the campaign as sent
-    
     return {
-        "message": f"Campaign marked as sent to {len(subscribers)} subscribers",
-        "note": "Pour envoyer réellement les emails, intégrez un service comme SendGrid ou Resend",
-        "subscribers_count": len(subscribers)
+        "message": f"Campaign envoyée à {sent_count}/{len(subscribers)} abonnés",
+        "sent_count": sent_count,
+        "failed_count": len(failed_emails),
+        "failed_emails": failed_emails[:10] if failed_emails else []  # Show first 10 failures
     }
+
+# Route to send a test email
+@api_router.post("/admin/newsletter/test")
+async def send_test_email(request: Request):
+    """Admin: Send a test email to verify Resend configuration"""
+    user = await require_admin(request)
+    body = await request.json()
+    test_email = body.get("email", user.email)
+    
+    try:
+        params = {
+            "from": f"Harmonie Féline & Humaine <{SENDER_EMAIL}>",
+            "to": [test_email],
+            "subject": "Test - Harmonie Féline & Humaine Newsletter",
+            "html": """
+            <div style="font-family: 'Manrope', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h1 style="color: #5FA098; font-family: 'Fraunces', serif;">Harmonie Féline & Humaine</h1>
+                </div>
+                <p style="color: #1A2F23; font-size: 16px;">Bonjour !</p>
+                <p style="color: #5C6B64;">Ceci est un email de test pour vérifier que votre configuration newsletter fonctionne correctement.</p>
+                <p style="color: #5C6B64;">Si vous recevez cet email, tout est parfaitement configuré ! 🎉</p>
+                <hr style="margin: 30px 0; border: none; border-top: 1px solid #E8E8E6;" />
+                <p style="color: #8E9E96; font-size: 12px; text-align: center;">
+                    © Harmonie Féline & Humaine - Votre guide bien-être
+                </p>
+            </div>
+            """
+        }
+        result = resend.Emails.send(params)
+        return {
+            "message": f"Email de test envoyé à {test_email}",
+            "success": True,
+            "resend_id": result.get("id") if isinstance(result, dict) else str(result)
+        }
+    except Exception as e:
+        logger.error(f"Test email failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Erreur d'envoi: {str(e)}")
 
 # Include the router in the main app
 app.include_router(api_router)
