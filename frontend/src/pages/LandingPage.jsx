@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, Sparkles } from "lucide-react";
 import { Button } from "../components/ui/button";
@@ -35,6 +34,38 @@ const LandingPage = () => {
     };
     fetchLandingPage();
   }, [slug]);
+
+  // Update document title and meta tags
+  useEffect(() => {
+    if (pageData) {
+      // Set title
+      document.title = `${pageData.meta_title || pageData.title || "Guide"} | Harmonie Féline & Humaine`;
+      
+      // Set meta description
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute("content", pageData.meta_description || "");
+      }
+      
+      // Set meta keywords
+      let metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (!metaKeywords) {
+        metaKeywords = document.createElement('meta');
+        metaKeywords.name = "keywords";
+        document.head.appendChild(metaKeywords);
+      }
+      metaKeywords.setAttribute("content", pageData.keywords?.join(", ") || "");
+    } else if (loading) {
+      document.title = "Chargement... | Harmonie Féline & Humaine";
+    } else if (error) {
+      document.title = "Page non trouvée | Harmonie Féline & Humaine";
+    }
+    
+    // Cleanup
+    return () => {
+      document.title = "Harmonie Féline & Humaine | Blog Bien-être";
+    };
+  }, [pageData, loading, error]);
 
   const categoryPaths = {
     human: "/bien-etre-humain",
@@ -119,143 +150,112 @@ const LandingPage = () => {
   // Loading state
   if (loading) {
     return (
-      <>
-        <Helmet>
-          <title>{"Chargement... | Harmonie Féline & Humaine"}</title>
-        </Helmet>
-        <div className="min-h-screen flex items-center justify-center bg-background">
-          <div className="animate-pulse text-primary text-xl font-heading">Chargement...</div>
-        </div>
-      </>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-pulse text-primary text-xl font-heading">Chargement...</div>
+      </div>
     );
   }
 
   // Error state
   if (error || !pageData) {
     return (
-      <>
-        <Helmet>
-          <title>{"Page non trouvée | Harmonie Féline & Humaine"}</title>
-        </Helmet>
-        <div className="min-h-screen flex flex-col items-center justify-center bg-background">
-          <h1 className="font-heading text-2xl text-text-main mb-4">Page non trouvée</h1>
-          <Link to="/">
-            <Button className="btn-primary">Retour à l'accueil</Button>
-          </Link>
-        </div>
-      </>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+        <h1 className="font-heading text-2xl text-text-main mb-4">Page non trouvée</h1>
+        <Link to="/">
+          <Button className="btn-primary">Retour à l'accueil</Button>
+        </Link>
+      </div>
     );
   }
 
-  // Build title string safely
-  const titleText = pageData.meta_title 
-    ? String(pageData.meta_title) 
-    : pageData.title 
-      ? String(pageData.title) 
-      : "Guide";
-  const fullTitle = titleText + " | Harmonie Féline & Humaine";
-  const descriptionText = pageData.meta_description ? String(pageData.meta_description) : "";
-  const keywordsText = Array.isArray(pageData.keywords) ? pageData.keywords.join(", ") : "";
-
   // Main render with data
   return (
-    <>
-      <Helmet>
-        <title>{fullTitle}</title>
-        <meta name="description" content={descriptionText} />
-        <meta name="keywords" content={keywordsText} />
-        <meta property="og:title" content={titleText} />
-        <meta property="og:description" content={descriptionText} />
-        <meta property="og:type" content="article" />
-      </Helmet>
+    <div className="min-h-screen" data-testid="landing-page">
+      {/* Hero Section */}
+      <section className="gradient-mesh noise-overlay py-20 md:py-28">
+        <div className="container-custom relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-white/40 mb-6">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium text-text-muted">Guide complet</span>
+            </div>
 
-      <div className="min-h-screen" data-testid="landing-page">
-        {/* Hero Section */}
-        <section className="gradient-mesh noise-overlay py-20 md:py-28">
-          <div className="container-custom relative z-10">
+            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-text-main mb-6">
+              {pageData.hero_title || "Guide"}
+            </h1>
+            
+            <p className="text-lg md:text-xl text-text-muted leading-relaxed mb-8">
+              {pageData.hero_subtitle || ""}
+            </p>
+
+            <Link to={categoryPaths[pageData.related_category] || "/"}>
+              <Button className="btn-primary text-lg h-14 px-8">
+                {pageData.cta_text || "Découvrir"}
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Content Blocks */}
+      <section className="section-spacing">
+        <div className="container-custom">
+          <div className="max-w-3xl mx-auto space-y-8">
+            {pageData.content_blocks?.map((block, index) => renderContentBlock(block, index))}
+          </div>
+        </div>
+      </section>
+
+      {/* Related Articles */}
+      {pageData.related_articles && pageData.related_articles.length > 0 && (
+        <section className="section-spacing bg-white">
+          <div className="container-custom">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="max-w-3xl mx-auto text-center"
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-white/40 mb-6">
-                <Sparkles className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-text-muted">Guide complet</span>
-              </div>
-
-              <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-text-main mb-6">
-                {pageData.hero_title || "Guide"}
-              </h1>
-              
-              <p className="text-lg md:text-xl text-text-muted leading-relaxed mb-8">
-                {pageData.hero_subtitle || ""}
+              <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main mb-4">
+                Articles recommandés
+              </h2>
+              <p className="text-text-muted text-lg">
+                Approfondissez vos connaissances avec nos articles
               </p>
+            </motion.div>
 
+            <div className="grid md:grid-cols-3 gap-8">
+              {pageData.related_articles.map((article, index) => (
+                <ArticleCard key={article.article_id} article={article} index={index} />
+              ))}
+            </div>
+
+            <div className="text-center mt-10">
               <Link to={categoryPaths[pageData.related_category] || "/"}>
-                <Button className="btn-primary text-lg h-14 px-8">
-                  {pageData.cta_text || "Découvrir"}
-                  <ArrowRight className="h-5 w-5 ml-2" />
+                <Button className="btn-secondary">
+                  Voir tous les articles
+                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </Link>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Content Blocks */}
-        <section className="section-spacing">
-          <div className="container-custom">
-            <div className="max-w-3xl mx-auto space-y-8">
-              {pageData.content_blocks?.map((block, index) => renderContentBlock(block, index))}
             </div>
           </div>
         </section>
+      )}
 
-        {/* Related Articles */}
-        {pageData.related_articles && pageData.related_articles.length > 0 && (
-          <section className="section-spacing bg-white">
-            <div className="container-custom">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center mb-12"
-              >
-                <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main mb-4">
-                  Articles recommandés
-                </h2>
-                <p className="text-text-muted text-lg">
-                  Approfondissez vos connaissances avec nos articles
-                </p>
-              </motion.div>
-
-              <div className="grid md:grid-cols-3 gap-8">
-                {pageData.related_articles.map((article, index) => (
-                  <ArticleCard key={article.article_id} article={article} index={index} />
-                ))}
-              </div>
-
-              <div className="text-center mt-10">
-                <Link to={categoryPaths[pageData.related_category] || "/"}>
-                  <Button className="btn-secondary">
-                    Voir tous les articles
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Product Spotlight */}
-        <section className="section-spacing">
-          <div className="container-custom">
-            <div className="max-w-xl mx-auto">
-              <ProductSpotlight type={pageData.related_category === "animal" ? "cats" : "supplements"} />
-            </div>
+      {/* Product Spotlight */}
+      <section className="section-spacing">
+        <div className="container-custom">
+          <div className="max-w-xl mx-auto">
+            <ProductSpotlight type={pageData.related_category === "animal" ? "cats" : "supplements"} />
           </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+    </div>
   );
 };
 
