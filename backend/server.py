@@ -302,9 +302,9 @@ async def create_article(article: ArticleCreate):
 
 @api_router.get("/articles/{article_id}/comments", response_model=List[dict])
 async def get_comments(article_id: str):
-    """Get all comments for an article"""
+    """Get approved comments for an article (public)"""
     comments = await db.comments.find(
-        {"article_id": article_id},
+        {"article_id": article_id, "status": "approved"},
         {"_id": 0}
     ).sort("created_at", -1).to_list(100)
     return comments
