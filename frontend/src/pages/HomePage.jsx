@@ -339,7 +339,14 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Shop Spotlights with enhanced styling */}
+      {/* Ad Banner */}
+      <section className="py-6 bg-white">
+        <div className="container-custom">
+          <AdBanner />
+        </div>
+      </section>
+
+      {/* Affiliate Partners Section */}
       <section className="section-spacing bg-gradient-to-b from-primary-light/10 to-secondary-light/20" data-testid="shop-section">
         <div className="container-custom">
           <motion.div
@@ -357,23 +364,13 @@ const HomePage = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <ProductSpotlight type="cats" />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <ProductSpotlight type="supplements" />
-            </motion.div>
+          {/* Affiliate Banners */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <AffiliateBanner type="both" />
           </div>
+
+          {/* Amazon Products */}
+          <AmazonProducts category="all" />
         </div>
       </section>
     </>
