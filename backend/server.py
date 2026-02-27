@@ -84,6 +84,7 @@ class Comment(BaseModel):
     user_name: str
     user_picture: Optional[str] = None
     content: str
+    status: str = "pending"  # pending, approved, rejected
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class CommentCreate(BaseModel):
