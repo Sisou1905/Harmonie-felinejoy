@@ -156,7 +156,7 @@ Réponds UNIQUEMENT avec un JSON valide au format suivant (sans markdown autour)
             api_key=api_key,
             session_id=f"article_gen_{uuid.uuid4().hex[:8]}",
             system_message="Tu es un expert en bien-être qui écrit des articles pour un blog."
-        ).with_model("anthropic", "claude-sonnet-4-5-20241022").with_params(max_tokens=4000)
+        ).with_model("anthropic", "claude-sonnet-4-5-20250929").with_params(max_tokens=4000)
         
         response = await chat.send_message(UserMessage(text=prompt))
         
