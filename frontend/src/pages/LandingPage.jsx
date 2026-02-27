@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle, Sparkles, BookOpen, ExternalLink } from "lucide-react";
 import { Button } from "../components/ui/button";
 import ArticleCard from "../components/ArticleCard";
 import ProductSpotlight from "../components/ProductSpotlight";
