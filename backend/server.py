@@ -889,6 +889,10 @@ async def search_articles(q: Optional[str] = None, category: Optional[str] = Non
         tag_list = [t.strip() for t in tags.split(",")]
         query["tags"] = {"$in": tag_list}
     
+    # If no filters provided, return empty results
+    if not q and not category and not tags:
+        return []
+    
     articles = await db.articles.find(query, {"_id": 0}).sort("created_at", -1).limit(50).to_list(50)
     return articles
 
