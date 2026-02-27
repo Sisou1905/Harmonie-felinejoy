@@ -53,9 +53,9 @@ const CommentSection = ({ articleId }) => {
 
       if (response.ok) {
         const comment = await response.json();
-        setComments([comment, ...comments]);
+        // Don't add to list yet - it needs moderation
         setNewComment("");
-        toast.success("Commentaire ajouté !");
+        toast.success("Commentaire soumis ! Il sera visible après modération.");
       } else if (response.status === 401) {
         toast.error("Connectez-vous pour commenter");
       } else {
