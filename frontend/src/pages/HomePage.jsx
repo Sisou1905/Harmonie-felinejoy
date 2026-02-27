@@ -4,8 +4,10 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Heart, Cat, Users } from "lucide-react";
 import { Button } from "../components/ui/button";
 import ArticleCard from "../components/ArticleCard";
-import ProductSpotlight from "../components/ProductSpotlight";
+import AffiliateBanner from "../components/AffiliateBanner";
+import AmazonProducts from "../components/AmazonProducts";
 import Newsletter from "../components/Newsletter";
+import { AdBanner } from "../components/AdSense";
 import { API } from "../App";
 
 const HomePage = () => {
