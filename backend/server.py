@@ -869,7 +869,7 @@ async def get_newsletter_subscribers(request: Request):
 # ==================== SEARCH ROUTES ====================
 
 @api_router.get("/search")
-async def search_articles(q: str, category: Optional[str] = None, tags: Optional[str] = None):
+async def search_articles(q: Optional[str] = None, category: Optional[str] = None, tags: Optional[str] = None):
     """Search articles by query, category, and tags"""
     query = {}
     
