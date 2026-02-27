@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle, BookOpen, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle, Sparkles } from "lucide-react";
 import { Button } from "../components/ui/button";
 import ArticleCard from "../components/ArticleCard";
 import ProductSpotlight from "../components/ProductSpotlight";
@@ -12,17 +12,23 @@ const LandingPage = () => {
   const { slug } = useParams();
   const [pageData, setPageData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchLandingPage = async () => {
+      setLoading(true);
+      setError(false);
       try {
         const response = await fetch(`${API}/landing-pages/${slug}`);
         if (response.ok) {
           const data = await response.json();
           setPageData(data);
+        } else {
+          setError(true);
         }
-      } catch (error) {
-        console.error("Failed to fetch landing page:", error);
+      } catch (err) {
+        console.error("Failed to fetch landing page:", err);
+        setError(true);
       } finally {
         setLoading(false);
       }
@@ -110,45 +116,48 @@ const LandingPage = () => {
     }
   };
 
+  // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <>
         <Helmet>
-          <title>Chargement... | Harmonie</title>
+          <title>Chargement... | Harmonie Féline & Humaine</title>
         </Helmet>
-        <div className="animate-pulse text-primary text-xl font-heading">Chargement...</div>
-      </div>
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="animate-pulse text-primary text-xl font-heading">Chargement...</div>
+        </div>
+      </>
     );
   }
 
-  if (!pageData) {
+  // Error state
+  if (error || !pageData) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+      <>
         <Helmet>
-          <title>Page non trouvée | Harmonie</title>
+          <title>Page non trouvée | Harmonie Féline & Humaine</title>
         </Helmet>
-        <h1 className="font-heading text-2xl text-text-main mb-4">Page non trouvée</h1>
-        <Link to="/">
-          <Button className="btn-primary">Retour à l'accueil</Button>
-        </Link>
-      </div>
+        <div className="min-h-screen flex flex-col items-center justify-center bg-background">
+          <h1 className="font-heading text-2xl text-text-main mb-4">Page non trouvée</h1>
+          <Link to="/">
+            <Button className="btn-primary">Retour à l'accueil</Button>
+          </Link>
+        </div>
+      </>
     );
   }
 
-  // Safely compute these AFTER we know pageData exists
-  const metaTitle = String(pageData.meta_title || "Guide | Harmonie");
-  const metaDescription = String(pageData.meta_description || "");
-  const metaKeywords = pageData.keywords ? pageData.keywords.join(", ") : "";
-
+  // Main render with data
   return (
     <>
       <Helmet>
-        <title>{metaTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <meta name="keywords" content={metaKeywords} />
-        <meta property="og:title" content={metaTitle} />
-        <meta property="og:description" content={metaDescription} />
+        <title>{`${pageData.meta_title || pageData.title} | Harmonie Féline & Humaine`}</title>
+        <meta name="description" content={pageData.meta_description || pageData.hero_subtitle || ""} />
+        <meta name="keywords" content={Array.isArray(pageData.keywords) ? pageData.keywords.join(", ") : ""} />
+        <meta property="og:title" content={pageData.meta_title || pageData.title || "Guide"} />
+        <meta property="og:description" content={pageData.meta_description || ""} />
         <meta property="og:type" content="article" />
+        <link rel="canonical" href={`https://wellness-hub-693.preview.emergentagent.com/guide/${slug}`} />
       </Helmet>
 
       <div className="min-h-screen" data-testid="landing-page">
@@ -175,7 +184,7 @@ const LandingPage = () => {
 
               <Link to={categoryPaths[pageData.related_category] || "/"}>
                 <Button className="btn-primary text-lg h-14 px-8">
-                  {pageData.cta_text}
+                  {pageData.cta_text || "Découvrir"}
                   <ArrowRight className="h-5 w-5 ml-2" />
                 </Button>
               </Link>
