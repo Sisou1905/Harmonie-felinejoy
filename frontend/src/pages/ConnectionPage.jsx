@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Heart, Users, Sparkles, HandHeart } from "lucide-react";
 import ArticleCard from "../components/ArticleCard";
@@ -10,6 +9,13 @@ import { API } from "../App";
 const ConnectionPage = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    document.title = "La Connexion Humain-Animal | Harmonie Féline & Humaine";
+    return () => {
+      document.title = "Harmonie Féline & Humaine | Blog Bien-être";
+    };
+  }, []);
 
   useEffect(() => {
     const fetchArticles = async () => {
