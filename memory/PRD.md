@@ -60,6 +60,11 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
   - **Resend** intégré pour envoi de newsletters (API key configurée)
   - Bug react-helmet-async CORRIGÉ sur ArticlePage.jsx et AdminPage.jsx (useEffect pattern)
   - Interface Admin Newsletter complète (créer, envoyer, test)
+  - **12 nouvelles landing pages SEO** avec sources scientifiques vérifiées :
+    - Bien-être Humain : yoga débutants, gestion stress travail, améliorer sommeil, alimentation anti-inflammatoire
+    - Bien-être Animal : alimentation bio chat, chat anxieux solutions, jeux enrichissement chat, soins dentaires chat
+    - La Connexion : bienfaits animaux santé mentale, adopter chat guide, méditation avec animal, **aquarium bienfaits mental**
+  - Total : **15 landing pages SEO** optimisées
 
 ## Prioritized Backlog
 
