@@ -22,6 +22,13 @@ const Footer = () => {
     { name: "Bien-être Humain", path: "/bien-etre-humain" },
     { name: "Bien-être Animal", path: "/bien-etre-animal" },
     { name: "La Connexion", path: "/connexion" },
+    { name: "Recherche", path: "/search" },
+  ];
+
+  const guideLinks = [
+    { name: "Méditation pour Débutants", path: "/guide/meditation-debutant" },
+    { name: "Santé du Chat Senior", path: "/guide/sante-chat-senior" },
+    { name: "Bienfaits de la Zoothérapie", path: "/guide/zootherapie-bienfaits" },
   ];
 
   return (
