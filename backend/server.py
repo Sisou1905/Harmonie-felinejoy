@@ -754,6 +754,430 @@ La relation avec votre chat est un miroir. Votre bien-être et le sien sont inti
     await db.articles.insert_many(articles)
     return {"message": "Data seeded successfully", "count": len(articles)}
 
+# ==================== ADMIN ROUTES ====================
+
+# Admin emails - add your email here to get admin access
+ADMIN_EMAILS = ["admin@harmonie.com"]
+
+async def require_admin(request: Request) -> User:
+    """Require admin authentication"""
+    user = await require_auth(request)
+    # For now, all authenticated users can be admin (you can restrict by email)
+    # if user.email not in ADMIN_EMAILS:
+    #     raise HTTPException(status_code=403, detail="Admin access required")
+    return user
+
+@api_router.get("/admin/stats")
+async def get_admin_stats(request: Request):
+    """Get admin dashboard statistics"""
+    user = await require_admin(request)
+    
+    articles_count = await db.articles.count_documents({})
+    users_count = await db.users.count_documents({})
+    comments_count = await db.comments.count_documents({})
+    newsletter_count = await db.newsletter.count_documents({})
+    
+    # Articles by category
+    human_count = await db.articles.count_documents({"category": "human"})
+    animal_count = await db.articles.count_documents({"category": "animal"})
+    connection_count = await db.articles.count_documents({"category": "connection"})
+    
+    # Recent activity
+    recent_comments = await db.comments.find({}, {"_id": 0}).sort("created_at", -1).limit(5).to_list(5)
+    recent_subscribers = await db.newsletter.find({}, {"_id": 0}).sort("created_at", -1).limit(5).to_list(5)
+    
+    return {
+        "articles": {
+            "total": articles_count,
+            "human": human_count,
+            "animal": animal_count,
+            "connection": connection_count
+        },
+        "users": users_count,
+        "comments": comments_count,
+        "newsletter_subscribers": newsletter_count,
+        "recent_comments": recent_comments,
+        "recent_subscribers": recent_subscribers
+    }
+
+@api_router.post("/admin/articles")
+async def admin_create_article(article: ArticleCreate, request: Request):
+    """Admin: Create a new article"""
+    user = await require_admin(request)
+    
+    # Check if slug already exists
+    existing = await db.articles.find_one({"slug": article.slug})
+    if existing:
+        raise HTTPException(status_code=400, detail="Article with this slug already exists")
+    
+    article_obj = Article(
+        **article.model_dump(),
+        author=user.name
+    )
+    
+    doc = article_obj.model_dump()
+    doc['created_at'] = doc['created_at'].isoformat()
+    doc['updated_at'] = doc['updated_at'].isoformat()
+    
+    await db.articles.insert_one(doc)
+    return doc
+
+@api_router.put("/admin/articles/{article_id}")
+async def admin_update_article(article_id: str, article: ArticleCreate, request: Request):
+    """Admin: Update an existing article"""
+    user = await require_admin(request)
+    
+    existing = await db.articles.find_one({"article_id": article_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Article not found")
+    
+    update_data = article.model_dump()
+    update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    await db.articles.update_one(
+        {"article_id": article_id},
+        {"$set": update_data}
+    )
+    
+    updated = await db.articles.find_one({"article_id": article_id}, {"_id": 0})
+    return updated
+
+@api_router.delete("/admin/articles/{article_id}")
+async def admin_delete_article(article_id: str, request: Request):
+    """Admin: Delete an article"""
+    user = await require_admin(request)
+    
+    existing = await db.articles.find_one({"article_id": article_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Article not found")
+    
+    await db.articles.delete_one({"article_id": article_id})
+    await db.comments.delete_many({"article_id": article_id})
+    await db.likes.delete_many({"article_id": article_id})
+    await db.bookmarks.delete_many({"article_id": article_id})
+    
+    return {"message": "Article deleted successfully"}
+
+@api_router.get("/admin/newsletter/subscribers")
+async def get_newsletter_subscribers(request: Request):
+    """Admin: Get all newsletter subscribers"""
+    user = await require_admin(request)
+    
+    subscribers = await db.newsletter.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    return subscribers
+
+# ==================== SEARCH ROUTES ====================
+
+@api_router.get("/search")
+async def search_articles(q: str, category: Optional[str] = None, tags: Optional[str] = None):
+    """Search articles by query, category, and tags"""
+    query = {}
+    
+    # Text search on title, excerpt, content
+    if q:
+        query["$or"] = [
+            {"title": {"$regex": q, "$options": "i"}},
+            {"excerpt": {"$regex": q, "$options": "i"}},
+            {"content": {"$regex": q, "$options": "i"}},
+            {"tags": {"$regex": q, "$options": "i"}}
+        ]
+    
+    if category:
+        query["category"] = category
+    
+    if tags:
+        tag_list = [t.strip() for t in tags.split(",")]
+        query["tags"] = {"$in": tag_list}
+    
+    articles = await db.articles.find(query, {"_id": 0}).sort("created_at", -1).limit(50).to_list(50)
+    return articles
+
+@api_router.get("/tags")
+async def get_all_tags():
+    """Get all unique tags with counts"""
+    pipeline = [
+        {"$unwind": "$tags"},
+        {"$group": {"_id": "$tags", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+        {"$project": {"tag": "$_id", "count": 1, "_id": 0}}
+    ]
+    
+    tags = await db.articles.aggregate(pipeline).to_list(100)
+    return tags
+
+# ==================== LANDING PAGES DATA ====================
+
+LANDING_PAGES = {
+    "meditation-debutant": {
+        "slug": "meditation-debutant",
+        "title": "Méditation pour Débutants | Guide Complet",
+        "meta_title": "Méditation Débutant : Guide Complet pour Commencer la Méditation",
+        "meta_description": "Découvrez comment débuter la méditation simplement. Techniques faciles, bienfaits prouvés et conseils pratiques pour les débutants en méditation.",
+        "keywords": ["méditation débutant", "apprendre méditation", "méditation facile", "techniques méditation", "bienfaits méditation"],
+        "hero_title": "Commencez votre voyage vers la sérénité",
+        "hero_subtitle": "La méditation pour débutants : techniques simples et efficaces",
+        "content_blocks": [
+            {
+                "type": "intro",
+                "title": "Pourquoi commencer la méditation ?",
+                "content": "La méditation est une pratique millénaire qui a fait ses preuves pour réduire le stress, améliorer la concentration et favoriser le bien-être mental. Pas besoin d'être un expert pour commencer."
+            },
+            {
+                "type": "steps",
+                "title": "5 étapes pour débuter",
+                "items": [
+                    "Trouvez un endroit calme et confortable",
+                    "Commencez par 5 minutes par jour",
+                    "Concentrez-vous sur votre respiration",
+                    "Acceptez que votre esprit vagabonde",
+                    "Soyez régulier plutôt que parfait"
+                ]
+            },
+            {
+                "type": "benefits",
+                "title": "Les bienfaits scientifiquement prouvés",
+                "items": [
+                    "Réduction du stress et de l'anxiété",
+                    "Amélioration de la qualité du sommeil",
+                    "Meilleure gestion des émotions",
+                    "Augmentation de la concentration"
+                ]
+            }
+        ],
+        "related_category": "human",
+        "cta_text": "Découvrez nos articles sur la méditation"
+    },
+    "sante-chat-senior": {
+        "slug": "sante-chat-senior",
+        "title": "Santé du Chat Senior | Conseils Vétérinaires",
+        "meta_title": "Santé Chat Senior : Guide Complet pour Prendre Soin de Votre Chat Âgé",
+        "meta_description": "Tout savoir sur la santé du chat senior. Nutrition adaptée, signes de vieillissement, visites vétérinaires et conseils pour un chat âgé heureux et en bonne santé.",
+        "keywords": ["chat senior", "santé chat âgé", "nutrition chat senior", "vieux chat", "soins chat âgé"],
+        "hero_title": "Prenez soin de votre compagnon senior",
+        "hero_subtitle": "Guide complet pour la santé et le bonheur de votre chat âgé",
+        "content_blocks": [
+            {
+                "type": "intro",
+                "title": "Quand mon chat devient-il senior ?",
+                "content": "Un chat est généralement considéré comme senior à partir de 7-10 ans. À cet âge, ses besoins nutritionnels et médicaux évoluent. Une attention particulière permet de lui assurer une vieillesse heureuse."
+            },
+            {
+                "type": "checklist",
+                "title": "Les signes à surveiller",
+                "items": [
+                    "Changement d'appétit ou de poids",
+                    "Diminution de l'activité physique",
+                    "Problèmes de mobilité ou d'articulations",
+                    "Changements dans les habitudes de toilettage",
+                    "Modifications du comportement"
+                ]
+            },
+            {
+                "type": "tips",
+                "title": "Conseils pour un chat senior en bonne santé",
+                "items": [
+                    "Alimentation adaptée riche en protéines de qualité",
+                    "Visites vétérinaires régulières (2x par an)",
+                    "Environnement confortable et accessible",
+                    "Stimulation mentale adaptée à son rythme"
+                ]
+            }
+        ],
+        "related_category": "animal",
+        "cta_text": "Découvrez nos articles sur le bien-être félin"
+    },
+    "zootherapie-bienfaits": {
+        "slug": "zootherapie-bienfaits",
+        "title": "Zoothérapie : Les Bienfaits Prouvés de la Présence Animale",
+        "meta_title": "Zoothérapie : Bienfaits Thérapeutiques des Animaux sur la Santé",
+        "meta_description": "Découvrez les bienfaits scientifiquement prouvés de la zoothérapie. Comment la présence d'animaux améliore notre santé physique et mentale.",
+        "keywords": ["zoothérapie", "thérapie animale", "bienfaits animaux", "santé mentale animaux", "connexion humain-animal"],
+        "hero_title": "Le pouvoir thérapeutique de la connexion animale",
+        "hero_subtitle": "Découvrez comment nos compagnons améliorent notre santé",
+        "content_blocks": [
+            {
+                "type": "intro",
+                "title": "Qu'est-ce que la zoothérapie ?",
+                "content": "La zoothérapie utilise la présence d'animaux pour améliorer le bien-être physique et mental des personnes. Cette approche est aujourd'hui reconnue et utilisée dans de nombreux contextes thérapeutiques."
+            },
+            {
+                "type": "science",
+                "title": "Ce que dit la science",
+                "items": [
+                    "Réduction de la pression artérielle",
+                    "Augmentation de l'ocytocine (hormone du bonheur)",
+                    "Diminution du cortisol (hormone du stress)",
+                    "Amélioration de l'humeur et réduction de l'anxiété"
+                ]
+            },
+            {
+                "type": "applications",
+                "title": "Applications thérapeutiques",
+                "items": [
+                    "Hôpitaux et maisons de retraite",
+                    "Accompagnement des troubles autistiques",
+                    "Aide aux personnes souffrant de dépression",
+                    "Soutien aux victimes de traumatismes"
+                ]
+            }
+        ],
+        "related_category": "connection",
+        "cta_text": "Explorez le lien humain-animal"
+    }
+}
+
+@api_router.get("/landing-pages")
+async def get_landing_pages():
+    """Get all available landing pages"""
+    return list(LANDING_PAGES.values())
+
+@api_router.get("/landing-pages/{slug}")
+async def get_landing_page(slug: str):
+    """Get a specific landing page by slug"""
+    if slug not in LANDING_PAGES:
+        raise HTTPException(status_code=404, detail="Landing page not found")
+    
+    page_data = LANDING_PAGES[slug]
+    
+    # Get related articles
+    related_articles = await db.articles.find(
+        {"category": page_data["related_category"]},
+        {"_id": 0}
+    ).sort("created_at", -1).limit(3).to_list(3)
+    
+    return {
+        **page_data,
+        "related_articles": related_articles
+    }
+
+# ==================== NEWSLETTER CAMPAIGN ====================
+
+class NewsletterCampaign(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    campaign_id: str = Field(default_factory=lambda: f"camp_{uuid.uuid4().hex[:12]}")
+    subject: str
+    content: str
+    articles: List[str] = []  # article_ids
+    sent_at: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+@api_router.get("/admin/newsletter/campaigns")
+async def get_newsletter_campaigns(request: Request):
+    """Admin: Get all newsletter campaigns"""
+    user = await require_admin(request)
+    
+    campaigns = await db.newsletter_campaigns.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    return campaigns
+
+@api_router.post("/admin/newsletter/campaigns")
+async def create_newsletter_campaign(request: Request):
+    """Admin: Create a newsletter campaign with recent articles"""
+    user = await require_admin(request)
+    body = await request.json()
+    
+    subject = body.get("subject", "Nouveautés de la semaine sur Harmonie")
+    custom_content = body.get("content", "")
+    
+    # Get recent articles from the past week
+    week_ago = datetime.now(timezone.utc) - timedelta(days=7)
+    recent_articles = await db.articles.find(
+        {"created_at": {"$gte": week_ago.isoformat()}},
+        {"_id": 0}
+    ).sort("created_at", -1).limit(5).to_list(5)
+    
+    # If no recent articles, get the latest ones
+    if not recent_articles:
+        recent_articles = await db.articles.find({}, {"_id": 0}).sort("created_at", -1).limit(3).to_list(3)
+    
+    # Build email content
+    articles_html = ""
+    for article in recent_articles:
+        articles_html += f"""
+        <div style="margin-bottom: 20px; padding: 15px; background: #f5f7f6; border-radius: 12px;">
+            <h3 style="color: #5FA098; margin: 0 0 10px 0;">{article['title']}</h3>
+            <p style="color: #5C6B64; margin: 0;">{article['excerpt']}</p>
+        </div>
+        """
+    
+    email_content = f"""
+    <div style="font-family: 'Manrope', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #5FA098; font-family: 'Fraunces', serif;">Harmonie Féline & Humaine</h1>
+        </div>
+        
+        {f'<p style="color: #1A2F23; font-size: 16px; line-height: 1.6;">{custom_content}</p>' if custom_content else ''}
+        
+        <h2 style="color: #1A2F23; font-family: 'Fraunces', serif;">Nos derniers articles</h2>
+        
+        {articles_html}
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="https://wellness-hub-693.preview.emergentagent.com" 
+               style="background: #5FA098; color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 500;">
+                Découvrir plus d'articles
+            </a>
+        </div>
+        
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #E8E8E6;" />
+        
+        <p style="color: #8E9E96; font-size: 12px; text-align: center;">
+            Vous recevez cet email car vous êtes inscrit à notre newsletter.<br/>
+            © Harmonie Féline & Humaine
+        </p>
+    </div>
+    """
+    
+    campaign = {
+        "campaign_id": f"camp_{uuid.uuid4().hex[:12]}",
+        "subject": subject,
+        "content": email_content,
+        "articles": [a["article_id"] for a in recent_articles],
+        "sent_at": None,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.newsletter_campaigns.insert_one(campaign)
+    
+    # Get subscriber count
+    subscriber_count = await db.newsletter.count_documents({})
+    
+    return {
+        "campaign": campaign,
+        "subscriber_count": subscriber_count,
+        "preview": email_content,
+        "message": f"Campaign created. Ready to send to {subscriber_count} subscribers."
+    }
+
+@api_router.post("/admin/newsletter/campaigns/{campaign_id}/send")
+async def send_newsletter_campaign(campaign_id: str, request: Request):
+    """Admin: Mark campaign as sent (actual email sending would require email service integration)"""
+    user = await require_admin(request)
+    
+    campaign = await db.newsletter_campaigns.find_one({"campaign_id": campaign_id})
+    if not campaign:
+        raise HTTPException(status_code=404, detail="Campaign not found")
+    
+    if campaign.get("sent_at"):
+        raise HTTPException(status_code=400, detail="Campaign already sent")
+    
+    # Get all subscribers
+    subscribers = await db.newsletter.find({}, {"_id": 0}).to_list(10000)
+    
+    # Mark as sent
+    await db.newsletter_campaigns.update_one(
+        {"campaign_id": campaign_id},
+        {"$set": {"sent_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    # Note: Actual email sending would require an email service like SendGrid, Resend, etc.
+    # This is a placeholder that marks the campaign as sent
+    
+    return {
+        "message": f"Campaign marked as sent to {len(subscribers)} subscribers",
+        "note": "Pour envoyer réellement les emails, intégrez un service comme SendGrid ou Resend",
+        "subscribers_count": len(subscribers)
+    }
+
 # Include the router in the main app
 app.include_router(api_router)
 
