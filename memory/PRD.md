@@ -59,16 +59,17 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
 - [x] Authentification Google
 - [x] Mind maps interactifs
 
-### P1 (High)
-- [ ] Système de modération des commentaires
-- [ ] Panel admin pour gérer les articles
-- [ ] Analytics et tracking
+### P1 (High) - DONE
+- [x] Panel admin pour gérer les articles
+- [x] Système de recherche avec filtres par tags
+- [x] Landing pages SEO (méditation, chat senior, zoothérapie)
+- [x] Gestion de campagnes newsletter
 
 ### P2 (Medium)
-- [ ] Landing pages SEO spécifiques (méditation débutant, santé chat senior)
-- [ ] Système de recherche d'articles
-- [ ] Tags et filtres avancés
-- [ ] Notifications email pour nouveaux articles
+- [ ] Intégration email réelle (SendGrid/Resend) pour newsletters
+- [ ] Analytics et tracking visiteurs
+- [ ] Système de modération des commentaires
+- [ ] Export des abonnés newsletter
 
 ### P3 (Nice to have)
 - [ ] Mode sombre
