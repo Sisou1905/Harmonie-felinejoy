@@ -158,6 +158,16 @@ const AppRouter = () => {
             <Route path="/article/:slug" element={<PageWrapper><ArticlePage /></PageWrapper>} />
             <Route path="/login" element={<PageWrapper><LoginPage /></PageWrapper>} />
             <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route path="/search" element={<PageWrapper><SearchPage /></PageWrapper>} />
+            <Route path="/guide/:slug" element={<PageWrapper><LandingPage /></PageWrapper>} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <PageWrapper><AdminPage /></PageWrapper>
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/dashboard"
               element={
