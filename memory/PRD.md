@@ -96,6 +96,6 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
 
 ## Next Tasks
 1. Configurer Google Analytics avec le vrai Measurement ID (remplacer placeholder dans index.html)
-2. Créer plus de landing pages SEO ciblées
+2. Ajouter plus de contenu/articles pour chaque catégorie
 3. Analytics personnalisés internes
 4. Export CSV des abonnés
