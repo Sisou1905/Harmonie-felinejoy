@@ -50,6 +50,10 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
   - 3 Landing Pages SEO optimisées (méditation débutant, santé chat senior, zoothérapie)
   - Système de gestion de campagnes newsletter
   - API de statistiques admin
+  - **Génération d'articles avec IA** (template-based)
+  - **Modération des commentaires** (pending/approved/rejected)
+  - **Google Analytics** intégré
+  - Email contact mis à jour: contact@felinejoy.com
 
 ## Prioritized Backlog
 
