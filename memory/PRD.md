@@ -44,6 +44,13 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
   - Google OAuth intégré
   - Sélecteur de langue avec 5 langues
 
+- **27 Fév 2026**: Phase 2 - Fonctionnalités avancées
+  - Panel Admin pour créer/modifier/supprimer des articles
+  - Système de recherche avec filtres par tags et catégories
+  - 3 Landing Pages SEO optimisées (méditation débutant, santé chat senior, zoothérapie)
+  - Système de gestion de campagnes newsletter
+  - API de statistiques admin
+
 ## Prioritized Backlog
 
 ### P0 (Critical) - DONE
