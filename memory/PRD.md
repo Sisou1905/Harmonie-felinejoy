@@ -115,3 +115,14 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
   - Couleurs pastel cohérentes (vert sauge, bleu ciel, terracotta)
   - Typographie: Fraunces (headings), Manrope (body)
   - Effets glass-morphism et gradients subtils
+
+## Monétisation (Déc 2025)
+- **Affiliation renforcée** :
+  - Bannières attractives Feline Joy et Zinzino
+  - Section produits Amazon (chat + bien-être)
+  - Liens affiliés avec tracking
+  - Placeholder ID Amazon: `harmoniefel-21` (à remplacer)
+- **Google AdSense** :
+  - Emplacements publicitaires préparés (banner, in-article, square)
+  - Placeholder ID AdSense: `ca-pub-XXXXXXXXXX` (à remplacer)
+  - Script AdSense ajouté dans index.html
