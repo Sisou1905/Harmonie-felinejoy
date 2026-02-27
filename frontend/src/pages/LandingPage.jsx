@@ -140,11 +140,11 @@ const LandingPage = () => {
   return (
     <>
       <Helmet>
-        <title>{pageData.meta_title || "Guide | Harmonie"}</title>
-        <meta name="description" content={pageData.meta_description || ""} />
-        <meta name="keywords" content={pageData.keywords?.join(", ") || ""} />
-        <meta property="og:title" content={pageData.meta_title || "Guide"} />
-        <meta property="og:description" content={pageData.meta_description || ""} />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta name="keywords" content={pageKeywords} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
         <meta property="og:type" content="article" />
         <link rel="canonical" href={`https://wellness-hub-693.preview.emergentagent.com/guide/${pageData.slug}`} />
       </Helmet>
