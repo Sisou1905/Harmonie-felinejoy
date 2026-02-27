@@ -207,6 +207,36 @@ const LandingPage = () => {
         <div className="container-custom">
           <div className="max-w-3xl mx-auto space-y-8">
             {pageData.content_blocks?.map((block, index) => renderContentBlock(block, index))}
+            
+            {/* Sources Section */}
+            {pageData.sources && pageData.sources.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mt-12 p-6 bg-primary-light/30 rounded-2xl border border-primary/20"
+              >
+                <h3 className="font-heading text-lg font-semibold text-text-main mb-4 flex items-center gap-2">
+                  <BookOpen className="h-5 w-5 text-primary" />
+                  Sources scientifiques
+                </h3>
+                <ul className="space-y-2">
+                  {pageData.sources.map((source, index) => (
+                    <li key={index}>
+                      <a
+                        href={source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary hover:text-primary-dark flex items-center gap-2 text-sm transition-colors"
+                      >
+                        <ExternalLink className="h-4 w-4 flex-shrink-0" />
+                        <span>{source.title}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
           </div>
         </div>
       </section>
