@@ -230,6 +230,113 @@ class WellnessBlogAPITester:
             self.log_test("Get Comments", False, f"Error: {str(e)}")
             return False
 
+    def test_search_api(self):
+        """Test search API with different queries and filters"""
+        test_cases = [
+            {"q": "méditation", "description": "Search for 'méditation'"},
+            {"q": "chat", "description": "Search for 'chat'"},
+            {"category": "human", "description": "Filter by human category"},
+            {"category": "animal", "description": "Filter by animal category"},
+            {"category": "connection", "description": "Filter by connection category"},
+            {"tags": "méditation,bien-être", "description": "Filter by tags"}
+        ]
+        
+        success_count = 0
+        for case in test_cases:
+            try:
+                params = {k: v for k, v in case.items() if k != 'description'}
+                response = self.session.get(f"{self.base_url}/search", params=params, timeout=10)
+                success = response.status_code == 200
+                details = f"Status: {response.status_code}, {case['description']}"
+                
+                if success:
+                    results = response.json()
+                    details += f", Results: {len(results)}"
+                    success_count += 1
+                    
+                self.log_test(f"Search API - {case['description']}", success, details)
+                
+            except Exception as e:
+                self.log_test(f"Search API - {case['description']}", False, f"Error: {str(e)}")
+        
+        return success_count > 0
+
+    def test_tags_api(self):
+        """Test tags API to get all available tags with counts"""
+        try:
+            response = self.session.get(f"{self.base_url}/tags", timeout=10)
+            success = response.status_code == 200
+            details = f"Status: {response.status_code}"
+            
+            if success:
+                tags = response.json()
+                details += f", Tags count: {len(tags)}"
+                
+                # Check structure
+                if tags and len(tags) > 0:
+                    first_tag = tags[0]
+                    if 'tag' in first_tag and 'count' in first_tag:
+                        details += f", Sample tag: {first_tag['tag']} ({first_tag['count']})"
+                    else:
+                        success = False
+                        details += ", Missing tag/count structure"
+                        
+            self.log_test("Tags API", success, details)
+            return success
+            
+        except Exception as e:
+            self.log_test("Tags API", False, f"Error: {str(e)}")
+            return False
+
+    def test_landing_pages_api(self):
+        """Test landing pages API for SEO pages"""
+        # Test specific landing pages mentioned in requirements
+        test_slugs = [
+            "meditation-debutant",
+            "sante-chat-senior", 
+            "zootherapie-bienfaits"
+        ]
+        
+        success_count = 0
+        for slug in test_slugs:
+            try:
+                response = self.session.get(f"{self.base_url}/landing-pages/{slug}", timeout=10)
+                success = response.status_code == 200
+                details = f"Status: {response.status_code}, Slug: {slug}"
+                
+                if success:
+                    page = response.json()
+                    # Check required fields
+                    required_fields = ['title', 'meta_title', 'content_blocks', 'related_articles']
+                    has_fields = all(field in page for field in required_fields)
+                    
+                    if has_fields:
+                        details += f", Related articles: {len(page.get('related_articles', []))}"
+                        success_count += 1
+                    else:
+                        success = False
+                        details += ", Missing required fields"
+                        
+                self.log_test(f"Landing Page - {slug}", success, details)
+                
+            except Exception as e:
+                self.log_test(f"Landing Page - {slug}", False, f"Error: {str(e)}")
+        
+        return success_count == len(test_slugs)
+
+    def test_admin_stats_unauthenticated(self):
+        """Test admin stats API without authentication (should return 401)"""
+        try:
+            response = self.session.get(f"{self.base_url}/admin/stats", timeout=10)
+            # Should be 401 unauthorized
+            success = response.status_code == 401
+            details = f"Status: {response.status_code} (Expected 401 for unauthenticated request)"
+            self.log_test("Admin Stats (Unauthenticated)", success, details)
+            return success
+        except Exception as e:
+            self.log_test("Admin Stats (Unauthenticated)", False, f"Error: {str(e)}")
+            return False
+
     def run_all_tests(self):
         """Run all backend tests"""
         print(f"\n🔍 Testing Wellness Blog Backend API")
