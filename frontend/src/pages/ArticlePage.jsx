@@ -8,7 +8,9 @@ import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { toast } from "sonner";
 import CommentSection from "../components/CommentSection";
-import ProductSpotlight from "../components/ProductSpotlight";
+import AffiliateBanner from "../components/AffiliateBanner";
+import AmazonProducts from "../components/AmazonProducts";
+import { AdInArticle, AdSquare } from "../components/AdSense";
 import { API, useAuth } from "../App";
 
 const ArticlePage = () => {
