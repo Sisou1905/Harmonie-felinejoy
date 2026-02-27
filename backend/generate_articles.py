@@ -114,7 +114,7 @@ CATEGORY_SOURCES = {
 
 async def generate_with_claude(topic: str, category: str, tone: str) -> dict:
     """Generate article content using Claude Sonnet via Emergent LLM"""
-    from emergentintegrations.llm.anthropic import AnthropicClient
+    from emergentintegrations.llm.chat import LlmChat, UserMessage
     
     category_names = {
         "human": "bien-être humain (méditation, nutrition, sommeil, gestion du stress)",
@@ -151,12 +151,14 @@ Réponds UNIQUEMENT avec un JSON valide au format suivant (sans markdown autour)
 }}"""
 
     try:
-        client = AnthropicClient()
-        response = await client.chat(
-            model="claude-sonnet-4-5-20241022",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=4000
-        )
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"article_gen_{uuid.uuid4().hex[:8]}",
+            system_message="Tu es un expert en bien-être qui écrit des articles pour un blog."
+        ).with_model("anthropic", "claude-sonnet-4-5-20241022").with_params(max_tokens=4000)
+        
+        response = await chat.send_message(UserMessage(text=prompt))
         
         # Parse the JSON response
         response_text = response.strip()
