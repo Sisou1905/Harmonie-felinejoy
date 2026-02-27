@@ -172,8 +172,8 @@ const HomePage = () => {
                 {/* Decorative frame with gradient border */}
                 <div className="hero-image-frame">
                   <motion.img
-                    src="https://images.unsplash.com/photo-1672312123315-8a4808e1027e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzOTB8MHwxfHNlYXJjaHw0fHx3b21hbiUyMGhvbGRpbmclMjBjYXQlMjBhZmZlY3Rpb25hdGUlMjBwYXN0ZWx8ZW58MHx8fHwxNzcyMTQ3MjMyfDA&ixlib=rb-4.1.0&q=85"
-                    alt="Femme tenant son chat avec affection"
+                    src="https://images.unsplash.com/photo-1631270275663-b9606b854141?crop=entropy&cs=srgb&fm=jpg&w=940"
+                    alt="Femme tenant son chat roux avec affection"
                     className="rounded-[1.75rem] object-cover w-full max-w-md mx-auto aspect-[4/5]"
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.4 }}
