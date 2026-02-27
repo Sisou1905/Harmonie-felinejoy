@@ -365,6 +365,13 @@ class WellnessBlogAPITester:
         
         success, article = self.test_get_article_by_slug(articles)
         
+        # Test NEW FEATURES mentioned in requirements
+        print("\n🎯 Testing New Features:")
+        self.test_search_api()
+        self.test_tags_api()
+        self.test_landing_pages_api()
+        self.test_admin_stats_unauthenticated()
+        
         # Test newsletter
         self.test_newsletter_subscription()
         
