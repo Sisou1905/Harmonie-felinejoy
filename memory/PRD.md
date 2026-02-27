@@ -68,12 +68,15 @@ Blog bien-être complet et apaisant avec palette de couleurs douces (verts et bl
 - [x] Système de recherche avec filtres par tags
 - [x] Landing pages SEO (méditation, chat senior, zoothérapie)
 - [x] Gestion de campagnes newsletter
+- [x] Génération d'articles avec IA
+- [x] Modération des commentaires
+- [x] Google Analytics
 
 ### P2 (Medium)
 - [ ] Intégration email réelle (SendGrid/Resend) pour newsletters
-- [ ] Analytics et tracking visiteurs
-- [ ] Système de modération des commentaires
-- [ ] Export des abonnés newsletter
+- [ ] Intégration LLM avancée pour génération d'articles (GPT, Claude)
+- [ ] Analytics personnalisés (dashboard interne)
+- [ ] Export des abonnés newsletter en CSV
 
 ### P3 (Nice to have)
 - [ ] Mode sombre
