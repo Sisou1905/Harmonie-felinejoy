@@ -43,15 +43,6 @@ const ConnectionPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>La Connexion Humain-Animal | Harmonie Féline & Humaine</title>
-        <meta
-          name="description"
-          content="Explorez le lien unique entre humains et animaux. Découvrez les bienfaits thérapeutiques de la présence animale et comment renforcer votre relation avec votre chat."
-        />
-        <meta name="keywords" content="connexion humain-animal, zoothérapie, bienfaits animaux, lien chat humain, thérapie animale" />
-      </Helmet>
-
       {/* Hero */}
       <section className="gradient-mesh noise-overlay py-20 md:py-28" data-testid="connection-hero">
         <div className="container-custom relative z-10">
