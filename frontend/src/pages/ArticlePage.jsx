@@ -216,16 +216,6 @@ const ArticlePage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{article.title} | Harmonie Féline & Humaine</title>
-        <meta name="description" content={article.excerpt} />
-        <meta name="keywords" content={article.tags?.join(", ")} />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={article.excerpt} />
-        <meta property="og:image" content={article.image_url} />
-        <meta property="og:type" content="article" />
-      </Helmet>
-
       <article className="min-h-screen" data-testid="article-page">
         {/* Hero Image */}
         <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
