@@ -121,7 +121,7 @@ const LandingPage = () => {
     return (
       <>
         <Helmet>
-          <title>Chargement... | Harmonie Féline & Humaine</title>
+          <title>{"Chargement... | Harmonie Féline & Humaine"}</title>
         </Helmet>
         <div className="min-h-screen flex items-center justify-center bg-background">
           <div className="animate-pulse text-primary text-xl font-heading">Chargement...</div>
@@ -135,7 +135,7 @@ const LandingPage = () => {
     return (
       <>
         <Helmet>
-          <title>Page non trouvée | Harmonie Féline & Humaine</title>
+          <title>{"Page non trouvée | Harmonie Féline & Humaine"}</title>
         </Helmet>
         <div className="min-h-screen flex flex-col items-center justify-center bg-background">
           <h1 className="font-heading text-2xl text-text-main mb-4">Page non trouvée</h1>
@@ -147,17 +147,26 @@ const LandingPage = () => {
     );
   }
 
+  // Build title string safely
+  const titleText = pageData.meta_title 
+    ? String(pageData.meta_title) 
+    : pageData.title 
+      ? String(pageData.title) 
+      : "Guide";
+  const fullTitle = titleText + " | Harmonie Féline & Humaine";
+  const descriptionText = pageData.meta_description ? String(pageData.meta_description) : "";
+  const keywordsText = Array.isArray(pageData.keywords) ? pageData.keywords.join(", ") : "";
+
   // Main render with data
   return (
     <>
       <Helmet>
-        <title>{`${pageData.meta_title || pageData.title} | Harmonie Féline & Humaine`}</title>
-        <meta name="description" content={pageData.meta_description || pageData.hero_subtitle || ""} />
-        <meta name="keywords" content={Array.isArray(pageData.keywords) ? pageData.keywords.join(", ") : ""} />
-        <meta property="og:title" content={pageData.meta_title || pageData.title || "Guide"} />
-        <meta property="og:description" content={pageData.meta_description || ""} />
+        <title>{fullTitle}</title>
+        <meta name="description" content={descriptionText} />
+        <meta name="keywords" content={keywordsText} />
+        <meta property="og:title" content={titleText} />
+        <meta property="og:description" content={descriptionText} />
         <meta property="og:type" content="article" />
-        <link rel="canonical" href={`https://wellness-hub-693.preview.emergentagent.com/guide/${slug}`} />
       </Helmet>
 
       <div className="min-h-screen" data-testid="landing-page">
@@ -175,11 +184,11 @@ const LandingPage = () => {
               </div>
 
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-text-main mb-6">
-                {pageData.hero_title}
+                {pageData.hero_title || "Guide"}
               </h1>
               
               <p className="text-lg md:text-xl text-text-muted leading-relaxed mb-8">
-                {pageData.hero_subtitle}
+                {pageData.hero_subtitle || ""}
               </p>
 
               <Link to={categoryPaths[pageData.related_category] || "/"}>
