@@ -907,10 +907,13 @@ async def get_pending_comments(request: Request):
     
     comments = await db.comments.find({"status": "pending"}, {"_id": 0}).sort("created_at", -1).to_list(100)
     
-    # Enrich with article titles
+    # Enrich with article titles - Optimized bulk query
+    article_ids = list(set(c["article_id"] for c in comments))
+    articles_cursor = db.articles.find({"article_id": {"$in": article_ids}}, {"_id": 0, "article_id": 1, "title": 1})
+    articles_map = {a["article_id"]: a["title"] async for a in articles_cursor}
+    
     for comment in comments:
-        article = await db.articles.find_one({"article_id": comment["article_id"]}, {"title": 1})
-        comment["article_title"] = article["title"] if article else "Article supprimé"
+        comment["article_title"] = articles_map.get(comment["article_id"], "Article supprimé")
     
     return comments
 
