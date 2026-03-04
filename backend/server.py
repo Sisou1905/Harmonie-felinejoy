@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
+import certifi
 import logging
 import httpx
 import asyncio
@@ -18,10 +19,8 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url, serverSelectionTimeoutMS=30000, tls=True, tlsAllowInvalidCertificates=True)
+client = AsyncIOMotorClient(mongo_url, tlsCAFile=certifi.where())
 db = client[os.environ['DB_NAME']]
-
 # Resend configuration
 resend.api_key = os.environ.get('RESEND_API_KEY')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
