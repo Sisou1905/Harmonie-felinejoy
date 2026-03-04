@@ -19,9 +19,11 @@ ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
-mongo_url = os.environ['MONGO_URL']
+mongo_url = os.environ.get('MONGO_URL', '').strip()
+if not mongo_url.startswith(('mongodb://', 'mongodb+srv://')):
+    raise RuntimeError(f"MONGO_URL invalide : '{mongo_url[:50]}' — verifier Render Environment")
 client = AsyncIOMotorClient(mongo_url, tlsInsecure=True)
-db = client[os.environ['DB_NAME']]
+db = client[os.environ.get('DB_NAME', 'harmonie')]
 # Resend configuration
 resend.api_key = os.environ.get('RESEND_API_KEY')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
