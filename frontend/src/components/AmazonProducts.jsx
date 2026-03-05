@@ -20,7 +20,7 @@ const AmazonProducts = ({ category = "all" }) => {
         rating: 4.5,
         reviews: 12453,
         image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=300",
-        asin: "B08XYZ1234",
+        asin: "B07PLBKJHM",
         tag: "Best-seller"
       },
       {
@@ -31,7 +31,7 @@ const AmazonProducts = ({ category = "all" }) => {
         rating: 4.7,
         reviews: 8921,
         image: "https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=300",
-        asin: "B08ABC5678",
+        asin: "B08BH1MLNY",
         tag: "Top qualité"
       },
       {
@@ -42,7 +42,7 @@ const AmazonProducts = ({ category = "all" }) => {
         rating: 4.4,
         reviews: 5632,
         image: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=300",
-        asin: "B09DEF9012",
+        asin: "B07WQJXN8Q",
         tag: "Écologique"
       },
       {
@@ -53,7 +53,7 @@ const AmazonProducts = ({ category = "all" }) => {
         rating: 4.3,
         reviews: 7845,
         image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=300",
-        asin: "B07GHI3456",
+        asin: "B08L3VJWZ8",
         tag: "Pack complet"
       }
     ],
