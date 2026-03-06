@@ -110,9 +110,10 @@ const AmazonProducts = ({ category = "all" }) => {
     { id: "wellness", name: "Bien-être", emoji: "🧘" }
   ];
 
-  const generateAmazonLink = (asin) => {
-    return `https://www.amazon.fr/dp/${asin}?tag=${AMAZON_AFFILIATE_ID}`;
-  };
+  const generateAmazonLink = (productName) => {
+  const query = encodeURIComponent(productName);
+  return `https://www.amazon.fr/s?k=${query}&tag=${AMAZON_AFFILIATE_ID}`;
+};
 
   const renderStars = (rating) => {
     return (
@@ -180,8 +181,7 @@ const AmazonProducts = ({ category = "all" }) => {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {products[activeCategory].map((product, index) => (
           <motion.a
-            key={product.id}
-            href={generateAmazonLink(product.asin)}
+            href={generateAmazonLink(product.name)}
             target="_blank"
             rel="noopener noreferrer sponsored"
             initial={{ opacity: 0, y: 20 }}
