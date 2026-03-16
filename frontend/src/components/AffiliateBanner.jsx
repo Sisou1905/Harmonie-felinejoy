@@ -16,17 +16,19 @@ const AffiliateBanner = ({ type = "both" }) => {
       badge: "Boutique officielle"
     },
     zinzino: {
-      name: "Zinzino",
-      tagline: "Compléments alimentaires testés & approuvés",
-      description: "Nutrition premium pour votre équilibre et votre vitalité au quotidien",
-      url: "https://www.zinzino.com/2020929659",
-      emoji: "🌿",
-      gradient: "from-primary-light/30 via-primary-light/10 to-secondary-light/20",
-      buttonColor: "bg-primary hover:bg-primary-dark",
-      features: ["Oméga-3 premium", "Tests personnalisés", "Qualité scandinave"],
-      badge: "Partenaire santé"
+  name: "Zinzino",
+  tagline: "Stoppez l'inflammation silencieuse. Régénérez vos cellules.",
+  description: "Rééquilibrez votre ratio Oméga-3/6, réduisez les risques de maladies chroniques et protégez votre santé cellulaire à long terme — testé & prouvé scientifiquement.",
+  url: "https://www.zinzino.com/2020929659",
+  emoji: "🧬",
+  image: "https://zinzinowebstorage.blob.core.windows.net/productimages/large/300000.png",
+  image2: "https://zinzinowebstorage.blob.core.windows.net/productimages/large/309000.png",
+  gradient: "from-emerald-50 via-teal-50 to-green-100",
+  buttonColor: "bg-teal-600 hover:bg-teal-700",
+  features: ["Anti-inflammation", "Équilibre Oméga-3/6", "Régénération cellulaire"],
+  badge: "Partenaire santé"
     }
-  };
+    };
 
   const renderBanner = (storeKey) => {
     const store = stores[storeKey];
@@ -61,7 +63,14 @@ const AffiliateBanner = ({ type = "both" }) => {
               className="w-20 h-20 rounded-2xl bg-white shadow-soft flex items-center justify-center flex-shrink-0"
               whileHover={{ rotate: 5, scale: 1.05 }}
             >
-              <span className="text-4xl">{store.emoji}</span>
+              {store.image ? (
+  <div className="flex gap-1 items-center justify-center">
+    <img src={store.image} alt={store.name} className="w-8 h-10 object-contain" />
+    {store.image2 && <img src={store.image2} alt={store.name} className="w-8 h-10 object-contain" />}
+  </div>
+) : (
+  <span className="text-4xl">{store.emoji}</span>
+)}
             </motion.div>
 
             {/* Content */}
