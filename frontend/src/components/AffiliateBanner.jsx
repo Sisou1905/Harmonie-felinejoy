@@ -8,7 +8,7 @@ const AffiliateBanner = ({ type = "both" }) => {
       name: "Feline Joy",
       tagline: "Accessoires & T-shirts pour amoureux des chats",
       description: "Découvrez notre collection exclusive de produits pour les passionnés de félins",
-      url: "https://www.felinejoycamy.myshopify.com",
+      url: "url: "https://felinejoycamy.myshopify.com",",
       emoji: "🐱",
       gradient: "from-accent/20 via-accent/10 to-primary-light/20",
       buttonColor: "bg-accent hover:bg-accent-hover",
