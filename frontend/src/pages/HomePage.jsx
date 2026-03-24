@@ -144,7 +144,7 @@ const HomePage = () => {
         {/* HERO */}
         <section>
           <div className="relative h-72 md:h-96 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1400&q=85" alt="Personne enlacant son chat avec tendresse" className="w-full h-full object-cover" onError={e => e.target.src = "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1400&q=80"} />
+            <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1400&q=85" alt="Personne enlacant son chat avec tendresse" className="w-full h-full object-cover" onError={e => e.target.src = "https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1400&q=80"} />
             <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 via-black/20 to-transparent" />
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="absolute bottom-0 left-0 right-0 p-6 md:p-12 max-w-4xl">
               <span className="inline-block bg-white/15 backdrop-blur-sm border border-white/30 text-white text-xs font-semibold tracking-widest uppercase px-3 py-1.5 rounded-full mb-3">Blog Bien-être · Harmonie Féline & Humaine</span>
@@ -283,7 +283,7 @@ const HomePage = () => {
           <h2 className="text-lg md:text-xl font-medium text-emerald-800 mb-1">Pour les amoureux des chats</h2>
           <p className="text-sm text-gray-500 leading-relaxed mb-4">Accessoires, jouets et t-shirts originaux pour chérir votre félin et afficher votre passion avec style.</p>
           <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/13315842307128167536_2048.jpg?v=1774202108&width=400" name="Stay Weird Stay Wild" sub="T-shirt rétro unisexe" price="~14€" star link="https://felinejoycamy.myshopify.com/products/unisex-garment-dyed-t-shirt" />
+            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/13315842307128167536_2048.jpg?v=1774202108&width=400" name="Stay Weird Stay Wild" sub="T-shirt rétro unisexe" price="Voir le prix →" star link="https://felinejoycamy.myshopify.com/products/unisex-garment-dyed-t-shirt" />
             <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/3106667881955.jpg?v=1770412974&width=400" name="Cozy Cave Cat Bed" sub="Niche douillette pompom" price="~19€" link="https://felinejoycamy.myshopify.com/products/lit-cocooning-pour-chat-niche-douillette-avec-pompon-couchage-premium" />
             <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/data_dd19f71b-8e59-4d10-b92b-6f0e5686c97a.jpg?v=1770414077&width=400" name="Crazy Cat Lady" sub="100% coton premium" price="~17€" link="https://felinejoycamy.myshopify.com/products/t-shirt-crazy-cat-lady-100-coton-premium-cadeau-parfait-maman-chat" />
             <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/data_b7f70288-c0a0-4b26-8fc5-a0d8315e5fcb.png?v=1770408141&width=400" name="Jouet plume rotatif" sub="USB rechargeable auto" price="~13€" link="https://felinejoycamy.myshopify.com/products/jouet-interactif-chat-culbuto-balle-oscillante-stimulante-auto-amusement" />
