@@ -83,7 +83,7 @@ const ProdCard = ({ img, name, sub, price, star, link }) => (
     <div className="p-2.5">
       <div className="text-xs font-medium text-emerald-800 leading-snug">{name}</div>
       <div className="text-xs text-gray-400 mt-0.5">{sub}</div>
-      <div className="text-sm font-medium text-amber-700 mt-1.5">{Découvrir}</div>
+      <div className="text-sm font-medium text-amber-700 mt-1.5">{""Découvrir""}</div>
     </div>
   </a>
 );
@@ -283,10 +283,10 @@ const HomePage = () => {
           <h2 className="text-lg md:text-xl font-medium text-emerald-800 mb-1">Pour les amoureux des chats</h2>
           <p className="text-sm text-gray-500 leading-relaxed mb-4">Accessoires, jouets et t-shirts originaux pour chérir votre félin et afficher votre passion avec style.</p>
           <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/13315842307128167536_2048.jpg?v=1774202108&width=400" name="Stay Weird Stay Wild" sub="T-shirt rétro unisexe" Découvrir="Découvrir" star link="https://felinejoycamy.myshopify.com/products/unisex-garment-dyed-t-shirt" />
-            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/3106667881955.jpg?v=1770412974&width=400" name="Cozy Cave Cat Bed" sub="Niche douillette pompom" Découvrir="~19€" link="https://felinejoycamy.myshopify.com/products/lit-cocooning-pour-chat-niche-douillette-avec-pompon-couchage-premium" />
-            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/data_dd19f71b-8e59-4d10-b92b-6f0e5686c97a.jpg?v=1770414077&width=400" name="Crazy Cat Lady" sub="100% coton premium" Découvrir="Découvrir" link="https://felinejoycamy.myshopify.com/products/t-shirt-crazy-cat-lady-100-coton-premium-cadeau-parfait-maman-chat" />
-            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/data_b7f70288-c0a0-4b26-8fc5-a0d8315e5fcb.png?v=1770408141&width=400" name="Jouet plume rotatif" sub="USB rechargeable auto" Découvrir="~13€" link="https://felinejoycamy.myshopify.com/products/jouet-interactif-chat-culbuto-balle-oscillante-stimulante-auto-amusement" />
+            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/13315842307128167536_2048.jpg?v=1774202108&width=400" name="Stay Weird Stay Wild" sub="T-shirt rétro unisexe" "Découvrir"="Découvrir" star link="https://felinejoycamy.myshopify.com/products/unisex-garment-dyed-t-shirt" />
+            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/3106667881955.jpg?v=1770412974&width=400" name="Cozy Cave Cat Bed" sub="Niche douillette pompom" ""Découvrir""="~19€" link="https://felinejoycamy.myshopify.com/products/lit-cocooning-pour-chat-niche-douillette-avec-pompon-couchage-premium" />
+            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/data_dd19f71b-8e59-4d10-b92b-6f0e5686c97a.jpg?v=1770414077&width=400" name="Crazy Cat Lady" sub="100% coton premium" "Découvrir"="Découvrir" link="https://felinejoycamy.myshopify.com/products/t-shirt-crazy-cat-lady-100-coton-premium-cadeau-parfait-maman-chat" />
+            <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/data_b7f70288-c0a0-4b26-8fc5-a0d8315e5fcb.png?v=1770408141&width=400" name="Jouet plume rotatif" sub="USB rechargeable auto" ""Découvrir""="~13€" link="https://felinejoycamy.myshopify.com/products/jouet-interactif-chat-culbuto-balle-oscillante-stimulante-auto-amusement" />
           </motion.div>
           <a href="https://felinejoycamy.myshopify.com" target="_blank" rel="noopener noreferrer" className="mt-4 flex items-center justify-center gap-2 w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-xl text-sm font-medium transition-colors">
             🐱 Voir toute la boutique Felinejoy <ExternalLink className="w-3.5 h-3.5" />
