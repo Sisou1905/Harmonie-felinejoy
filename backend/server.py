@@ -1,5 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse 
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -30,7 +30,11 @@ SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 
 # Create the main app
 app = FastAPI(title="Harmonie Féline & Humaine API")
-
+@app.get("/ads.txt")
+def ads_txt():
+    return PlainTextResponse(
+        "google.com, pub-2771964189463944, DIRECT, f08c47fec0942fa0"
+    )
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
