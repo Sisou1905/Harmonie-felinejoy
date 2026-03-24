@@ -72,7 +72,7 @@ const BenCard = ({ icon, title, sub }) => (
   </div>
 );
 
-const ProdCard = ({ img, name, sub, Voir le prix , star, link }) => (
+const ProdCard = ({ img, name, sub, price, star, link }) => (
   <a href={link || "https://felinejoycamy.myshopify.com"} target="_blank" rel="noopener noreferrer"
     className={`block rounded-xl overflow-hidden bg-white transition-all hover:shadow-md hover:-translate-y-0.5 ${star ? "border-2 border-emerald-600" : "border border-gray-100"}`}>
     {star && (
