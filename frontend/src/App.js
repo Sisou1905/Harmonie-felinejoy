@@ -1,6 +1,5 @@
 import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate, Link } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toaster } from "./components/ui/sonner";
 import "./App.css";
@@ -200,13 +199,11 @@ function App() {
   }, []);
 
   return (
-    <HelmetProvider>
       <BrowserRouter>
         <AuthProvider>
           <AppRouter />
         </AuthProvider>
       </BrowserRouter>
-    </HelmetProvider>
   );
 }
 
