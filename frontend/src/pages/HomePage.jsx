@@ -1,24 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ShoppingBag, ExternalLink, Tag } from "lucide-react";
 import { API } from "../App";
-
-const SEO = () => (
-  <Helmet>
-    <title>Harmonie Féline & Humaine | Blog Bien-être humain, animal & connexion</title>
-    <meta name="description" content="Blog bien-être : prendre soin de soi avec les Oméga-3 Zinzino prouvés scientifiquement, comprendre son chat, et célébrer le lien humain-animal. Articles, recettes naturelles et produits sélectionnés." />
-    <meta name="keywords" content="bien-être humain, bien-être animal, oméga-3, zinzino, chat, lien humain-animal, compléments alimentaires, blog bien-être, felinejoy" />
-    <meta property="og:title" content="Harmonie Féline & Humaine | Blog Bien-être" />
-    <meta property="og:description" content="Prendre soin de soi, comprendre son animal, chérir ce lien unique — articles, études prouvées et produits sélectionnés." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://harmonie.felinejoy.com" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1200&q=85" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="canonical" href="https://harmonie.felinejoy.com" />
-  </Helmet>
-);
 
 const fadeUp = {
   hidden: { opacity: 0, y: 22 },
@@ -154,7 +138,7 @@ const HomePage = () => {
 
   return (
     <>
-      <SEO />
+      
       <div className="min-h-screen bg-stone-50">
 
         {/* HERO */}
