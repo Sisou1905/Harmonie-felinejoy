@@ -1,14 +1,107 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Heart, Cat, Users } from "lucide-react";
-import { Button } from "../components/ui/button";
-import ArticleCard from "../components/ArticleCard";
-import AffiliateBanner from "../components/AffiliateBanner";
-import AmazonProducts from "../components/AmazonProducts";
-import Newsletter from "../components/Newsletter";
-import { AdBanner } from "../components/AdSense";
+import { ArrowRight, Sparkles, ShoppingBag, ExternalLink } from "lucide-react";
 import { API } from "../App";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
+
+const TAG_STYLES = {
+  "Bien-être humain": "bg-emerald-50 text-emerald-800 border-emerald-200",
+  "Bien-être animal":  "bg-orange-50 text-orange-800 border-orange-200",
+  "Science":           "bg-emerald-50 text-emerald-800 border-emerald-200",
+  "Lien":              "bg-violet-50 text-violet-800 border-violet-200",
+  "Recette":           "bg-amber-50 text-amber-800 border-amber-200",
+  "connection":        "bg-violet-50 text-violet-800 border-violet-200",
+  "nutrition":         "bg-emerald-50 text-emerald-800 border-emerald-200",
+};
+
+const TagBadge = ({ label }) => {
+  const style = TAG_STYLES[label] || "bg-gray-100 text-gray-700 border-gray-200";
+  return (
+    <span className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-0.5 rounded-full border ${style}`}>
+      <Sparkles className="w-2.5 h-2.5" />{label}
+    </span>
+  );
+};
+
+const ArticleCard = ({ article }) => (
+  <motion.div variants={fadeUp} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-emerald-200 hover:shadow-md transition-all duration-300">
+    {article.image_url && (
+      <div className="relative overflow-hidden h-44">
+        <img src={article.image_url} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+      </div>
+    )}
+    <div className="p-4">
+      <div className="flex items-center gap-2 mb-2">
+        <TagBadge label={article.category || "bien-être"} />
+        <span className="text-xs text-gray-400">{article.reading_time || "5"} min</span>
+      </div>
+      <h3 className="font-medium text-gray-900 leading-snug mb-2 line-clamp-2 group-hover:text-emerald-700 transition-colors">{article.title}</h3>
+      <p className="text-sm text-gray-500 line-clamp-2 mb-3">{article.excerpt}</p>
+      <div className="flex items-center justify-between">
+        <Link to={`/article/${article.slug}`} className="inline-flex items-center gap-1 text-sm font-medium text-emerald-700 hover:text-emerald-900 transition-colors">
+          Lire l'article <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
+        {article.amazon_url && (
+          <a href={article.amazon_url} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-xs font-medium text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full hover:bg-amber-100 transition-colors">
+            <ShoppingBag className="w-3 h-3" />Recommandation Amazon
+          </a>
+        )}
+      </div>
+    </div>
+  </motion.div>
+);
+
+const BenCard = ({ icon, title, sub }) => (
+  <div className="bg-white border border-emerald-100 rounded-xl p-3 text-center">
+    <div className="text-xl mb-1">{icon}</div>
+    <div className="text-xs font-medium text-emerald-800">{title}</div>
+    <div className="text-xs text-emerald-600 mt-0.5">{sub}</div>
+  </div>
+);
+
+const ProdCard = ({ img, name, sub, price, star }) => (
+  <div className={`rounded-xl overflow-hidden bg-white transition-all hover:shadow-md ${star ? "border-2 border-emerald-600" : "border border-gray-100"}`}>
+    {star && <div className="bg-emerald-700 text-white text-center text-xs font-semibold py-1 tracking-wide">⭐ BEST-SELLER</div>}
+    <img src={img} alt={name} className="w-full h-28 object-cover" onError={(e)=>e.target.style.background="#f0f0ec"} />
+    <div className="p-2.5">
+      <div className="text-xs font-medium text-emerald-800 leading-snug">{name}</div>
+      <div className="text-xs text-gray-400 mt-0.5">{sub}</div>
+      <div className="text-sm font-medium text-amber-700 mt-1.5">{price}</div>
+    </div>
+  </div>
+);
+
+const MasqueIllo = () => (
+  <div className="w-full h-36 bg-gradient-to-br from-amber-50 to-stone-100 relative flex items-center justify-center overflow-hidden rounded-t-2xl">
+    <span className="absolute top-2 left-3 text-lg opacity-20">🌿</span>
+    <span className="absolute bottom-3 right-4 text-lg opacity-20">🌿</span>
+    <div className="absolute left-12 top-4" style={{transform:"rotate(-25deg)"}}>
+      <div className="w-4 h-5 bg-gradient-to-b from-blue-600 to-indigo-800 rounded-t-full rounded-b-lg" style={{boxShadow:"0 0 10px rgba(67,97,238,0.7)"}} />
+      <div className="w-1.5 h-14 bg-gradient-to-b from-amber-200 to-amber-600 rounded-full mx-auto" />
+    </div>
+    <div className="flex flex-col items-center ml-8">
+      <div className="w-20 h-2.5 bg-gradient-to-b from-stone-300 to-stone-400 rounded-t-lg" />
+      <div className="w-20 h-10 bg-gradient-to-b from-stone-50 to-stone-200 rounded-b-full border border-stone-300 relative overflow-hidden flex items-center justify-center">
+        <div className="w-12 h-5 bg-gradient-to-b from-white to-stone-100 rounded-b-full absolute top-2" />
+        <div className="w-7 h-3 rounded-full absolute top-2 bg-gradient-to-r from-blue-600 to-indigo-700 opacity-90" style={{boxShadow:"0 0 8px rgba(79,70,229,0.6)"}} />
+      </div>
+    </div>
+    {[{l:"52%",t:"30%",s:5},{l:"60%",t:"22%",s:3},{l:"65%",t:"40%",s:4},{l:"45%",t:"55%",s:3}].map((d,i)=>(
+      <div key={i} className="absolute rounded-full bg-indigo-600" style={{left:d.l,top:d.t,width:d.s,height:d.s,opacity:0.75,boxShadow:"0 0 6px rgba(79,70,229,0.5)"}} />
+    ))}
+    <div className="absolute bottom-2 left-3 bg-white/80 rounded-full px-2.5 py-0.5 text-xs font-medium text-amber-900">
+      Poudre de Nila · Fromage blanc 3%
+    </div>
+  </div>
+);
 
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
@@ -16,364 +109,300 @@ const HomePage = () => {
 
   useEffect(() => {
     document.title = "Harmonie Féline & Humaine | Blog Bien-être";
-    return () => {
-      document.title = "Harmonie Féline & Humaine | Blog Bien-être";
-    };
   }, []);
 
   useEffect(() => {
-    const fetchArticles = async () => {
+    const fetch_ = async () => {
       try {
-        const response = await fetch(`${API}/articles?limit=6`);
-        if (response.ok) {
-          const data = await response.json();
-          setArticles(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch articles:", error);
-      } finally {
-        setLoading(false);
-      }
+        const r = await fetch(`${API}/articles?limit=6`);
+        if (r.ok) setArticles(await r.json());
+      } catch (e) { console.error(e); }
+      finally { setLoading(false); }
     };
-    fetchArticles();
+    fetch_();
   }, []);
 
-  const sections = [
-    {
-      title: "Bien-être Humain",
-      description: "Méditation, nutrition, sommeil et gestion du stress",
-      icon: Heart,
-      path: "/bien-etre-humain",
-      color: "from-primary to-primary-dark",
-      emoji: "🧘",
-      bgPattern: "bg-gradient-to-br from-primary-light/40 to-primary-light/10",
-    },
-    {
-      title: "Bien-être Animal",
-      description: "Santé, comportement et bonheur de vos félins",
-      icon: Cat,
-      path: "/bien-etre-animal",
-      color: "from-accent to-accent-hover",
-      emoji: "🐱",
-      bgPattern: "bg-gradient-to-br from-accent/20 to-accent/5",
-    },
-    {
-      title: "La Connexion",
-      description: "Le lien unique entre humains et animaux",
-      icon: Users,
-      path: "/connexion",
-      color: "from-secondary to-secondary-dark",
-      emoji: "💕",
-      bgPattern: "bg-gradient-to-br from-secondary-light/40 to-secondary-light/10",
-    },
+  const fallback = [
+    { title: "3 mois d'Oméga-3 pour mieux dormir et réduire le stress", category: "Science", excerpt: "Une étude relayée par Science & Vie révèle qu'une cure de 3 mois d'Oméga-3 transforme votre équilibre mental.", image_url: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80", slug: "#", reading_time: 6, amazon_url: "https://www.amazon.fr/s?k=omega+3+complement&tag=sissoulily-21" },
+    { title: "Comment votre chat ressent votre anxiété — étude comportementale 2024", category: "Bien-être animal", excerpt: "Les chats perçoivent les changements physiologiques de leurs propriétaires avec une acuité surprenante.", image_url: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80", slug: "#", reading_time: 4, amazon_url: null },
+    { title: "Le lien humain-animal réduit le cortisol de 23%", category: "Lien", excerpt: "Des études scientifiques confirment ce que nous ressentons — notre relation avec nos animaux nous transforme.", image_url: "https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=600&q=80", slug: "#", reading_time: 5, amazon_url: null },
   ];
 
-  // Floating decorative elements
-  const floatingEmojis = ["🌿", "✨", "🐾", "🌸", "💫", "🍃"];
+  const displayArticles = articles.length > 0 ? articles : fallback;
+  const amazonArticles = displayArticles.filter(a => a.amazon_url);
 
   return (
-    <>
-      {/* Hero Section with enhanced visuals */}
-      <section className="relative overflow-hidden" data-testid="hero-section">
-        {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary-light/60 via-background to-secondary-light/40" />
-        
-        {/* Floating decorations */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {floatingEmojis.map((emoji, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-3xl opacity-20"
-              initial={{ 
-                x: `${Math.random() * 100}%`, 
-                y: `${Math.random() * 100}%`,
-              }}
-              animate={{ 
-                y: [`${Math.random() * 100}%`, `${Math.random() * 100}%`],
-                rotate: [0, 360]
-              }}
-              transition={{ 
-                duration: 15 + Math.random() * 10, 
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-            >
-              {emoji}
-            </motion.div>
-          ))}
-        </div>
+    <div className="min-h-screen bg-stone-50">
 
-        {/* Blob shapes */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-light/30 rounded-full blur-3xl animate-blob" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary-light/30 rounded-full blur-3xl animate-blob" style={{ animationDelay: "2s" }} />
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-blob" style={{ animationDelay: "4s" }} />
-
-        <div className="container-custom py-24 md:py-36 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              {/* Playful badge */}
-              <motion.div 
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-sm border-2 border-primary-light shadow-soft mb-8"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400 }}
-              >
-                <motion.span
-                  animate={{ rotate: [0, 15, -15, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  ✨
-                </motion.span>
-                <span className="text-sm font-semibold text-primary-dark">Bien-être holistique</span>
-              </motion.div>
-              
-              <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-semibold text-text-main leading-[1.1] mb-8">
-                Harmonie entre{" "}
-                <span className="text-gradient">corps</span>,{" "}
-                <br className="hidden sm:block" />
-                <span className="text-gradient">esprit</span> et{" "}
-                <span className="text-gradient">compagnons</span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-text-muted leading-relaxed mb-10 max-w-lg">
-                Explorez notre univers dédié au bien-être humain et félin. 
-                Des articles scientifiques pour une vie plus équilibrée et harmonieuse. 🌿
-              </p>
-              
-              <div className="flex flex-wrap gap-4">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link to="/bien-etre-humain">
-                    <Button className="btn-primary btn-playful text-base h-14 px-8 shadow-float" data-testid="cta-human-wellness">
-                      <span className="mr-2">🧘</span>
-                      Découvrir
-                      <ArrowRight className="h-5 w-5 ml-2" />
-                    </Button>
-                  </Link>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link to="/bien-etre-animal">
-                    <Button className="btn-secondary btn-playful text-base h-14 px-8" data-testid="cta-animal-wellness">
-                      <span className="mr-2">🐱</span>
-                      Nos amis félins
-                    </Button>
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative hidden lg:block"
-            >
-              <div className="relative">
-                {/* Decorative frame with gradient border */}
-                <div className="hero-image-frame">
-                  <motion.img
-                    src="https://images.unsplash.com/photo-1695727526803-a70a8eb59aa5?crop=entropy&cs=srgb&fm=jpg&w=940"
-                    alt="Femme embrassant tendrement son chat"
-                    className="rounded-[1.75rem] object-cover w-full max-w-md mx-auto aspect-[4/5]"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.4 }}
-                  />
-                </div>
-                
-                {/* Floating badges around image */}
-                <motion.div 
-                  className="absolute -top-4 -right-4 bg-white rounded-2xl p-3 shadow-float"
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <span className="text-2xl">🐾</span>
-                </motion.div>
-                <motion.div 
-                  className="absolute -bottom-4 -left-4 bg-white rounded-2xl px-4 py-2 shadow-float flex items-center gap-2"
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 3.5, repeat: Infinity }}
-                >
-                  <span className="text-xl">💕</span>
-                  <span className="text-sm font-semibold text-primary-dark">Amour & Sérénité</span>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Wavy separator */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path d="M0 50C360 100 720 0 1080 50C1260 75 1380 75 1440 50V100H0V50Z" fill="white" fillOpacity="0.8"/>
-          </svg>
-        </div>
-      </section>
-
-      {/* Sections Overview with playful cards */}
-      <section className="section-spacing bg-white relative" data-testid="sections-overview">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <motion.span 
-              className="inline-block text-4xl mb-4"
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            >
-              🌟
-            </motion.span>
-            <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main mb-4">
-              Explorez nos univers
-            </h2>
-            <p className="text-text-muted text-lg max-w-2xl mx-auto">
-              Trois piliers interconnectés pour une approche holistique du bien-être
-            </p>
+      {/* HERO */}
+      <section>
+        <div className="relative h-72 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=1200&q=85" alt="personne avec son chat"
+            className="w-full h-full object-cover"
+            onError={e => e.target.src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=1200&q=80"} />
+          <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/80 via-black/20 to-transparent" />
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            className="absolute bottom-0 left-0 right-0 p-6">
+            <span className="inline-block bg-white/15 backdrop-blur-sm border border-white/30 text-white text-xs font-semibold tracking-widest uppercase px-3 py-1.5 rounded-full mb-3">
+              Blog Bien-être · Harmonie Féline & Humaine
+            </span>
+            <h1 className="text-2xl font-medium text-white leading-tight" style={{textShadow:"0 2px 12px rgba(0,0,0,0.3)"}}>
+              Prendre soin de soi,<br />comprendre son animal,<br />chérir ce lien unique
+            </h1>
           </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {sections.map((section, index) => (
-              <motion.div
-                key={section.path}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.15 }}
-              >
-                <Link to={section.path} className="block group">
-                  <motion.div 
-                    className={`card-organic ${section.bgPattern} p-8 h-full`}
-                    whileHover={{ y: -8 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    {/* Playful icon with emoji */}
-                    <div className="relative mb-6">
-                      <motion.div 
-                        className={`w-20 h-20 bg-gradient-to-br ${section.color} rounded-[1.5rem] flex items-center justify-center shadow-float`}
-                        whileHover={{ rotate: 5, scale: 1.1 }}
-                        transition={{ type: "spring", stiffness: 400 }}
-                      >
-                        <span className="text-3xl">{section.emoji}</span>
-                      </motion.div>
-                      <motion.div 
-                        className="absolute -top-2 -right-2 text-lg"
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      >
-                        ✨
-                      </motion.div>
-                    </div>
-                    
-                    <h3 className="font-heading text-xl font-semibold text-text-main mb-3 group-hover:text-primary transition-colors">
-                      {section.title}
-                    </h3>
-                    <p className="text-text-muted mb-6">
-                      {section.description}
-                    </p>
-                    <span className="inline-flex items-center text-primary font-semibold text-sm gap-1 group-hover:gap-3 transition-all">
-                      Explorer
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </motion.div>
-                </Link>
-              </motion.div>
+        </div>
+        <div className="bg-white px-5 pt-5 pb-6">
+          <p className="text-sm text-gray-500 leading-relaxed mb-4">
+            Un espace dédié au bien-être humain, à la santé animale, et à cette connexion profonde qui nous unit à nos compagnons félins — articles, études prouvées et produits soigneusement sélectionnés.
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { icon:"🧘", label:"Bien-être humain",  sub:"Corps, esprit, compléments", bg:"bg-emerald-50 border-emerald-200", h:"text-emerald-800", s:"text-emerald-600" },
+              { icon:"🐱", label:"Bien-être animal",   sub:"Santé, bonheur, comportement", bg:"bg-orange-50 border-orange-200", h:"text-orange-800", s:"text-orange-600" },
+              { icon:"🤝", label:"Lien humain-animal", sub:"Ce qu'il nous apporte", bg:"bg-violet-50 border-violet-200", h:"text-violet-800", s:"text-violet-600" },
+            ].map(p => (
+              <div key={p.label} className={`${p.bg} border rounded-xl p-2.5 text-center`}>
+                <div className="text-xl mb-1">{p.icon}</div>
+                <div className={`text-xs font-semibold ${p.h} leading-tight`}>{p.label}</div>
+                <div className={`text-xs ${p.s} mt-1 leading-snug`}>{p.sub}</div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Articles with enhanced styling */}
-      <section className="section-spacing bg-gradient-to-b from-white to-primary-light/20" data-testid="featured-articles">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-12"
-          >
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl">📚</span>
-                <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main">
-                  Articles récents
-                </h2>
+      {/* ① ARTICLES */}
+      <section className="px-5 py-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <p className="text-xs font-semibold tracking-widest uppercase text-emerald-400 mb-0.5">① Articles & Éveil</p>
+            <h2 className="text-lg font-medium text-emerald-800">Recherches, conseils & rituels</h2>
+          </div>
+          <Link to="/blog" className="text-xs text-emerald-600 font-medium flex items-center gap-1 hover:text-emerald-800">
+            Tout voir <ArrowRight className="w-3 h-3" />
+          </Link>
+        </div>
+        {loading ? (
+          <div className="space-y-3">{[1,2,3].map(i=><div key={i} className="bg-white rounded-2xl h-64 animate-pulse border border-gray-100"/>)}</div>
+        ) : (
+          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="space-y-4">
+            {displayArticles.map((a, i) => <ArticleCard key={a._id || i} article={a} />)}
+          </motion.div>
+        )}
+
+        {/* Recette Masque Nila */}
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+          className="mt-4 bg-white rounded-2xl overflow-hidden border border-amber-100">
+          <MasqueIllo />
+          <div className="p-4">
+            <span className="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 border border-rose-200 text-xs font-semibold px-2.5 py-1 rounded-full mb-3">
+              ✨ Rituel beauté hebdomadaire
+            </span>
+            <h3 className="font-medium text-amber-900 mb-3">Masque Nila & Fromage Blanc — peau nette, teint unifié</h3>
+            <p className="text-xs font-semibold text-amber-900 mb-2">Ingrédients :</p>
+            <div className="grid grid-cols-3 gap-2 mb-4">
+              {[{ico:"🔵",qty:"2 c. à café",n:"poudre de Nila"},{ico:"🥛",qty:"2 c. à soupe",n:"fromage blanc 3%"},{ico:"⏱️",qty:"20 minutes",n:"de pose zen"}].map(g=>(
+                <div key={g.n} className="bg-amber-50 border border-amber-100 rounded-xl p-2.5 text-center">
+                  <div className="text-xl mb-1">{g.ico}</div>
+                  <div className="text-xs font-medium text-amber-900">{g.qty}</div>
+                  <div className="text-xs text-amber-700 mt-0.5">{g.n}</div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs font-semibold text-amber-900 mb-2">Préparation :</p>
+            <div className="space-y-2 mb-4">
+              {[
+                "Mélangez 2 c. à café de Nila avec 2 c. à soupe de fromage blanc 3% jusqu'à obtenir une pâte homogène légèrement bleue.",
+                "Appliquez sur le visage de préférence après la douche — les pores sont dilatés et la peau absorbe mieux.",
+                "Laissez poser 20 minutes, rincez à l'eau tiède. À utiliser 1 fois par semaine comme rituel bien-être.",
+              ].map((step,i)=>(
+                <div key={i} className="flex gap-2.5 items-start">
+                  <div className="w-5 h-5 rounded-full bg-amber-800 text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">{i+1}</div>
+                  <p className="text-xs text-gray-600 leading-relaxed">{step}</p>
+                </div>
+              ))}
+            </div>
+            <div className="bg-amber-50 border border-amber-100 rounded-xl p-3 mb-3">
+              <p className="text-xs font-semibold text-amber-900 mb-2">Bienfaits :</p>
+              <div className="flex flex-wrap gap-1.5">
+                {["✓ Unifie le teint","✓ Réduit les points noirs","✓ Anti-boutons","✓ Atténue les cicatrices"].map(b=>(
+                  <span key={b} className="bg-white border border-amber-200 text-amber-900 text-xs px-2.5 py-1 rounded-full">{b}</span>
+                ))}
               </div>
-              <p className="text-text-muted">
-                Découvrez nos dernières publications scientifiques et inspirantes
-              </p>
             </div>
-            <Link to="/search">
-              <Button className="btn-secondary btn-playful">
-                Voir tout
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </Link>
-          </motion.div>
-
-          {loading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-white rounded-3xl h-96 animate-pulse shadow-soft" />
-              ))}
+            <div className="bg-emerald-50 border border-emerald-100 rounded-xl p-3 text-xs text-emerald-700 leading-relaxed">
+              🌿 <strong>Conseil zen :</strong> profitez de ces 20 minutes pour méditer ou vous poser avec votre chat.
             </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {articles.slice(0, 6).map((article, index) => (
-                <ArticleCard key={article.article_id || index} article={article} index={index} />
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="section-spacing bg-white">
-        <div className="container-custom">
-          <div className="max-w-2xl mx-auto">
-            <Newsletter />
           </div>
-        </div>
+        </motion.div>
+
+        <Link to="/blog" className="mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-emerald-200 text-emerald-700 text-sm font-medium hover:bg-emerald-50 transition-colors">
+          Voir tous les articles <ArrowRight className="w-4 h-4" />
+        </Link>
       </section>
 
-      {/* Ad Banner */}
-      <section className="py-6 bg-white">
-        <div className="container-custom">
-          <AdBanner />
-        </div>
-      </section>
-
-      {/* Affiliate Partners Section */}
-      <section className="section-spacing bg-gradient-to-b from-primary-light/10 to-secondary-light/20" data-testid="shop-section">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <span className="text-3xl mb-4 block">🛍️</span>
-            <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main mb-4">
-              Nos boutiques partenaires
-            </h2>
-            <p className="text-text-muted text-lg max-w-2xl mx-auto">
-              Des produits sélectionnés avec amour pour votre bien-être et celui de vos compagnons
-            </p>
-          </motion.div>
-
-          {/* Affiliate Banners */}
-          <div className="max-w-4xl mx-auto mb-12">
-            <AffiliateBanner type="both" />
+      {/* ② ZINZINO */}
+      <section className="px-5 py-6 bg-white">
+        <p className="text-xs font-semibold tracking-widest uppercase text-emerald-400 mb-0.5">② Compléments prouvés scientifiquement</p>
+        <h2 className="text-lg font-medium text-emerald-800 mb-1">Oméga-3 Zinzino — testés, mesurés, prouvés</h2>
+        <p className="text-sm text-gray-500 leading-relaxed mb-5">Des laboratoires scandinaves indépendants analysent votre sang avant et après. Pas de promesses — des preuves.</p>
+        <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+          className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl p-4">
+          <div className="flex gap-3 items-center mb-4">
+            <img src="https://zinzinowebstorage.blob.core.windows.net/productimages/large/300000.png" alt="BalanceOil+"
+              className="w-16 h-20 object-contain bg-white rounded-xl p-1 border border-emerald-100 flex-shrink-0"
+              onError={e=>e.target.style.display="none"} />
+            <div>
+              <h3 className="font-medium text-emerald-800">Zinzino BalanceOil+</h3>
+              <p className="text-xs text-emerald-600 mt-0.5 mb-2">Huile Oméga-3 · Polyphénols · Vitamine D3</p>
+              <div className="flex gap-1.5 flex-wrap">
+                <span className="bg-emerald-800 text-white text-xs px-2 py-0.5 rounded">✓ 1,7M tests</span>
+                <span className="bg-emerald-800 text-white text-xs px-2 py-0.5 rounded">✓ Friend of the Sea</span>
+              </div>
+            </div>
           </div>
+          <p className="text-xs font-semibold text-emerald-800 mb-2">Bénéfices prouvés cliniquement :</p>
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            <BenCard icon="🔥" title="Réduit l'inflammation" sub="silencieuse & chronique" />
+            <BenCard icon="🛡️" title="Prévient les maladies" sub="cardio & chroniques" />
+            <BenCard icon="⚡" title="Regagne en énergie" sub="mentale & physique" />
+            <BenCard icon="😴" title="Améliore le sommeil" sub="réduit le stress" />
+          </div>
+          <div className="bg-white border border-emerald-100 rounded-xl p-3 mb-4">
+            <p className="text-xs font-semibold text-emerald-800 text-center mb-3">Ratio Oméga-6/3 — avant → après 120 jours</p>
+            <div className="flex items-center gap-2">
+              <div className="flex-1 text-center bg-red-50 border border-red-100 rounded-lg py-2">
+                <div className="text-lg font-medium text-red-500">25:1</div>
+                <div className="text-xs text-gray-400">Moyenne française</div>
+              </div>
+              <div className="text-emerald-400 text-xl">→</div>
+              <div className="flex-1 text-center bg-emerald-50 border border-emerald-100 rounded-lg py-2">
+                <div className="text-lg font-medium text-emerald-600">3:1</div>
+                <div className="text-xs text-gray-400">Après Zinzino</div>
+              </div>
+              <div className="text-emerald-400 text-xl">→</div>
+              <div className="flex-1 text-center bg-emerald-50 border border-emerald-100 rounded-lg py-2">
+                <div className="text-lg font-medium text-emerald-700">120j</div>
+                <div className="text-xs text-gray-400">Prouvé</div>
+              </div>
+            </div>
+          </div>
+          <a href="https://www.zinzino.com/2020929659" target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full bg-emerald-800 hover:bg-emerald-900 text-white py-3 rounded-xl text-sm font-medium transition-colors">
+            <ShoppingBag className="w-4 h-4" />Commander sur Zinzino — prix partenaire<ExternalLink className="w-3.5 h-3.5" />
+          </a>
+          <div className="mt-3 flex items-center gap-2.5 bg-white border border-emerald-100 rounded-xl p-3">
+            <span className="text-base">🐾</span>
+            <div className="flex-1">
+              <div className="text-xs font-medium text-emerald-800">Compléments alimentaires animaux</div>
+              <div className="text-xs text-emerald-600">aussi disponibles chez Zinzino</div>
+            </div>
+            <a href="https://www.zinzino.com/2020929659" target="_blank" rel="noopener noreferrer"
+              className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs px-3 py-1.5 rounded-full font-medium hover:bg-emerald-100 transition-colors">
+              Voir →
+            </a>
+          </div>
+        </motion.div>
+      </section>
 
-          {/* Amazon Products */}
-          <AmazonProducts category="all" />
+      {/* ③ BOUTIQUE FELINEJOY */}
+      <section className="px-5 py-6">
+        <p className="text-xs font-semibold tracking-widest uppercase text-amber-500 mb-0.5">③ Boutique Felinejoy</p>
+        <h2 className="text-lg font-medium text-emerald-800 mb-1">Pour les amoureux des chats</h2>
+        <p className="text-sm text-gray-500 leading-relaxed mb-4">Accessoires, jouets et t-shirts originaux pour chérir votre félin et afficher votre passion.</p>
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid grid-cols-2 gap-3">
+          <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/13315842307128167536_2048.jpg?v=1774202108&width=400" name="Stay Weird Stay Wild" sub="T-shirt rétro unisexe" price="~14€" star />
+          <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/3106667881955.jpg?v=1770412974&width=400" name="Cozy Cave Cat Bed" sub="Niche douillette pompom" price="~19€" />
+          <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/data_dd19f71b-8e59-4d10-b92b-6f0e5686c97a.jpg?v=1770414077&width=400" name="Crazy Cat Lady" sub="100% coton premium" price="~17€" />
+          <ProdCard img="https://felinejoycamy.myshopify.com/cdn/shop/files/data_b7f70288-c0a0-4b26-8fc5-a0d8315e5fcb.png?v=1770408141&width=400" name="Jouet plume rotatif" sub="USB rechargeable auto" price="~13€" />
+        </motion.div>
+        <a href="https://felinejoycamy.myshopify.com" target="_blank" rel="noopener noreferrer"
+          className="mt-4 flex items-center justify-center gap-2 w-full bg-amber-600 hover:bg-amber-700 text-white py-3 rounded-xl text-sm font-medium transition-colors">
+          🐱 Voir toute la boutique Felinejoy <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+      </section>
+
+      {/* ④ LIEN HUMAIN-ANIMAL */}
+      <section className="px-5 py-6 bg-white">
+        <p className="text-xs font-semibold tracking-widest uppercase text-violet-400 mb-0.5">④ Lien humain-animal</p>
+        <h2 className="text-lg font-medium text-emerald-800 mb-2">Ce que votre chat vous apporte vraiment</h2>
+        <p className="text-sm text-gray-500 leading-relaxed mb-4">La science confirme ce que nous ressentons : notre lien avec nos animaux nous transforme profondément — corps, esprit et cœur.</p>
+        <div className="relative rounded-2xl overflow-hidden h-40 mb-4">
+          <img src="https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=800&q=80" alt="lien humain chat"
+            className="w-full h-full object-cover"
+            onError={e=>e.target.src="https://images.unsplash.com/photo-1611695434398-4f4b330623e4?w=800&q=80"} />
+          <div className="absolute inset-0 bg-gradient-to-t from-violet-900/60 to-transparent" />
+          <p className="absolute bottom-3 left-3 right-3 text-white text-xs italic leading-relaxed" style={{textShadow:"0 1px 6px rgba(0,0,0,0.4)"}}>
+            "Un animal réduit le cortisol, ralentit le cœur, ancre dans le présent."
+          </p>
+        </div>
+        <div className="grid grid-cols-3 gap-2 mb-5">
+          {[{v:"−23%",l:"cortisol (stress)"},{v:"+oxytocine",l:"hormone du lien"},{v:"−15%",l:"risque cardiaque"}].map(s=>(
+            <div key={s.v} className="bg-violet-50 border border-violet-100 rounded-xl p-2.5 text-center">
+              <div className="text-sm font-medium text-violet-700">{s.v}</div>
+              <div className="text-xs text-violet-500 mt-0.5 leading-snug">{s.l}</div>
+            </div>
+          ))}
+        </div>
+        <div className="bg-white border border-violet-100 rounded-2xl p-4">
+          <div className="flex items-start justify-between mb-3">
+            <div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-violet-300 mb-1">Sagesse du jour</p>
+              <h3 className="font-medium text-violet-900">1er accord Toltèque</h3>
+            </div>
+            <span className="text-4xl font-light text-violet-100 leading-none">01</span>
+          </div>
+          <p className="text-sm italic text-violet-600 mb-2 leading-relaxed">"Que votre parole soit impeccable"</p>
+          <p className="text-xs text-gray-500 leading-relaxed mb-2">Parlez à votre chat avec douceur aujourd'hui. Observez comment il réagit à votre ton — pas vos mots.</p>
+          <p className="text-xs text-violet-300 mb-4">Inspiré de Florence Millot · La petite boîte toltèque</p>
+          <Link to="/blog" className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-violet-200 text-violet-600 text-sm font-medium hover:bg-violet-50 transition-colors">
+            Lire le principe de demain <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
         </div>
       </section>
-    </>
+
+      {/* RECOMMANDATIONS PRODUITS AMAZON */}
+      {amazonArticles.length > 0 && (
+        <section className="px-5 py-6">
+          <p className="text-xs font-semibold tracking-widest uppercase text-amber-500 mb-0.5">Recommandations produits Amazon</p>
+          <h2 className="text-lg font-medium text-emerald-800 mb-1">Nos coups de cœur</h2>
+          <p className="text-sm text-gray-500 leading-relaxed mb-4">Des produits sélectionnés en lien avec nos articles — bien-être humain et animal.</p>
+          <div className="space-y-3">
+            {amazonArticles.slice(0, 4).map((a, i) => (
+              <a key={i} href={a.amazon_url} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-white border border-amber-100 rounded-xl p-3 hover:border-amber-300 hover:shadow-sm transition-all group">
+                {a.image_url && <img src={a.image_url} alt={a.title} className="w-12 h-12 rounded-lg object-cover flex-shrink-0" />}
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-medium text-gray-800 line-clamp-2 leading-snug">{a.title}</p>
+                  <p className="text-xs text-amber-600 mt-1 font-medium">Voir la recommandation →</p>
+                </div>
+                <ShoppingBag className="w-4 h-4 text-amber-500 flex-shrink-0 group-hover:text-amber-700 transition-colors" />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* FOOTER */}
+      <footer className="bg-emerald-900 text-white px-5 py-8 mt-2">
+        <div className="text-center mb-5">
+          <div className="text-lg font-medium mb-1">🌿 Harmonie Féline & Humaine</div>
+          <div className="text-sm text-emerald-300">Blog bien-être · Corps, animal & connexion</div>
+        </div>
+        <div className="flex flex-col gap-2.5">
+          <a href="https://www.zinzino.com/2020929659" target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white py-3 rounded-xl text-sm font-medium transition-colors">
+            <ExternalLink className="w-3.5 h-3.5" />Boutique Zinzino
+          </a>
+          <a href="https://felinejoycamy.myshopify.com" target="_blank" rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-500 text-white py-3 rounded-xl text-sm font-medium transition-colors">
+            <ShoppingBag className="w-3.5 h-3.5" />Boutique Felinejoy
+          </a>
+        </div>
+        <p className="text-center text-xs text-emerald-400 mt-5">© 2025 Harmonie Féline & Humaine</p>
+      </footer>
+
+    </div>
   );
 };
 
