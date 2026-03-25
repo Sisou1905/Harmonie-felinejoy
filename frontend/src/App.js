@@ -17,6 +17,7 @@ import AdminPage from "./pages/AdminPage";
 import SearchPage from "./pages/SearchPage";
 import LandingPage from "./pages/LandingPage";
 import BlogPage from "./pages/BlogPage";
+import BlogPage from "./pages/BlogPage";
 
 // Components
 import Header from "./components/Header";
@@ -151,6 +152,7 @@ const AppRouter = () => {
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
+    <Route path="/blog" element={<PageWrapper><BlogPage /></PageWrapper>} />
             <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
     <Route path="/blog" element={<PageWrapper><BlogPage /></PageWrapper>} />
             <Route path="/bien-etre-humain" element={<PageWrapper><HumanWellnessPage /></PageWrapper>} />
