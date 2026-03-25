@@ -152,7 +152,7 @@ const AppRouter = () => {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
             <Route path="/bien-etre-humain" element={<PageWrapper><HumanWellnessPage /></PageWrapper>} />
-    <Route path="/blog" element={<PageWrapper><HumanWellnessPage /></PageWrapper>} />
+    <Route path="/blog" element={<PageWrapper><HomePage /></PageWrapper>} />
             <Route path="/bien-etre-animal" element={<PageWrapper><AnimalWellnessPage /></PageWrapper>} />
             <Route path="/connexion" element={<PageWrapper><ConnectionPage /></PageWrapper>} />
             <Route path="/article/:slug" element={<PageWrapper><ArticlePage /></PageWrapper>} />
