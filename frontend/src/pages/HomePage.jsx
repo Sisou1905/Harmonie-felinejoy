@@ -529,24 +529,20 @@ const HomePage = () => {
                   </div>
                 ))}
               </div>
-              <div className="bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-100 rounded-2xl p-4 shadow-sm">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <p className="text-xs font-bold tracking-widest uppercase text-violet-300 mb-1">Accord du moment</p>
-                    <h3 className="font-semibold text-violet-900">1er accord Toltèque</h3>
-                  </div>
-                  <span className="text-4xl font-light text-violet-100 leading-none">01</span>
-                </div>
-                <p className="text-sm italic text-violet-600 mb-2 font-medium">"Que votre parole soit impeccable"</p>
-                <p className="text-xs text-gray-500 leading-relaxed mb-2">Parlez à votre chat avec douceur. Observez comment il réagit à votre ton — pas vos mots.</p>
-                <p className="text-xs text-violet-300 mb-3">Don Miguel Ruiz · Les 4 Accords Toltèques</p>
-                <Link to="/blog" className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border-2 border-violet-200 text-violet-600 text-sm font-semibold hover:bg-violet-50 transition-colors">
-                  Lire tous les principes <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+              <div className="bg-violet-50 border border-violet-100 rounded-2xl p-4">
+  <p className="text-xs font-bold tracking-widest uppercase text-violet-300 mb-3">Le saviez-vous ?</p>
+  <div className="space-y-3">
+    {[
+      { icon:"🧠", txt:"Caresser un chat libère de l'ocytocine — la même hormone que lors d'un câlin humain." },
+      { icon:"❤️", txt:"Les propriétaires de chats ont 30% moins de risques d'AVC selon une étude de l'Université du Minnesota." },
+      { icon:"😴", txt:"Le ronronnement du chat (25-50 Hz) favorise la régénération osseuse et réduit le stress." },
+    ].map((f,i) => (
+      <div key={i} className="flex gap-2.5 items-start">
+        <span className="text-lg flex-shrink-0">{f.icon}</span>
+        <p className="text-xs text-violet-700 leading-relaxed">{f.txt}</p>
+      </div>
+    ))}
+  </div>
       </section>
 
       {/* AMAZON PRODUITS EN BAS */}
