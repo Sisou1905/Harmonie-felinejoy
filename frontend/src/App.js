@@ -17,7 +17,6 @@ import AdminPage from "./pages/AdminPage";
 import SearchPage from "./pages/SearchPage";
 import LandingPage from "./pages/LandingPage";
 import BlogPage from "./pages/BlogPage";
-import BlogPage from "./pages/BlogPage";
 
 // Components
 import Header from "./components/Header";
