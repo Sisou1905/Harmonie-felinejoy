@@ -39,6 +39,7 @@ const TAG_STYLES = {
   "human":            "bg-emerald-50 text-emerald-800 border-emerald-200",
   "animal":           "bg-orange-50 text-orange-800 border-orange-200",
 };
+
 const TagBadge = ({ label }) => {
   const style = TAG_STYLES[label] || "bg-gray-100 text-gray-700 border-gray-200";
   return (
@@ -253,18 +254,28 @@ const AMAZON_PRODUCTS = [
   { name:"Gant massage anti-poils", desc:"Brossage et câlin, double face", img:"https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=300&q=80", url:"https://www.amazon.fr/s?k=gant+massage+chat+anti+poils&tag=sissoulily-21", badge:"💆 Relaxant" },
 ];
 
+const fallback = [
+  { title:"3 mois d'Omega-3 pour mieux dormir et reduire le stress", category:"Science", excerpt:"Une etude relayee par Science & Vie revele qu'une cure de 3 mois d'Omega-3 transforme votre equilibre mental.", image_url:"https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80", slug:"omega-3-stress-sommeil-cure-3-mois", reading_time:6 },
+  { title:"Comment votre chat ressent votre anxiete", category:"Bien-être animal", excerpt:"Les chats percoivent les changements physiologiques de leurs proprietaires avec une acuite surprenante.", image_url:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80", slug:"comment-les-animaux-reduisent-notre-stress", reading_time:4 },
+  { title:"Le lien humain-animal reduit le cortisol de 23%", category:"Lien", excerpt:"Des etudes scientifiques confirment ce que nous ressentons.", image_url:"https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=600&q=80", slug:"bienfaits-therapeutiques-presence-animale", reading_time:5 },
+  { title:"L'importance du sommeil pour la sante", category:"Bien-être humain", excerpt:"Le sommeil est un pilier fondamental de notre sante. Apprenez a optimiser vos nuits.", image_url:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&q=80", slug:"importance-sommeil-sante", reading_time:6 },
+  { title:"Nutrition Optimale pour les Chats Seniors", category:"Bien-être animal", excerpt:"Les besoins nutritionnels de votre chat evoluent avec l'age. Decouvrez comment adapter son alimentation.", image_url:"https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&q=80", slug:"nutrition-chat-senior", reading_time:5 },
+  { title:"Comment les animaux reduisent notre stress", category:"Lien", excerpt:"Decouvrez pourquoi la presence d'un animal de compagnie est l'un des remedes naturels les plus puissants.", image_url:"https://images.unsplash.com/photo-1511044568932-338ceba5ad33?w=600&q=80", slug:"comment-les-animaux-reduisent-notre-stress", reading_time:5 },
+];
+
 const HomePage = () => {
   const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
   useSEO();
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         const r = await fetch(`${API}/articles?limit=20`);
-        if (r.ok) setArticles(await r.json());
+        if (r.ok) {
+          const data = await r.json();
+          if (data.length > 0) setArticles(data);
+        }
       } catch (e) { console.error(e); }
-      finally { setLoading(false); }
     };
     fetchArticles();
   }, []);
@@ -278,13 +289,7 @@ const HomePage = () => {
     return [...omega, ...humain.slice(0,2), ...animal.slice(0,2), ...connexion, ...reste];
   };
 
-  const fallback = [
-    { title:"3 mois d'Omega-3 pour mieux dormir et reduire le stress", category:"Science", excerpt:"Une etude relayee par Science & Vie revele qu'une cure de 3 mois d'Omega-3 transforme votre equilibre mental.", image_url:"https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80", slug:"omega-3-stress-sommeil-cure-3-mois", reading_time:6 },
-    { title:"Comment votre chat ressent votre anxiete", category:"Bien-être animal", excerpt:"Les chats percoivent les changements physiologiques de leurs proprietaires avec une acuite surprenante.", image_url:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80", slug:"#", reading_time:4 },
-    { title:"Le lien humain-animal reduit le cortisol de 23%", category:"Lien", excerpt:"Des etudes scientifiques confirment ce que nous ressentons.", image_url:"https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=600&q=80", slug:"#", reading_time:5 },
-  ];
-
-  const displayArticles = articles.length > 0 ? sortArticles(articles) : fallback;
+  const displayArticles = sortArticles(articles.length > 0 ? articles : fallback);
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -332,7 +337,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* TOLTÈQUES ACCORDÉON */}
+      {/* TOLTÈQUES */}
       <ToltequesSection />
 
       {/* ARTICLES */}
@@ -346,16 +351,13 @@ const HomePage = () => {
             Tout voir <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
-        {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[1,2,3].map(i=><div key={i} className="bg-white rounded-2xl h-72 animate-pulse border border-gray-100"/>)}
-          </div>
-        ) : (
-          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once:true }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {displayArticles.map((a,i)=><ArticleCard key={a._id||i} article={a} />)}
-          </motion.div>
-        )}
+
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once:true }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {displayArticles.map((a,i)=><ArticleCard key={a._id||i} article={a} />)}
+        </motion.div>
+
+        {/* Masque Nila */}
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once:true }}
           className="mt-6 bg-white rounded-2xl overflow-hidden border border-amber-100 md:flex shadow-sm">
           <div className="md:w-64 flex-shrink-0"><MasqueIllo /></div>
@@ -391,6 +393,7 @@ const HomePage = () => {
             </div>
           </div>
         </motion.div>
+
         <Link to="/blog" className="mt-4 flex items-center justify-center gap-2 w-full py-3 rounded-xl border-2 border-emerald-200 text-emerald-700 text-sm font-semibold hover:bg-emerald-50 transition-colors">
           Voir tous les articles <ArrowRight className="w-4 h-4" />
         </Link>
@@ -476,7 +479,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* BOUTIQUE FELINEJOY */}
+      {/* BOUTIQUE */}
       <section className="px-5 md:px-8 py-8 max-w-5xl mx-auto">
         <p className="text-xs font-bold tracking-widest uppercase text-amber-500 mb-0.5">Boutique Felinejoy</p>
         <h2 className="text-lg md:text-2xl font-semibold text-emerald-800 mb-1">Pour les amoureux des chats</h2>
@@ -530,22 +533,26 @@ const HomePage = () => {
                 ))}
               </div>
               <div className="bg-violet-50 border border-violet-100 rounded-2xl p-4">
-  <p className="text-xs font-bold tracking-widest uppercase text-violet-300 mb-3">Le saviez-vous ?</p>
-  <div className="space-y-3">
-    {[
-      { icon:"🧠", txt:"Caresser un chat libère de l'ocytocine — la même hormone que lors d'un câlin humain." },
-      { icon:"❤️", txt:"Les propriétaires de chats ont 30% moins de risques d'AVC selon une étude de l'Université du Minnesota." },
-      { icon:"😴", txt:"Le ronronnement du chat (25-50 Hz) favorise la régénération osseuse et réduit le stress." },
-    ].map((f,i) => (
-      <div key={i} className="flex gap-2.5 items-start">
-        <span className="text-lg flex-shrink-0">{f.icon}</span>
-        <p className="text-xs text-violet-700 leading-relaxed">{f.txt}</p>
-      </div>
-    ))}
-  </div>
+                <p className="text-xs font-bold tracking-widest uppercase text-violet-300 mb-3">Le saviez-vous ?</p>
+                <div className="space-y-3">
+                  {[
+                    { icon:"🧠", txt:"Caresser un chat libère de l'ocytocine — la même hormone que lors d'un câlin humain." },
+                    { icon:"❤️", txt:"Les propriétaires de chats ont 30% moins de risques d'AVC selon une étude de l'Université du Minnesota." },
+                    { icon:"😴", txt:"Le ronronnement du chat (25-50 Hz) favorise la régénération osseuse et réduit le stress." },
+                  ].map((f,i) => (
+                    <div key={i} className="flex gap-2.5 items-start">
+                      <span className="text-lg flex-shrink-0">{f.icon}</span>
+                      <p className="text-xs text-violet-700 leading-relaxed">{f.txt}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* AMAZON PRODUITS EN BAS */}
+      {/* AMAZON EN BAS */}
       <section className="px-5 md:px-8 py-8 bg-stone-50">
         <div className="max-w-5xl mx-auto">
           <p className="text-xs font-bold tracking-widest uppercase text-amber-500 mb-0.5">Nos coups de coeur Amazon</p>
