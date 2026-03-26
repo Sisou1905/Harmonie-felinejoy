@@ -165,8 +165,8 @@ const AppRouter = () => {
             <Route path="/search" element={<PageWrapper><SearchPage /></PageWrapper>} />
             <Route path="/guide/:slug" element={<PageWrapper><LandingPage /></PageWrapper>} />
             <Route path="/a-propos" element={<PageWrapper><AboutPage /></PageWrapper>} />
-            <Route path="/confidentialite" element={<PageWrapper><PrivacyPage /></PageWrapper>} />
-            <Route path="/mentions-legales" element={<PageWrapper><LegalPage /></PageWrapper>} />
+            <Route path="/privacy" element={<PageWrapper><PrivacyPage /></PageWrapper>} />
+            <Route path="/legal" element={<PageWrapper><LegalPage /></PageWrapper>} />
                
             <Route
               path="/admin"
