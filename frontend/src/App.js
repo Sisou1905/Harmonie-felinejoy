@@ -166,9 +166,10 @@ const AppRouter = () => {
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/search" element={<PageWrapper><SearchPage /></PageWrapper>} />
             <Route path="/guide/:slug" element={<PageWrapper><LandingPage /></PageWrapper>} />
-    <Route path="/a-propos" element={<PageWrapper><AboutPage /></PageWrapper>} />
-<Route path="/confidentialite" element={<PageWrapper><PrivacyPage /></PageWrapper>} />
-<Route path="/mentions-legales" element={<PageWrapper><LegalPage /></PageWrapper>} />
+            <Route path="/a-propos" element={<PageWrapper><AboutPage /></PageWrapper>} />
+            <Route path="/confidentialite" element={<PageWrapper><PrivacyPage /></PageWrapper>} />
+            <Route path="/mentions-legales" element={<PageWrapper><LegalPage /></PageWrapper>} />
+               
             <Route
               path="/admin"
               element={
