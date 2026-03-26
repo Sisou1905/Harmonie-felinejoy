@@ -154,11 +154,9 @@ const AppRouter = () => {
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
-    <Route path="/blog" element={<PageWrapper><BlogPage /></PageWrapper>} />
+            <Route path="/blog" element={<PageWrapper><BlogPage /></PageWrapper>} />
             <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
-    <Route path="/blog" element={<PageWrapper><BlogPage /></PageWrapper>} />
             <Route path="/bien-etre-humain" element={<PageWrapper><HumanWellnessPage /></PageWrapper>} />
-    <Route path="/blog" element={<PageWrapper><HomePage /></PageWrapper>} />
             <Route path="/bien-etre-animal" element={<PageWrapper><AnimalWellnessPage /></PageWrapper>} />
             <Route path="/connexion" element={<PageWrapper><ConnectionPage /></PageWrapper>} />
             <Route path="/article/:slug" element={<PageWrapper><ArticlePage /></PageWrapper>} />
