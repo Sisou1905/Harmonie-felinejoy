@@ -17,6 +17,9 @@ import AdminPage from "./pages/AdminPage";
 import SearchPage from "./pages/SearchPage";
 import LandingPage from "./pages/LandingPage";
 import BlogPage from "./pages/BlogPage";
+import AboutPage from "./pages/AboutPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import LegalPage from "./pages/LegalPage";
 
 // Components
 import Header from "./components/Header";
@@ -163,6 +166,9 @@ const AppRouter = () => {
             <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/search" element={<PageWrapper><SearchPage /></PageWrapper>} />
             <Route path="/guide/:slug" element={<PageWrapper><LandingPage /></PageWrapper>} />
+    <Route path="/a-propos" element={<PageWrapper><AboutPage /></PageWrapper>} />
+<Route path="/confidentialite" element={<PageWrapper><PrivacyPage /></PageWrapper>} />
+<Route path="/mentions-legales" element={<PageWrapper><LegalPage /></PageWrapper>} />
             <Route
               path="/admin"
               element={
