@@ -30,13 +30,6 @@ const Footer = () => {
     { name: "Recherche", path: "/search", emoji: "🔍" },
   ];
 
-  const guideLinks = [
-    { name: "Méditation pour Débutants", path: "/guide/meditation-debutant", emoji: "🧘‍♀️" },
-    { name: "Santé du Chat Senior", path: "/guide/sante-chat-senior", emoji: "🐈" },
-    { name: "Bienfaits Aquarium", path: "/guide/aquarium-bienfaits-mental", emoji: "🐠" },
-    { name: "Yoga Débutants", path: "/guide/yoga-debutants", emoji: "🌸" },
-  ];
-
   return (
     <footer className="relative bg-gradient-to-b from-white to-primary-light/20 border-t border-primary-light/30" data-testid="footer">
       {/* Decorative top wave */}
@@ -86,27 +79,6 @@ const Footer = () => {
                     to={link.path}
                     className="flex items-center gap-2 text-text-muted hover:text-primary transition-colors text-sm group"
                     data-testid={`footer-link-${link.path.replace("/", "") || "home"}`}
-                  >
-                    <span className="text-sm opacity-70 group-hover:opacity-100">{link.emoji}</span>
-                    {link.name}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
-
-          {/* SEO Guide Links */}
-          <div>
-            <h4 className="font-heading text-base font-semibold text-text-main mb-6 flex items-center gap-2">
-              <span>📚</span> Guides Pratiques
-            </h4>
-            <ul className="space-y-3">
-              {guideLinks.map((link) => (
-                <motion.li key={link.path} whileHover={{ x: 4 }}>
-                  <Link
-                    to={link.path}
-                    className="flex items-center gap-2 text-text-muted hover:text-primary transition-colors text-sm group"
-                    data-testid={`footer-guide-${link.path.split('/').pop()}`}
                   >
                     <span className="text-sm opacity-70 group-hover:opacity-100">{link.emoji}</span>
                     {link.name}
