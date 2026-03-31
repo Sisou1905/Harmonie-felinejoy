@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Heart, Brain, Moon, Salad } from "lucide-react";
 import ArticleCard from "../components/ArticleCard";
-import MindMap, { humanWellnessNodes, humanWellnessEdges } from "../components/MindMap";
 import ProductSpotlight from "../components/ProductSpotlight";
 import { API } from "../App";
 
@@ -46,8 +45,7 @@ const HumanWellnessPage = () => {
         <meta name="keywords" content="bien-être humain, méditation, sommeil, nutrition, stress, santé mentale" />
       </Helmet>
 
-      {/* Hero */}
-      <section className="gradient-mesh noise-overlay py-20 md:py-28" data-testid="human-wellness-hero">
+      <section className="gradient-mesh noise-overlay py-20 md:py-28">
         <div className="container-custom relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -57,60 +55,23 @@ const HumanWellnessPage = () => {
           >
             <div className="flex gap-3 mb-6">
               {topics.map((topic, i) => (
-                <div
-                  key={i}
-                  className={`${topic.color} w-10 h-10 rounded-xl flex items-center justify-center`}
-                >
+                <div key={i} className={`${topic.color} w-10 h-10 rounded-xl flex items-center justify-center`}>
                   <topic.icon className="h-5 w-5 text-white" />
                 </div>
               ))}
             </div>
-            
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-text-main mb-6">
               Bien-être <span className="text-primary">Humain</span>
             </h1>
             <p className="text-lg md:text-xl text-text-muted leading-relaxed">
-              Explorez nos ressources pour cultiver votre santé physique et mentale. 
+              Explorez nos ressources pour cultiver votre santé physique et mentale.
               Des articles basés sur des recherches scientifiques pour une vie plus équilibrée.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Mind Map Section */}
-      <section className="section-spacing bg-white" data-testid="human-mindmap-section">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main mb-4">
-              Explorer les concepts
-            </h2>
-            <p className="text-text-muted text-lg max-w-2xl mx-auto">
-              Naviguez visuellement à travers les différentes dimensions du bien-être humain
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <MindMap
-              nodes={humanWellnessNodes}
-              edges={humanWellnessEdges}
-              title="Bien-être Humain"
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Articles */}
-      <section className="section-spacing" data-testid="human-articles-section">
+      <section className="section-spacing">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -146,8 +107,7 @@ const HumanWellnessPage = () => {
         </div>
       </section>
 
-      {/* Product Spotlight */}
-      <section className="section-spacing bg-white" data-testid="human-product-section">
+      <section className="section-spacing bg-white">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
