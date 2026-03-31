@@ -1,4 +1,5 @@
 import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react";
+import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toaster } from "./components/ui/sonner";
@@ -64,8 +65,6 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // CRITICAL: If returning from OAuth callback, skip the /me check.
-    // AuthCallback will exchange the session_id and establish the session first.
     if (window.location.hash?.includes("session_id=")) {
       setLoading(false);
       return;
@@ -74,7 +73,6 @@ const AuthProvider = ({ children }) => {
   }, [checkAuth]);
 
   const login = () => {
-    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
     const redirectUrl = window.location.origin + "/auth/callback";
     window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
   };
@@ -143,7 +141,6 @@ const PageWrapper = ({ children }) => {
 const AppRouter = () => {
   const location = useLocation();
 
-  // Check URL fragment for session_id - synchronously during render
   if (location.hash?.includes("session_id=")) {
     return <AuthCallback />;
   }
@@ -167,7 +164,6 @@ const AppRouter = () => {
             <Route path="/a-propos" element={<PageWrapper><AboutPage /></PageWrapper>} />
             <Route path="/privacy" element={<PageWrapper><PrivacyPage /></PageWrapper>} />
             <Route path="/legal" element={<PageWrapper><LegalPage /></PageWrapper>} />
-               
             <Route
               path="/admin"
               element={
@@ -195,7 +191,6 @@ const AppRouter = () => {
 };
 
 function App() {
-  // Seed data on first load
   useEffect(() => {
     const seedData = async () => {
       try {
@@ -208,11 +203,13 @@ function App() {
   }, []);
 
   return (
+    <HelmetProvider>
       <BrowserRouter>
         <AuthProvider>
           <AppRouter />
         </AuthProvider>
       </BrowserRouter>
+    </HelmetProvider>
   );
 }
 
