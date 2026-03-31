@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, Users, Sparkles, HandHeart } from "lucide-react";
 import ArticleCard from "../components/ArticleCard";
-import MindMap, { connectionNodes, connectionEdges } from "../components/MindMap";
 import ProductSpotlight from "../components/ProductSpotlight";
 import { API } from "../App";
 
@@ -43,8 +42,7 @@ const ConnectionPage = () => {
 
   return (
     <>
-      {/* Hero */}
-      <section className="gradient-mesh noise-overlay py-20 md:py-28" data-testid="connection-hero">
+      <section className="gradient-mesh noise-overlay py-20 md:py-28">
         <div className="container-custom relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -54,20 +52,16 @@ const ConnectionPage = () => {
             >
               <div className="flex gap-3 mb-6">
                 {topics.map((topic, i) => (
-                  <div
-                    key={i}
-                    className={`${topic.color} w-10 h-10 rounded-xl flex items-center justify-center`}
-                  >
+                  <div key={i} className={`${topic.color} w-10 h-10 rounded-xl flex items-center justify-center`}>
                     <topic.icon className="h-5 w-5 text-white" />
                   </div>
                 ))}
               </div>
-              
               <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-semibold text-text-main mb-6">
                 La <span className="text-secondary-dark">Connexion</span>
               </h1>
               <p className="text-lg md:text-xl text-text-muted leading-relaxed">
-                Le lien entre humains et animaux est précieux et scientifiquement prouvé. 
+                Le lien entre humains et animaux est précieux et scientifiquement prouvé.
                 Découvrez comment cette relation unique améliore notre bien-être mutuel.
               </p>
             </motion.div>
@@ -83,7 +77,7 @@ const ConnectionPage = () => {
                 <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-accent rounded-full blur-2xl opacity-40" />
                 <img
                   src="https://images.unsplash.com/photo-1695727526803-a70a8eb59aa5?crop=entropy&cs=srgb&fm=jpg&w=940"
-                  alt="Femme embrassant tendrement son chat - connexion humain-animal"
+                  alt="Femme embrassant tendrement son chat"
                   className="rounded-3xl shadow-float object-cover w-full max-w-md mx-auto aspect-[4/5]"
                 />
               </div>
@@ -92,40 +86,7 @@ const ConnectionPage = () => {
         </div>
       </section>
 
-      {/* Mind Map Section */}
-      <section className="section-spacing bg-white" data-testid="connection-mindmap-section">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main mb-4">
-              Les dimensions de la connexion
-            </h2>
-            <p className="text-text-muted text-lg max-w-2xl mx-auto">
-              Explorez les multiples façons dont la relation humain-animal enrichit nos vies
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <MindMap
-              nodes={connectionNodes}
-              edges={connectionEdges}
-              title="Connexion Humain-Animal"
-            />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Key Benefits */}
-      <section className="section-spacing" data-testid="connection-benefits">
+      <section className="section-spacing">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -140,24 +101,9 @@ const ConnectionPage = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              {
-                title: "Réduction du stress",
-                description: "Caresser un animal réduit le cortisol et augmente l'ocytocine, l'hormone du bonheur.",
-                icon: Heart,
-                color: "bg-accent",
-              },
-              {
-                title: "Santé cardiovasculaire",
-                description: "Les propriétaires d'animaux ont une pression artérielle plus basse en moyenne.",
-                icon: Sparkles,
-                color: "bg-primary",
-              },
-              {
-                title: "Bien-être mental",
-                description: "La présence d'un animal réduit les sentiments de solitude et combat la dépression.",
-                icon: Users,
-                color: "bg-secondary",
-              },
+              { title: "Réduction du stress", description: "Caresser un animal réduit le cortisol et augmente l'ocytocine, l'hormone du bonheur.", icon: Heart, color: "bg-accent" },
+              { title: "Santé cardiovasculaire", description: "Les propriétaires d'animaux ont une pression artérielle plus basse en moyenne.", icon: Sparkles, color: "bg-primary" },
+              { title: "Bien-être mental", description: "La présence d'un animal réduit les sentiments de solitude et combat la dépression.", icon: Users, color: "bg-secondary" },
             ].map((benefit, index) => (
               <motion.div
                 key={index}
@@ -170,20 +116,15 @@ const ConnectionPage = () => {
                 <div className={`w-14 h-14 ${benefit.color} rounded-2xl flex items-center justify-center mb-6`}>
                   <benefit.icon className="h-7 w-7 text-white" />
                 </div>
-                <h3 className="font-heading text-xl font-semibold text-text-main mb-3">
-                  {benefit.title}
-                </h3>
-                <p className="text-text-muted leading-relaxed">
-                  {benefit.description}
-                </p>
+                <h3 className="font-heading text-xl font-semibold text-text-main mb-3">{benefit.title}</h3>
+                <p className="text-text-muted leading-relaxed">{benefit.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Articles */}
-      <section className="section-spacing bg-white" data-testid="connection-articles-section">
+      <section className="section-spacing bg-white">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -219,20 +160,8 @@ const ConnectionPage = () => {
         </div>
       </section>
 
-      {/* Product Spotlights */}
-      <section className="section-spacing" data-testid="connection-products-section">
+      <section className="section-spacing">
         <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main mb-4">
-              Pour vous et vos compagnons
-            </h2>
-          </motion.div>
-
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <ProductSpotlight type="cats" />
             <ProductSpotlight type="supplements" />
