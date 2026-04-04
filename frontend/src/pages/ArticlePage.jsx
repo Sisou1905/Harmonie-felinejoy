@@ -345,23 +345,26 @@ const ArticlePage = () => {
             )}
 
             {/* Article Content */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="article-content prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{
-                __html: article.content
-                  .replace(/## /g, "<h2>")
-                  .replace(/### /g, "<h3>")
-                  .replace(/\n\n/g, "</p><p>")
-                  .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                  .replace(/- (.*)/g, "<li>$1</li>")
-                  .replace(/<li>/g, "<ul><li>")
-                  .replace(/<\/li>\n/g, "</li></ul>")
-              }}
-            />
-
+           <div className="article-content prose prose-lg max-w-none">
+  <ReactMarkdown
+    components={{
+      a: ({ href, children }) => (
+        <a href={href} target="_blank" rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2 rounded-xl transition-colors no-underline my-1">
+          {children}
+        </a>
+      ),
+      h2: ({ children }) => <h2 className="text-xl font-bold text-gray-900 mt-6 mb-3">{children}</h2>,
+      h3: ({ children }) => <h3 className="text-lg font-semibold text-gray-800 mt-4 mb-2">{children}</h3>,
+      p: ({ children }) => <p className="text-gray-700 leading-relaxed mb-4">{children}</p>,
+      strong: ({ children }) => <strong className="font-bold text-gray-900">{children}</strong>,
+      ul: ({ children }) => <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>,
+      li: ({ children }) => <li className="text-gray-700">{children}</li>,
+    }}
+  >
+    {article.content}
+  </ReactMarkdown>
+</div>
             {/* Sources */}
             {article.sources && article.sources.length > 0 && (
               <motion.div
