@@ -50,7 +50,7 @@ const TagBadge = ({ label }) => {
 };
 
 const ArticleCard = ({ article }) => {
-  const isUne = article.slug && article.slug.includes("omega");
+  const isUne = article.created_at && new Date(article.created_at) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
   return (
     <motion.article variants={fadeUp} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 flex flex-col">
       {article.image_url && (
