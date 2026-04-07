@@ -286,7 +286,7 @@ const HomePage = () => {
     const animal = arts.filter(a => ["Bien-être animal","animal"].includes(a.category)).sort((a,b)=>(b.likes_count||0)-(a.likes_count||0));
     const connexion = arts.filter(a => ["Lien","connection"].includes(a.category)).sort((a,b)=>(b.likes_count||0)-(a.likes_count||0));
     const reste = arts.filter(a => !omega.includes(a) && !humain.includes(a) && !animal.includes(a) && !connexion.includes(a));
-    const sorted = [...omega, ...humain.slice(0,2), ...animal.slice(0,2), ...connexion, ...reste]; const top6 = sorted.slice(0, 6).map(a => a.slug); sorted.forEach(a => a.featured = top6.includes(a.slug)); return sorted;
+    const sorted = [...omega, ...humain.slice(0,2), ...animal.slice(0,2), ...connexion, ...reste].sort((a,b) => new Date(b.created_at) - new Date(a.created_at)); const top6 = sorted.slice(0, 6).map(a => a.slug); sorted.forEach(a => a.featured = top6.includes(a.slug)); return sorted;
   };
 
   const displayArticles = sortArticles(articles.length > 0 ? articles : fallback);
