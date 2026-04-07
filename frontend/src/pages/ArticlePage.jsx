@@ -272,7 +272,7 @@ const ArticlePage = () => {
               <div className="flex items-center gap-6 text-text-muted text-sm">
                 <span className="flex items-center gap-2">
                   <User className="h-4 w-4" />
-                  {article.author}
+                  {"Sissou"}
                 </span>
                 <span className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
