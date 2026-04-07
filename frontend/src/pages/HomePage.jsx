@@ -50,7 +50,7 @@ const TagBadge = ({ label }) => {
 };
 
 const ArticleCard = ({ article }) => {
-  const isOmega = article.slug && article.slug.includes("omega");
+  const isUne = article.slug && article.slug.includes("omega");
   return (
     <motion.article variants={fadeUp} className="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-emerald-200 hover:shadow-lg transition-all duration-300 flex flex-col">
       {article.image_url && (
@@ -58,7 +58,7 @@ const ArticleCard = ({ article }) => {
           <img src={article.image_url} alt={article.title} loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          {isOmega && (
+          {isUne && (
             <div className="absolute top-3 left-3 bg-emerald-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
               A la une
             </div>
