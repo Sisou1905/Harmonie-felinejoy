@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Heart, Bookmark, Share2, Calendar, User, ExternalLink, BookOpen } from "lucide-react";
@@ -347,6 +348,7 @@ const ArticlePage = () => {
             {/* Article Content */}
            <div className="article-content prose prose-lg max-w-none">
   <ReactMarkdown
+    rehypePlugins={[rehypeRaw]}
     components={{
       a: ({ href, children }) => (
         <a href={href} target="_blank" rel="noopener noreferrer"
