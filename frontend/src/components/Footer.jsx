@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, Mail, ExternalLink, ArrowUpRight } from "lucide-react";
+import { Heart, Mail, ArrowUpRight } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -32,7 +32,6 @@ const Footer = () => {
 
   return (
     <footer className="relative bg-gradient-to-b from-white to-primary-light/20 border-t border-primary-light/30" data-testid="footer">
-      {/* Decorative top wave */}
       <div className="absolute top-0 left-0 right-0 -translate-y-full overflow-hidden">
         <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
           <path d="M0 30C200 60 400 0 720 30C1040 60 1240 0 1440 30V60H0V30Z" fill="white"/>
@@ -41,10 +40,11 @@ const Footer = () => {
 
       <div className="container-custom section-spacing">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-          {/* Brand with animation */}
+
+          {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-3 mb-6 group">
-              <motion.div 
+              <motion.div
                 className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary via-primary to-secondary flex items-center justify-center shadow-float"
                 whileHover={{ rotate: 5, scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -57,10 +57,9 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-text-muted text-sm leading-relaxed mb-6">
-              Votre guide holistique pour le bien-être humain et animal. 
+              Votre guide holistique pour le bien-être humain et animal.
               Des articles scientifiques pour une vie plus équilibrée. 🌿
             </p>
-            {/* Social proof */}
             <div className="flex items-center gap-2 text-xs text-text-muted">
               <span className="px-3 py-1.5 bg-white rounded-full shadow-soft font-medium">20+ Articles</span>
               <span className="px-3 py-1.5 bg-white rounded-full shadow-soft font-medium">15 Guides</span>
@@ -78,7 +77,6 @@ const Footer = () => {
                   <Link
                     to={link.path}
                     className="flex items-center gap-2 text-text-muted hover:text-primary transition-colors text-sm group"
-                    data-testid={`footer-link-${link.path.replace("/", "") || "home"}`}
                   >
                     <span className="text-sm opacity-70 group-hover:opacity-100">{link.emoji}</span>
                     {link.name}
@@ -88,7 +86,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Shop Links with cards */}
+          {/* Shop Links */}
           <div>
             <h4 className="font-heading text-base font-semibold text-text-main mb-6 flex items-center gap-2">
               <span>🛍️</span> Nos Boutiques
@@ -101,7 +99,6 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group block p-3 bg-white rounded-xl shadow-soft hover:shadow-float transition-all border border-transparent hover:border-primary-light"
-                    data-testid={`shop-link-${shop.name.toLowerCase().replace(/\s+/g, '-')}`}
                   >
                     <div className="flex items-start gap-3">
                       <span className="text-2xl">{shop.emoji}</span>
@@ -140,6 +137,7 @@ const Footer = () => {
               </motion.a>
             </div>
           </div>
+
         </div>
 
         {/* Bottom Bar */}
@@ -150,11 +148,11 @@ const Footer = () => {
           <Link to="/privacy" className="text-text-muted text-sm hover:text-primary transition-colors">
             Politique de confidentialité
           </Link>
-          <motion.p 
+          <motion.p
             className="flex items-center gap-2 text-text-muted text-sm"
             whileHover={{ scale: 1.05 }}
           >
-            Fait avec 
+            Fait avec
             <motion.span
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 1, repeat: Infinity }}
@@ -164,6 +162,7 @@ const Footer = () => {
             pour votre bien-être 🌟
           </motion.p>
         </div>
+
       </div>
     </footer>
   );
