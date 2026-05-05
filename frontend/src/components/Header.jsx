@@ -25,6 +25,7 @@ const Header = () => {
     { name: "Bien-être Humain", path: "/bien-etre-humain", icon: "🧘" },
     { name: "Bien-être Animal", path: "/bien-etre-animal", icon: "🐱" },
     { name: "La Connexion", path: "/connexion", icon: "💕" },
+    { name: "À propos", path: "/a-propos", icon: "💡" },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -33,9 +34,8 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-primary-light/30 shadow-[0_4px_30px_rgba(95,160,152,0.08)]" data-testid="header">
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
-          {/* Logo with playful animation */}
           <Link to="/" className="flex items-center gap-3 group" data-testid="logo-link">
-            <motion.div 
+            <motion.div
               className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-primary via-primary to-secondary flex items-center justify-center shadow-float"
               whileHover={{ scale: 1.05, rotate: 3 }}
               whileTap={{ scale: 0.95 }}
@@ -52,13 +52,12 @@ const Header = () => {
             </motion.div>
             <div className="hidden sm:block">
               <h1 className="font-heading text-lg font-semibold text-text-main leading-tight group-hover:text-primary transition-colors">
-                Harmonie
+                Harmonie Joy
               </h1>
-              <p className="text-xs text-text-muted font-ui">Féline & Humaine</p>
+              <p className="text-xs text-text-muted font-ui">Blog Bien-être</p>
             </div>
           </Link>
 
-          {/* Desktop Navigation with playful hover effects */}
           <nav className="hidden lg:flex items-center gap-1 bg-primary-light/20 rounded-full p-1.5" data-testid="desktop-nav">
             {navItems.map((item) => (
               <Link
@@ -77,9 +76,7 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Right Section */}
           <div className="flex items-center gap-3">
-            {/* Search Button with bounce */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <Button
                 variant="ghost"
@@ -92,7 +89,6 @@ const Header = () => {
               </Button>
             </motion.div>
 
-            {/* Language Selector */}
             <LanguageSelector />
 
             {user ? (
@@ -152,7 +148,6 @@ const Header = () => {
               </motion.div>
             )}
 
-            {/* Mobile Menu Button */}
             <motion.button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="lg:hidden p-2.5 rounded-xl bg-primary-light/30 hover:bg-primary-light transition-colors"
@@ -168,7 +163,6 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation with smooth animations */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.nav
