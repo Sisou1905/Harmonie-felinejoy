@@ -52,8 +52,8 @@ const Footer = () => {
                 <span className="text-white text-2xl font-heading font-bold">H</span>
               </motion.div>
               <div>
-                <h3 className="font-heading text-lg font-semibold text-text-main group-hover:text-primary transition-colors">Harmonie</h3>
-                <p className="text-xs text-text-muted font-ui">Féline & Humaine ✨</p>
+                <h3 className="font-heading text-lg font-semibold text-text-main group-hover:text-primary transition-colors">Harmonie Joy</h3>
+                <p className="text-xs text-text-muted font-ui">Blog Bien-être ✨</p>
               </div>
             </Link>
             <p className="text-text-muted text-sm leading-relaxed mb-6">
@@ -96,7 +96,7 @@ const Footer = () => {
             <ul className="space-y-4">
               {shopLinks.map((shop) => (
                 <motion.li key={shop.url} whileHover={{ scale: 1.02 }}>
-                  <a
+                  
                     href={shop.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -145,8 +145,11 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-primary-light/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-text-muted text-sm">
-            © {currentYear} Harmonie Féline & Humaine. Tous droits réservés.
+            © {currentYear} Harmonie Joy. Tous droits réservés.
           </p>
+          <Link to="/privacy" className="text-text-muted text-sm hover:text-primary transition-colors">
+            Politique de confidentialité
+          </Link>
           <motion.p 
             className="flex items-center gap-2 text-text-muted text-sm"
             whileHover={{ scale: 1.05 }}
