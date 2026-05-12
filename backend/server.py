@@ -30,6 +30,15 @@ SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 
 # Create the main app
 app = FastAPI(title="Harmonie Féline & Humaine API")
+from fastapi.responses import RedirectResponse
+
+@app.middleware("http")
+async def redirect_old_domain(request: Request, call_next):
+    host = request.headers.get("host", "")
+    if "felinejoy.com" in host:
+        new_url = str(request.url).replace(host, "www.harmoniejoy.net")
+        return RedirectResponse(url=new_url, status_code=301)
+    return await call_next(request)
 @app.get("/ads.txt")
 def ads_txt():
     return PlainTextResponse(
