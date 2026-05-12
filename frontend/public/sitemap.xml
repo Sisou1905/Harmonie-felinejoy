@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://harmonie.felinejoy.com/</loc>
+    <loc>https://www.harmoniejoy.net/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://harmonie.felinejoy.com/articles</loc>
+    <loc>https://www.harmoniejoy.net/articles</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://harmonie.felinejoy.com/categorie/human</loc>
+    <loc>https://www.harmoniejoy.net/categorie/human</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://harmonie.felinejoy.com/categorie/animal</loc>
+    <loc>https://www.harmoniejoy.net/categorie/animal</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://harmonie.felinejoy.com/categorie/connection</loc>
+    <loc>https://www.harmoniejoy.net/categorie/connection</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.harmoniejoy.net/article/avis-zinzino-balanceoil-phycosci-x20</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>
