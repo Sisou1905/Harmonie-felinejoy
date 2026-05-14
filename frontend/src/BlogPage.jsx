@@ -75,7 +75,7 @@ const BlogPage = () => {
   const [category, setCategory] = useState("Tous");
 
   useEffect(() => {
-    document.title = "Blog — Harmonie Féline & Humaine";
+    document.title = "Blog Bien-être — Harmonie Joy | Articles scientifiques et conseils pratiques";
     const fetch_ = async () => {
       try {
         const r = await fetch(`${API}/articles?limit=50`);
@@ -103,12 +103,15 @@ const BlogPage = () => {
       <div className="bg-gradient-to-br from-emerald-800 to-teal-900 px-5 md:px-8 py-10 md:py-16">
         <div className="max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <p className="text-xs font-bold tracking-widest uppercase text-emerald-300 mb-2">Blog Harmonie</p>
+            <p className="text-xs font-bold tracking-widest uppercase text-emerald-300 mb-2">Blog Harmonie Joy</p>
             <h1 className="text-2xl md:text-4xl font-semibold text-white mb-3">
               Tous nos articles bien-être
             </h1>
-            <p className="text-sm md:text-base text-emerald-200 max-w-xl leading-relaxed mb-6">
-              Recherches scientifiques, conseils pratiques, rituels naturels — pour vous et votre félin.
+            <p className="text-sm md:text-base text-emerald-200 max-w-2xl leading-relaxed mb-4">
+              Bienvenue sur le blog Harmonie Joy, votre espace dédié au bien-être holistique humain et animal. Chaque semaine, nous partageons des articles sourcés et validés scientifiquement sur la santé naturelle, la méditation, la nutrition, les émotions, la connexion avec la nature et le bonheur de nos animaux de compagnie. Des informations simples, accessibles et concrètes pour améliorer votre quotidien, que vous ayez 15 ans ou 50 ans.
+            </p>
+            <p className="text-xs text-emerald-300 mb-6">
+              Disponible en français, anglais, arabe, turc et polonais · {articles.length > 0 ? articles.length : "25"}+ articles publiés
             </p>
             <div className="relative max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-400" />
@@ -156,7 +159,8 @@ const BlogPage = () => {
       </div>
 
       <div className="bg-emerald-950 text-white px-5 py-6 text-center">
-        <p className="text-xs text-emerald-400">🌿 Harmonie Féline & Humaine · Nouveaux articles chaque semaine</p>
+        <p className="text-xs text-emerald-400">🌿 Harmonie Joy · Bien-être humain et animal · Nouveaux articles chaque semaine</p>
+        <p className="text-xs text-emerald-300 mt-1">Santé holistique · Méditation · Nutrition · Lien humain-animal · Chakras · Sommeil</p>
         <Link to="/" className="text-xs text-emerald-300 hover:text-white mt-2 inline-block transition-colors">
           Retour à l'accueil
         </Link>
