@@ -244,16 +244,15 @@ const ToltequesSection = () => {
 };
 
 const AMAZON_PRODUCTS = [
-  { name:"Diffuseur Huiles Essentielles", desc:"Ultrasonique 300ml, silencieux, 7 couleurs LED", img:"https://images.unsplash.com/photo-1615634260167-c8cdede054de?w=300&q=80", url:"https://www.amazon.fr/dp/B07TD59XY6?tag=sissoulily-21", badge:"🌸 Relaxation" },
-  { name:"Lampe de Luminothérapie Beurer", desc:"10 000 Lux, combat la fatigue hivernale", img:"https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&q=80", url:"https://www.amazon.fr/dp/B00MOIWOAK?tag=sissoulily-21", badge:"☀️ Énergie" },
-  { name:"Correcteur de Posture Dos", desc:"Homme & Femme, soulage les douleurs dorsales", img:"https://images.unsplash.com/photo-1522898467493-49726bf28798?w=300&q=80", url:"https://www.amazon.fr/dp/B0D146DFH8?tag=sissoulily-21", badge:"💪 Bien-être" },
-  { name:"Coussin Ergonomique Lombaire", desc:"Bureau & voiture, anti-glissant", img:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&q=80", url:"https://www.amazon.fr/dp/B0DNZ76LMP?tag=sissoulily-21", badge:"🪑 Confort" },
-  { name:"Tapis de Yoga Premium", desc:"Antidérapant, épaisseur 6mm, écologique", img:"https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=300&q=80", url:"https://www.amazon.fr/s?k=tapis+yoga+premium+antiderapant&tag=sissoulily-21", badge:"🧘 Yoga" },
-  { name:"Bougie Méditation Naturelle", desc:"Cire de soja, parfum apaisant, longue durée", img:"https://images.unsplash.com/photo-1603905219487-6f1f36df9bcd?w=300&q=80", url:"https://www.amazon.fr/s?k=bougie+meditation+cire+soja+naturelle&tag=sissoulily-21", badge:"🕯️ Zen" },
-  { name:"Journal de Gratitude", desc:"Planner bien-être, 365 jours, couverture souple", img:"https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=300&q=80", url:"https://www.amazon.fr/s?k=journal+gratitude+planner+bien-etre&tag=sissoulily-21", badge:"📔 Mindset" },
-  { name:"Tisane Relaxante Bio", desc:"Mélange camomille, valériane, passiflore", img:"https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=300&q=80", url:"https://www.amazon.fr/s?k=tisane+relaxante+bio+camomille+valeriane&tag=sissoulily-21", badge:"🌿 Bio" },
+  { name:"Diffuseur Huiles Essentielles", desc:"Ultrasonique 500ml, silencieux, 7 couleurs LED", img:"https://m.media-amazon.com/images/I/91RXRUmWhzL._AC_SL1500_.jpg", url:"https://www.amazon.fr/dp/B07TD59XY6?tag=sissoulily-21", badge:"🌸 Relaxation" },
+  { name:"Lampe de Luminothérapie Beurer", desc:"10 000 Lux, combat la fatigue hivernale", img:"https://m.media-amazon.com/images/I/81+7YvdA+HL._AC_SL1500_.jpg", url:"https://www.amazon.fr/dp/B00MOIWOAK?tag=sissoulily-21", badge:"☀️ Énergie" },
+  { name:"Correcteur de Posture Dos", desc:"Homme & Femme, soulage les douleurs dorsales", img:"https://m.media-amazon.com/images/I/71Zept-1GlL._SL1500_.jpg", url:"https://www.amazon.fr/dp/B0D146DFH8?tag=sissoulily-21", badge:"💪 Bien-être" },
+  { name:"Coussin Ergonomique Lombaire", desc:"Bureau & voiture, anti-glissant", img:"https://m.media-amazon.com/images/I/816yk1T7ksL._AC_SL1500_.jpg", url:"https://www.amazon.fr/dp/B0DNZ76LMP?tag=sissoulily-21", badge:"🪑 Confort" },
+  { name:"Tapis de Yoga Premium", desc:"Antidérapant, épaisseur 6mm, écologique", img:"https://m.media-amazon.com/images/I/614QOsP52pL._AC_SL1500_.jpg", url:"https://www.amazon.fr/s?k=tapis+yoga+premium&tag=sissoulily-21", badge:"🧘 Yoga" },
+  { name:"Bougie Méditation Naturelle", desc:"Cire de soja, parfum apaisant, longue durée", img:"https://m.media-amazon.com/images/I/71TCigt1acL._AC_SL1500_.jpg", url:"https://www.amazon.fr/s?k=bougie+meditation+soja&tag=sissoulily-21", badge:"🕯️ Zen" },
+  { name:"Journal de Gratitude", desc:"Planner bien-être, 365 jours, couverture souple", img:"https://m.media-amazon.com/images/I/61I6l5TyWPL._SL1293_.jpg", url:"https://www.amazon.fr/s?k=journal+gratitude&tag=sissoulily-21", badge:"📔 Mindset" },
+  { name:"Tisane Relaxante Bio", desc:"Mélange camomille, valériane, passiflore", img:"https://m.media-amazon.com/images/I/71eGoJhH3OL._AC_SL1500_.jpg", url:"https://www.amazon.fr/s?k=tisane+relaxante+bio&tag=sissoulily-21", badge:"🌿 Bio" },
 ];
-
 const fallback = [
   { title:"3 mois d'Omega-3 pour mieux dormir et reduire le stress", category:"Science", excerpt:"Une etude relayee par Science & Vie revele qu'une cure de 3 mois d'Omega-3 transforme votre equilibre mental.", image_url:"https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80", slug:"omega-3-stress-sommeil-cure-3-mois", reading_time:6 },
   { title:"Comment votre chat ressent votre anxiete", category:"Bien-être animal", excerpt:"Les chats percoivent les changements physiologiques de leurs proprietaires avec une acuite surprenante.", image_url:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80", slug:"comment-les-animaux-reduisent-notre-stress", reading_time:4 },
