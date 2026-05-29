@@ -244,14 +244,14 @@ const ToltequesSection = () => {
 };
 
 const AMAZON_PRODUCTS = [
-  { name:"Diffuseur Huiles Essentielles", desc:"Ultrasonique 300ml, silencieux, 7 couleurs LED", img:"https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=300&q=80", url:"https://www.amazon.fr/dp/B07TD59XY6?tag=sissoulily-21", badge:"🌸 Relaxation" },
-  { name:"Lampe de Luminothérapie Beurer", desc:"10 000 Lux, combat la fatigue hivernale", img:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80", url:"https://www.amazon.fr/dp/B00MOIWOAK?tag=sissoulily-21", badge:"☀️ Énergie" },
-  { name:"Correcteur de Posture Dos", desc:"Homme & Femme, soulage les douleurs dorsales", img:"https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&q=80", url:"https://www.amazon.fr/dp/B0D146DFH8?tag=sissoulily-21", badge:"💪 Bien-être" },
-  { name:"Coussin Ergonomique Lombaire", desc:"Bureau & voiture, anti-glissant", img:"https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300&q=80", url:"https://www.amazon.fr/dp/B0DNZ76LMP?tag=sissoulily-21", badge:"🪑 Confort" },
-  { name:"Tapis de Yoga Premium", desc:"Antidérapant, épaisseur 6mm, écologique", img:"https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&q=80", url:"https://www.amazon.fr/s?k=tapis+yoga+premium+antiderapant&tag=sissoulily-21", badge:"🧘 Yoga" },
-  { name:"Bougie Méditation Naturelle", desc:"Cire de soja, parfum apaisant, longue durée", img:"https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=300&q=80", url:"https://www.amazon.fr/s?k=bougie+meditation+cire+soja+naturelle&tag=sissoulily-21", badge:"🕯️ Zen" },
-  { name:"Journal de Gratitude", desc:"Planner bien-être, 365 jours, couverture souple", img:"https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=300&q=80", url:"https://www.amazon.fr/s?k=journal+gratitude+planner+bien-etre&tag=sissoulily-21", badge:"📔 Mindset" },
-  { name:"Tisane Relaxante Bio", desc:"Mélange camomille, valériane, passiflore", img:"https://images.unsplash.com/photo-1556383689-b86b57bac7a0?w=300&q=80", url:"https://www.amazon.fr/s?k=tisane+relaxante+bio+camomille+valeriane&tag=sissoulily-21", badge:"🌿 Bio" },
+  { name:"Diffuseur Huiles Essentielles", desc:"Ultrasonique 300ml, silencieux, 7 couleurs LED", img:"https://images.unsplash.com/photo-1602928298849-327d4a84b7f6?w=300&q=80", url:"https://www.amazon.fr/dp/B07TD59XY6?tag=sissoulily-21", badge:"🌸 Relaxation" },
+  { name:"Lampe de Luminothérapie Beurer", desc:"10 000 Lux, combat la fatigue hivernale", img:"https://images.unsplash.com/photo-1513506003901-1e6a35359930?w=300&q=80", url:"https://www.amazon.fr/dp/B00MOIWOAK?tag=sissoulily-21", badge:"☀️ Énergie" },
+  { name:"Correcteur de Posture Dos", desc:"Homme & Femme, soulage les douleurs dorsales", img:"https://images.unsplash.com/photo-1559757175-5700dde675bc?w=300&q=80", url:"https://www.amazon.fr/dp/B0D146DFH8?tag=sissoulily-21", badge:"💪 Bien-être" },
+  { name:"Coussin Ergonomique Lombaire", desc:"Bureau & voiture, anti-glissant", img:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=80", url:"https://www.amazon.fr/dp/B0DNZ76LMP?tag=sissoulily-21", badge:"🪑 Confort" },
+  { name:"Tapis de Yoga Premium", desc:"Antidérapant, épaisseur 6mm, écologique", img:"https://images.unsplash.com/photo-1601925228953-54b6ab74b497?w=300&q=80", url:"https://www.amazon.fr/s?k=tapis+yoga+premium+antiderapant&tag=sissoulily-21", badge:"🧘 Yoga" },
+  { name:"Bougie Méditation Naturelle", desc:"Cire de soja, parfum apaisant, longue durée", img:"https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=300&q=80", url:"https://www.amazon.fr/s?k=bougie+meditation+cire+soja+naturelle&tag=sissoulily-21", badge:"🕯️ Zen" },
+  { name:"Journal de Gratitude", desc:"Planner bien-être, 365 jours, couverture souple", img:"https://images.unsplash.com/photo-1517842645767-c639042777db?w=300&q=80", url:"https://www.amazon.fr/s?k=journal+gratitude+planner+bien-etre&tag=sissoulily-21", badge:"📔 Mindset" },
+  { name:"Tisane Relaxante Bio", desc:"Mélange camomille, valériane, passiflore", img:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=300&q=80", url:"https://www.amazon.fr/s?k=tisane+relaxante+bio+camomille+valeriane&tag=sissoulily-21", badge:"🌿 Bio" },
 ];
 
 const fallback = [
