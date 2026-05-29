@@ -18,7 +18,7 @@ const useSEO = () => {
     setMeta("og:title", "Harmonie Féline & Humaine | Blog Bien-être", true);
     setMeta("og:description", "Prendre soin de soi, comprendre son animal, chérir ce lien unique.", true);
     setMeta("og:type", "website", true);
-    setMeta("og:url", "https://harmonie.felinejoy.com", true);
+    setMeta("og:url", "https://harmoniejoy.net", true);
     setMeta("og:image", "https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1200&q=85", true);
     setMeta("twitter:card", "summary_large_image");
   }, []);
