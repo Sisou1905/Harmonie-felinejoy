@@ -88,7 +88,7 @@ const Newsletter = () => {
             Rejoignez notre communauté !
           </h2>
           <p className="text-text-muted text-base mb-8 max-w-md mx-auto">
-            Recevez chaque semaine des conseils bien-être pour vous et vos compagnons félins 🐱
+            Recevez chaque semaine des conseils bien-être pour prendre soin de vous au quotidien ✨
           </p>
 
           {/* Benefits */}
@@ -96,7 +96,7 @@ const Newsletter = () => {
             {[
               { emoji: "📚", text: "Articles exclusifs" },
               { emoji: "🎁", text: "Conseils gratuits" },
-              { emoji: "🐾", text: "Tips pour chats" },
+              { emoji: "🌿", text: "Rituels naturels" },
             ].map((item, i) => (
               <motion.span 
                 key={i}
