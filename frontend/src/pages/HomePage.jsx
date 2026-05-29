@@ -553,8 +553,8 @@ const HomePage = () => {
       <section className="px-5 md:px-8 py-8 bg-stone-50">
         <div className="max-w-5xl mx-auto">
           <p className="text-xs font-bold tracking-widest uppercase text-amber-500 mb-0.5">Nos coups de coeur Amazon</p>
-          <h2 className="text-lg md:text-2xl font-semibold text-emerald-800 mb-1">Produits bien-être pour vous & votre chat</h2>
-          <p className="text-sm text-gray-500 leading-relaxed mb-5">Sélectionnés avec soin pour leur qualité et leur impact sur votre bien-être et celui de votre félin.</p>
+          <h2 className="text-lg md:text-2xl font-semibold text-emerald-800 mb-1">Produits bien-être pour votre quotidien</h2>
+          <p className="text-sm text-gray-500 leading-relaxed mb-5">Sélectionnés avec soin pour leur qualité et leur impact sur votre bien-être au quotidien.</p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {AMAZON_PRODUCTS.map((p,i)=>(
               <a key={i} href={p.url} target="_blank" rel="noopener noreferrer"
