@@ -308,8 +308,9 @@ async def get_article(slug: str):
     return article
 
 @api_router.post("/articles", response_model=dict)
-async def create_article(article: ArticleCreate):
-    """Create new article (admin only in production)"""
+async def create_article(article: ArticleCreate, request: Request):
+    """Create new article (admin only)"""
+    await require_admin(request)
     article_dict = article.model_dump()
     article_obj = Article(**article_dict)
     doc = article_obj.model_dump()
@@ -782,15 +783,20 @@ La relation avec votre chat est un miroir. Votre bien-être et le sien sont inti
 
 # ==================== ADMIN ROUTES ====================
 
-# Admin emails - add your email here to get admin access
-ADMIN_EMAILS = ["admin@harmonie.com"]
+# Admin emails - seuls ces comptes ont acces au back-office.
+# Surchargeable via la variable d'environnement ADMIN_EMAILS (valeurs separees par des virgules).
+ADMIN_EMAILS = [
+    e.strip().lower()
+    for e in os.environ.get("ADMIN_EMAILS", "").split(",")
+    if e.strip()
+]
 
 async def require_admin(request: Request) -> User:
     """Require admin authentication"""
     user = await require_auth(request)
-    # For now, all authenticated users can be admin (you can restrict by email)
-    # if user.email not in ADMIN_EMAILS:
-    #     raise HTTPException(status_code=403, detail="Admin access required")
+    if (user.email or "").strip().lower() not in ADMIN_EMAILS:
+        logger.warning(f"Acces admin refuse pour: {user.email}")
+        raise HTTPException(status_code=403, detail="Admin access required")
     return user
 
 @api_router.get("/admin/stats")

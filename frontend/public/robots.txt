@@ -5,4 +5,4 @@ Allow: /ads.txt
 User-agent: Mediapartners-Google
 Allow: /
 
-Sitemap: https://harmoniejoy.net/sitemap.xml
+Sitemap: https://www.harmoniejoy.net/sitemap.xml

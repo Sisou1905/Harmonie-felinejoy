@@ -19,7 +19,7 @@ const AffiliateBanner = ({ type = "both" }) => {
   name: "Zinzino",
   tagline: "Stoppez l'inflammation silencieuse. Régénérez vos cellules.",
   description: "Rééquilibrez votre ratio Oméga-3/6, réduisez les risques de maladies chroniques et protégez votre santé cellulaire à long terme — testé & prouvé scientifiquement.",
-  url: "https://www.zinzino.com/2020929659",
+  url: "https://www.zinzino.com/2020929659/fr/fr-fr",
   emoji: "🧬",
   image: "https://zinzinowebstorage.blob.core.windows.net/productimages/large/300000.png",
   image2: "https://zinzinowebstorage.blob.core.windows.net/productimages/large/309000.png",

@@ -15,7 +15,7 @@ const ProductSpotlight = ({ type = "cats" }) => {
       title: "Zinzino",
       subtitle: "Compléments alimentaires testés & approuvés",
       description: "Des suppléments nutritionnels de qualité pour votre bien-être quotidien.",
-      url: "https://www.zinzino.com/2020929659",
+      url: "https://www.zinzino.com/2020929659/fr/fr-fr",
       image: "https://images.unsplash.com/photo-1556383689-b86b57bac7a0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHw0fHxoZWFsdGh5JTIwaGVyYmFsJTIwdGVhJTIwYW5kJTIwYm9va3MlMjBhZXN0aGV0aWN8ZW58MHx8fHwxNzcyMTQ3MjMzfDA&ixlib=rb-4.1.0&q=85",
       badge: "Nutrition",
     },

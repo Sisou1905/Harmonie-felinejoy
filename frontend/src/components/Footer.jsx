@@ -7,7 +7,7 @@ const Footer = () => {
 
   const shopLinks = [
     { name: "Feline Joy", url: "https://www.felinejoycamy.myshopify.com", description: "Accessoires & T-shirts chats", emoji: "🐱" },
-    { name: "Zinzino", url: "https://www.zinzino.com/2020929659", description: "Nutrition testee & approuvee", emoji: "🌿" }
+    { name: "Zinzino", url: "https://www.zinzino.com/2020929659/fr/fr-fr", description: "Nutrition testee & approuvee", emoji: "🌿" }
   ];
 
   const quickLinks = [
