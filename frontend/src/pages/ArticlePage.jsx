@@ -127,6 +127,49 @@ const ArticlePage = () => {
         document.head.appendChild(ogImage);
       }
       ogImage.setAttribute("content", article.image_url || "");
+
+      const canonicalUrl = `https://www.harmoniejoy.net/article/${article.slug}`;
+      let canonical = document.querySelector('link[rel="canonical"]');
+      if (!canonical) {
+        canonical = document.createElement('link');
+        canonical.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonical);
+      }
+      canonical.setAttribute('href', canonicalUrl);
+
+      const setMeta = (selector, attributes, content) => {
+        let element = document.querySelector(selector);
+        if (!element) {
+          element = document.createElement('meta');
+          Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+          document.head.appendChild(element);
+        }
+        element.setAttribute('content', content || '');
+      };
+      setMeta('meta[property="og:url"]', { property: 'og:url' }, canonicalUrl);
+      setMeta('meta[name="twitter:title"]', { name: 'twitter:title' }, article.title);
+      setMeta('meta[name="twitter:description"]', { name: 'twitter:description' }, article.excerpt);
+      setMeta('meta[name="twitter:image"]', { name: 'twitter:image' }, article.image_url);
+
+      const schemaId = 'article-schema';
+      let schema = document.getElementById(schemaId);
+      if (!schema) {
+        schema = document.createElement('script');
+        schema.id = schemaId;
+        schema.type = 'application/ld+json';
+        document.head.appendChild(schema);
+      }
+      schema.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: article.title,
+        description: article.excerpt,
+        image: article.image_url ? [article.image_url] : [],
+        datePublished: article.created_at,
+        dateModified: article.updated_at || article.created_at,
+        author: { '@type': 'Person', name: article.author || 'Harmonie Joy' },
+        mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl }
+      });
     } else if (loading) {
       document.title = "Chargement... | Harmonie Féline & Humaine";
     }

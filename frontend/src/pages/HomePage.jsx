@@ -79,7 +79,7 @@ const ArticleCard = ({ article }) => {
           Lire l'article <ArrowRight className="w-3.5 h-3.5" />
         </Link>
         <div className="flex gap-2 mt-auto flex-wrap">
-          <a href="https://www.zinzino.com/2020929659" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.zinzino.com/2020929659/fr/fr-fr" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full hover:bg-emerald-100 transition-colors">
             <ExternalLink className="w-3 h-3" />Zinzino
           </a>
@@ -457,7 +457,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-            <a href="https://www.zinzino.com/2020929659" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.zinzino.com/2020929659/fr/fr-fr" target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 w-full bg-emerald-800 hover:bg-emerald-900 text-white py-3.5 rounded-xl text-sm font-bold transition-colors mt-4 shadow-md">
               <ShoppingBag className="w-4 h-4" />Commander sur Zinzino — prix partenaire avantageux<ExternalLink className="w-3.5 h-3.5" />
             </a>
@@ -467,7 +467,7 @@ const HomePage = () => {
                 <div className="text-xs font-semibold text-emerald-800">Compléments alimentaires animaux</div>
                 <div className="text-xs text-emerald-600">aussi disponibles chez Zinzino — même qualité scandinave</div>
               </div>
-              <a href="https://www.zinzino.com/2020929659" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.zinzino.com/2020929659/fr/fr-fr" target="_blank" rel="noopener noreferrer"
                 className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs px-3 py-1.5 rounded-full font-semibold hover:bg-emerald-100 transition-colors whitespace-nowrap">
                 Voir
               </a>
@@ -590,7 +590,7 @@ const HomePage = () => {
             <Link to="/bien-etre-humain" className="hover:text-white transition-colors">Bien-être</Link>
           </div>
           <div className="flex flex-col md:flex-row gap-3 md:justify-center md:max-w-sm md:mx-auto">
-            <a href="https://www.zinzino.com/2020929659" target="_blank" rel="noopener noreferrer"
+            <a href="https://www.zinzino.com/2020929659/fr/fr-fr" target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white py-3 px-6 rounded-xl text-sm font-semibold transition-colors">
               <ExternalLink className="w-3.5 h-3.5" />Boutique Zinzino
             </a>
