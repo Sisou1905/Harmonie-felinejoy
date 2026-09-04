@@ -496,8 +496,9 @@ async def health():
 # ==================== SEED DATA ====================
 
 @api_router.post("/seed")
-async def seed_data():
+async def seed_data(request: Request):
     """Seed initial articles data"""
+    await require_admin(request)
     # Check if already seeded
     existing = await db.articles.count_documents({})
     if existing > 0:

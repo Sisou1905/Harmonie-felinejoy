@@ -1,31 +1,11 @@
-import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Cat, Heart, Stethoscope, Home } from "lucide-react";
 import ArticleCard from "../components/ArticleCard";
-import ProductSpotlight from "../components/ProductSpotlight";
-import { API } from "../App";
+import { editorialArticles } from "../data/editorialArticles";
 
 const AnimalWellnessPage = () => {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await fetch(`${API}/articles?category=animal`);
-        if (response.ok) {
-          const data = await response.json();
-          setArticles(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch articles:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchArticles();
-  }, []);
+  const articles = editorialArticles.filter((article) => article.category === "animal");
 
   const topics = [
     { icon: Cat, label: "Comportement", color: "bg-accent" },
@@ -63,8 +43,8 @@ const AnimalWellnessPage = () => {
               Bien-être <span className="text-accent-foreground">Animal</span>
             </h1>
             <p className="text-lg md:text-xl text-text-muted leading-relaxed">
-              Découvrez comment prendre soin de votre compagnon félin.
-              Des conseils vétérinaires et comportementaux pour un chat heureux et épanoui.
+              Découvrez des repères pour observer et respecter votre compagnon félin.
+              Les articles signalent quand demander l’avis d’un vétérinaire.
             </p>
           </motion.div>
         </div>
@@ -86,13 +66,7 @@ const AnimalWellnessPage = () => {
             </p>
           </motion.div>
 
-          {loading ? (
-            <div className="grid md:grid-cols-2 gap-8">
-              {[1, 2].map((i) => (
-                <div key={i} className="bg-white rounded-3xl h-96 animate-pulse" />
-              ))}
-            </div>
-          ) : articles.length === 0 ? (
+          {articles.length === 0 ? (
             <div className="text-center py-12 text-text-muted">
               <p>Aucun article disponible pour le moment.</p>
             </div>
@@ -106,18 +80,6 @@ const AnimalWellnessPage = () => {
         </div>
       </section>
 
-      <section className="section-spacing bg-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-xl mx-auto"
-          >
-            <ProductSpotlight type="cats" />
-          </motion.div>
-        </div>
-      </section>
     </>
   );
 };

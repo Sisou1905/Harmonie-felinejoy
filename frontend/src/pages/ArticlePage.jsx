@@ -10,13 +10,12 @@ import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { toast } from "sonner";
 import CommentSection from "../components/CommentSection";
-import AffiliateBanner from "../components/AffiliateBanner";
-import AmazonProducts from "../components/AmazonProducts";
-import { AdInArticle, AdSquare } from "../components/AdSense";
 import { API, useAuth } from "../App";
+import { editorialArticleBySlug } from "../data/editorialArticles";
 
 const ArticlePage = () => {
   const { slug } = useParams();
+  const editorialArticle = editorialArticleBySlug[slug];
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [liked, setLiked] = useState(false);
@@ -37,6 +36,13 @@ const ArticlePage = () => {
   };
 
   const fetchArticle = useCallback(async () => {
+    if (editorialArticle) {
+      setArticle(editorialArticle);
+      setLikesCount(0);
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch(`${API}/articles/${slug}`);
       if (response.ok) {
@@ -49,7 +55,7 @@ const ArticlePage = () => {
     } finally {
       setLoading(false);
     }
-  }, [slug]);
+  }, [slug, editorialArticle]);
 
   const fetchInteractionStatus = useCallback(async () => {
     if (!article?.article_id) return;
@@ -170,6 +176,13 @@ const ArticlePage = () => {
         author: { '@type': 'Person', name: article.author || 'Harmonie Joy' },
         mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl }
       });
+      let robots = document.querySelector('meta[name="robots"]');
+      if (!robots) {
+        robots = document.createElement('meta');
+        robots.setAttribute('name', 'robots');
+        document.head.appendChild(robots);
+      }
+      robots.setAttribute('content', editorialArticle ? 'index,follow,max-image-preview:large' : 'noindex,follow');
     } else if (loading) {
       document.title = "Chargement... | Harmonie Féline & Humaine";
     }
@@ -178,7 +191,7 @@ const ArticlePage = () => {
     return () => {
       document.title = "Harmonie Féline & Humaine | Blog Bien-être";
     };
-  }, [article, loading]);
+  }, [article, loading, editorialArticle]);
 
   const handleLike = async () => {
     if (!user) {
@@ -439,31 +452,6 @@ const ArticlePage = () => {
                 </ul>
               </motion.div>
             )}
-
-            {/* In-Article Ad */}
-            <div className="mt-12">
-              <AdInArticle />
-            </div>
-
-            {/* Affiliate Banner */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-12"
-            >
-              <AffiliateBanner type={article.category === "animal" ? "felinejoy" : "zinzino"} />
-            </motion.div>
-
-            {/* Amazon Products */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mt-12"
-            >
-              <AmazonProducts category={article.category === "animal" ? "cats" : "wellness"} />
-            </motion.div>
 
             {/* Comments */}
             <CommentSection articleId={article.article_id} />

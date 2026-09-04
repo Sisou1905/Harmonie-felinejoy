@@ -6,8 +6,8 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const shopLinks = [
-    { name: "Feline Joy", url: "https://www.felinejoycamy.myshopify.com", description: "Accessoires & T-shirts chats", emoji: "🐱" },
-    { name: "Zinzino", url: "https://www.zinzino.com/2020929659/fr/fr-fr", description: "Nutrition testee & approuvee", emoji: "🌿" }
+    { name: "Feline Joy", url: "https://www.felinejoycamy.myshopify.com", description: "Accessoires & T-shirts chats — lien partenaire", emoji: "🐱" },
+    { name: "Zinzino", url: "https://www.zinzino.com/2020929659/fr/fr-fr", description: "Lien partenaire", emoji: "🌿" }
   ];
 
   const quickLinks = [
@@ -52,7 +52,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Nos Boutiques</h4>
+            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Liens partenaires</h4>
             <ul className="space-y-4">
               {shopLinks.map((shop) => (
                 <li key={shop.url}>
@@ -76,12 +76,19 @@ const Footer = () => {
 
         <div className="mt-16 pt-8 border-t border-primary-light/30 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-text-muted text-sm">
-            &copy; {currentYear} Harmonie Joy. Tous droits reserves.
+            © {currentYear} Harmonie Joy. Tous droits réservés.
           </p>
-          <Link to="/privacy" className="text-text-muted text-sm hover:text-primary transition-colors">
-            Politique de confidentialite
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy" className="text-text-muted text-sm hover:text-primary transition-colors">
+              Politique de confidentialité
+            </Link>
+            <Link to="/legal" className="text-text-muted text-sm hover:text-primary transition-colors">
+              Mentions légales
+            </Link>
+          </div>
         </div>
+
+        <p className="mt-5 text-xs text-text-muted leading-relaxed max-w-3xl">Certains liens vers des boutiques sont des liens partenaires susceptibles de donner lieu à une commission. Ils sont distincts des contenus éditoriaux et ne constituent pas un avis médical ou vétérinaire.</p>
 
       </div>
     </footer>

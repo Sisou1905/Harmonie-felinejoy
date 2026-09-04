@@ -1,26 +1,26 @@
-import { useEffect, useState, createContext, useContext, useCallback, useRef } from "react";
+import { lazy, Suspense, useEffect, useState, createContext, useContext, useCallback, useRef } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation, useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Toaster } from "./components/ui/sonner";
 import "./App.css";
 
-// Pages
-import HomePage from "./pages/HomePage";
-import HumanWellnessPage from "./pages/HumanWellnessPage";
-import AnimalWellnessPage from "./pages/AnimalWellnessPage";
-import ConnectionPage from "./pages/ConnectionPage";
-import ArticlePage from "./pages/ArticlePage";
-import DashboardPage from "./pages/DashboardPage";
-import LoginPage from "./pages/LoginPage";
+// Route-level lazy loading keeps the first download focused on the page a visitor opens.
+const HomePage = lazy(() => import("./pages/HomePage"));
+const HumanWellnessPage = lazy(() => import("./pages/HumanWellnessPage"));
+const AnimalWellnessPage = lazy(() => import("./pages/AnimalWellnessPage"));
+const ConnectionPage = lazy(() => import("./pages/ConnectionPage"));
+const ArticlePage = lazy(() => import("./pages/ArticlePage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
 import AuthCallback from "./pages/AuthCallback";
-import AdminPage from "./pages/AdminPage";
-import SearchPage from "./pages/SearchPage";
-import LandingPage from "./pages/LandingPage";
-import BlogPage from "./pages/BlogPage";
-import AboutPage from "./pages/AboutPage";
-import PrivacyPage from "./pages/PrivacyPage";
-import LegalPage from "./pages/LegalPage";
+const AdminPage = lazy(() => import("./pages/AdminPage"));
+const SearchPage = lazy(() => import("./pages/SearchPage"));
+const LandingPage = lazy(() => import("./pages/LandingPage"));
+const BlogPage = lazy(() => import("./pages/BlogPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const PrivacyPage = lazy(() => import("./pages/PrivacyPage"));
+const LegalPage = lazy(() => import("./pages/LegalPage"));
 
 // Components
 import Header from "./components/Header";
@@ -149,8 +149,9 @@ const AppRouter = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-grow">
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-background text-primary">Chargement de la page…</div>}>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
             <Route path="/blog" element={<PageWrapper><BlogPage /></PageWrapper>} />
             <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
             <Route path="/bien-etre-humain" element={<PageWrapper><HumanWellnessPage /></PageWrapper>} />
@@ -180,8 +181,9 @@ const AppRouter = () => {
                 </ProtectedRoute>
               }
             />
-          </Routes>
-        </AnimatePresence>
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
       </main>
       <Newsletter />
       <Footer />
@@ -191,17 +193,6 @@ const AppRouter = () => {
 };
 
 function App() {
-  useEffect(() => {
-    const seedData = async () => {
-      try {
-        await fetch(`${API}/seed`, { method: "POST" });
-      } catch (e) {
-        console.log("Seed skipped or already done");
-      }
-    };
-    seedData();
-  }, []);
-
   return (
     <HelmetProvider>
       <BrowserRouter>

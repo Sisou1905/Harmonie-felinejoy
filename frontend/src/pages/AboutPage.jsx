@@ -1,26 +1,27 @@
+import { Link } from "react-router-dom";
+
 const AboutPage = () => {
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px', fontFamily: 'Georgia, serif', color: '#333', lineHeight: '1.8' }}>
+    <main style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px', fontFamily: 'Georgia, serif', color: '#333', lineHeight: '1.8' }}>
       <h1 style={{ fontSize: '2rem', marginBottom: '10px', color: '#2d2d2d' }}>À propos de Harmonie Joy</h1>
       <hr style={{ marginBottom: '30px', borderColor: '#eee' }} />
 
-      <p>Harmonie Joy est un blog bien-être holistique qui explore le lien profond entre la santé du corps, de l'esprit et de notre environnement naturel.</p>
+      <p>Harmonie Joy est un média indépendant consacré au bien-être humain, au bien-être félin et aux gestes qui facilitent une cohabitation attentive. Les sujets abordés vont du sommeil et des routines quotidiennes à l’environnement du chat d’intérieur et à la relation humain-animal.</p>
 
-      <p>Notre approche est simple : des informations claires, des techniques concrètes et faciles à intégrer dans le quotidien, pour que chaque lecteur puisse progresser à son rythme vers un mieux-être réel et durable.</p>
+      <h2>Notre méthode éditoriale</h2>
+      <p>Nous privilégions les conseils réalisables dans la vie courante et les sources identifiables. Lorsqu’un article traite de santé humaine ou animale, il indique ses références et rappelle les limites de l’information générale. Un article ne remplace ni un diagnostic, ni une consultation avec un médecin, un vétérinaire ou un autre professionnel qualifié.</p>
+      <p>Nous ne présentons pas un produit, un complément ou une pratique comme un traitement. Les situations inhabituelles, persistantes ou inquiétantes doivent être discutées avec un professionnel de santé adapté.</p>
 
-      <p>Nos articles couvrent des thématiques variées : santé holistique, techniques de mémorisation pour collégiens et lycéens, communion avec la nature et ses bienfaits, gestion du stress, nutrition, sommeil, médecines douces et le bonheur de nos compagnons animaux, en particulier nos chats bien-aimés.</p>
+      <h2>Indépendance et liens partenaires</h2>
+      <p>Harmonie Joy peut percevoir une commission lorsqu’un lecteur effectue un achat après avoir suivi certains liens partenaires. Cette possibilité est signalée à proximité du lien concerné. Elle ne finance pas un avis médical ou vétérinaire et ne change pas notre méthode de sélection éditoriale.</p>
 
-      <p>Nous croyons aussi au lien unique et précieux qui unit l'humain à son animal de compagnie. Cette relation va bien au-delà de la simple cohabitation : elle nourrit notre équilibre émotionnel, réduit notre stress et enrichit notre quotidien d'une présence bienveillante et authentique. Prendre soin de son chat, c'est aussi prendre soin de soi.</p>
-
-      <p>Que vous ayez 15 ans ou 50 ans, que vous soyez parent, étudiant ou simplement curieux de mieux vivre, Harmonie Joy est fait pour vous.</p>
-
-      <p>Harmonie Joy est disponible en français, anglais, arabe, turc et polonais, parce que le bien-être n'a pas de frontières.</p>
-
-      <p style={{ marginTop: '40px' }}>
-        <strong>Contact :</strong>{' '}
+      <h2>Contact</h2>
+      <p>
+        Pour une question éditoriale, une correction ou une demande relative à vos données, écrivez à{' '}
         <a href="mailto:contact@felinejoy.com" style={{ color: '#6b8f71' }}>contact@felinejoy.com</a>
       </p>
-    </div>
+      <p>Consultez aussi notre <Link to="/privacy" style={{ color: '#6b8f71' }}>politique de confidentialité</Link> et nos <Link to="/legal" style={{ color: '#6b8f71' }}>mentions légales</Link>.</p>
+    </main>
   );
 };
 

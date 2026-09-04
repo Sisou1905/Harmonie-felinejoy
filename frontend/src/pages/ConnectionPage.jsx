@@ -1,36 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, Users, Sparkles, HandHeart } from "lucide-react";
 import ArticleCard from "../components/ArticleCard";
-import ProductSpotlight from "../components/ProductSpotlight";
-import { API } from "../App";
+import { editorialArticles } from "../data/editorialArticles";
 
 const ConnectionPage = () => {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const articles = editorialArticles.filter((article) => article.category === "connection");
 
   useEffect(() => {
     document.title = "La Connexion Humain-Animal | Harmonie Féline & Humaine";
     return () => {
       document.title = "Harmonie Féline & Humaine | Blog Bien-être";
     };
-  }, []);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await fetch(`${API}/articles?category=connection`);
-        if (response.ok) {
-          const data = await response.json();
-          setArticles(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch articles:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchArticles();
   }, []);
 
   const topics = [
@@ -61,8 +42,8 @@ const ConnectionPage = () => {
                 La <span className="text-secondary-dark">Connexion</span>
               </h1>
               <p className="text-lg md:text-xl text-text-muted leading-relaxed">
-                Le lien entre humains et animaux est précieux et scientifiquement prouvé.
-                Découvrez comment cette relation unique améliore notre bien-être mutuel.
+                Le lien entre humains et animaux est précieux et propre à chaque foyer.
+                Découvrez comment construire une cohabitation plus attentive, dans le respect de chacun.
               </p>
             </motion.div>
 
@@ -95,15 +76,15 @@ const ConnectionPage = () => {
             className="text-center mb-12"
           >
             <h2 className="font-heading text-3xl md:text-4xl font-semibold text-text-main mb-4">
-              Les bienfaits prouvés
+              Des repères pour mieux vivre ensemble
             </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { title: "Réduction du stress", description: "Caresser un animal réduit le cortisol et augmente l'ocytocine, l'hormone du bonheur.", icon: Heart, color: "bg-accent" },
-              { title: "Santé cardiovasculaire", description: "Les propriétaires d'animaux ont une pression artérielle plus basse en moyenne.", icon: Sparkles, color: "bg-primary" },
-              { title: "Bien-être mental", description: "La présence d'un animal réduit les sentiments de solitude et combat la dépression.", icon: Users, color: "bg-secondary" },
+              { title: "Observer", description: "Les habitudes, postures et préférences de l’animal sont les premiers repères pour adapter le quotidien.", icon: Heart, color: "bg-accent" },
+              { title: "Respecter", description: "Le contact, le jeu et le repos ont plus de valeur lorsqu’ils restent choisis et prévisibles.", icon: Sparkles, color: "bg-primary" },
+              { title: "Demander conseil", description: "Un changement soudain de comportement, d’appétit ou d’élimination mérite un avis vétérinaire.", icon: Users, color: "bg-secondary" },
             ].map((benefit, index) => (
               <motion.div
                 key={index}
@@ -140,13 +121,7 @@ const ConnectionPage = () => {
             </p>
           </motion.div>
 
-          {loading ? (
-            <div className="grid md:grid-cols-2 gap-8">
-              {[1, 2].map((i) => (
-                <div key={i} className="bg-background rounded-3xl h-96 animate-pulse" />
-              ))}
-            </div>
-          ) : articles.length === 0 ? (
+          {articles.length === 0 ? (
             <div className="text-center py-12 text-text-muted">
               <p>Aucun article disponible pour le moment.</p>
             </div>
@@ -160,14 +135,6 @@ const ConnectionPage = () => {
         </div>
       </section>
 
-      <section className="section-spacing">
-        <div className="container-custom">
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <ProductSpotlight type="cats" />
-            <ProductSpotlight type="supplements" />
-          </div>
-        </div>
-      </section>
     </>
   );
 };

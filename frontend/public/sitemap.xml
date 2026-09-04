@@ -31,9 +31,29 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.harmoniejoy.net/article/avis-zinzino-balanceoil-phycosci-x20</loc>
+    <loc>https://www.harmoniejoy.net/privacy</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.harmoniejoy.net/legal</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.harmoniejoy.net/article/rituel-du-soir-pour-mieux-dormir-routine-30-minutes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.harmoniejoy.net/article/chat-interieur-7-signes-ennui-routine-enrichissement-sure</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.harmoniejoy.net/article/vivre-avec-un-chat-au-quotidien-rituels-respectent-son-rythme</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
 

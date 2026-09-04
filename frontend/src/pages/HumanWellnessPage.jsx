@@ -1,31 +1,11 @@
-import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Heart, Brain, Moon, Salad } from "lucide-react";
 import ArticleCard from "../components/ArticleCard";
-import ProductSpotlight from "../components/ProductSpotlight";
-import { API } from "../App";
+import { editorialArticles } from "../data/editorialArticles";
 
 const HumanWellnessPage = () => {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await fetch(`${API}/articles?category=human`);
-        if (response.ok) {
-          const data = await response.json();
-          setArticles(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch articles:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchArticles();
-  }, []);
+  const articles = editorialArticles.filter((article) => article.category === "human");
 
   const topics = [
     { icon: Brain, label: "Méditation", color: "bg-primary" },
@@ -64,8 +44,8 @@ const HumanWellnessPage = () => {
               Bien-être <span className="text-primary">Humain</span>
             </h1>
             <p className="text-lg md:text-xl text-text-muted leading-relaxed">
-              Explorez nos ressources pour cultiver votre santé physique et mentale.
-              Des articles basés sur des recherches scientifiques pour une vie plus équilibrée.
+              Explorez des repères pratiques pour votre quotidien.
+              Les articles indiquent leurs sources et ne remplacent pas un avis médical.
             </p>
           </motion.div>
         </div>
@@ -87,13 +67,7 @@ const HumanWellnessPage = () => {
             </p>
           </motion.div>
 
-          {loading ? (
-            <div className="grid md:grid-cols-2 gap-8">
-              {[1, 2].map((i) => (
-                <div key={i} className="bg-white rounded-3xl h-96 animate-pulse" />
-              ))}
-            </div>
-          ) : articles.length === 0 ? (
+          {articles.length === 0 ? (
             <div className="text-center py-12 text-text-muted">
               <p>Aucun article disponible pour le moment.</p>
             </div>
@@ -107,18 +81,6 @@ const HumanWellnessPage = () => {
         </div>
       </section>
 
-      <section className="section-spacing bg-white">
-        <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-xl mx-auto"
-          >
-            <ProductSpotlight type="supplements" />
-          </motion.div>
-        </div>
-      </section>
     </>
   );
 };

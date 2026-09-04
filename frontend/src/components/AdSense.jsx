@@ -4,6 +4,7 @@ import { useEffect } from "react";
 // Replace ca-pub-XXXXXXXXXX with your AdSense publisher ID
 
 const ADSENSE_CLIENT = "ca-pub-2771964189463944"; // Votre ID AdSense
+const ADSENSE_ENABLED = process.env.REACT_APP_ENABLE_ADSENSE === "true";
 
 const AdSense = ({ 
   slot, 
@@ -15,13 +16,16 @@ const AdSense = ({
   useEffect(() => {
     try {
       // Push ad to AdSense
-      if (window.adsbygoogle && process.env.NODE_ENV === "production") {
+      if (ADSENSE_ENABLED && window.adsbygoogle && process.env.NODE_ENV === "production") {
         window.adsbygoogle.push({});
       }
     } catch (error) {
       console.log("AdSense error:", error);
     }
   }, []);
+
+  // Activate only after AdSense approval and certified-CMP configuration.
+  if (!ADSENSE_ENABLED) return null;
 
   // In development, show placeholder
   if (process.env.NODE_ENV !== "production") {

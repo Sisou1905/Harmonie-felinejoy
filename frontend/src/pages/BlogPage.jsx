@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Search } from "lucide-react";
-import { API } from "../App";
+import { editorialArticles } from "../data/editorialArticles";
 
 const fadeUp = { hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } } };
 const stagger = { visible: { transition: { staggerChildren: 0.08 } } };
@@ -28,18 +28,11 @@ const TagBadge = ({ label }) => {
   );
 };
 
-const CATEGORIES = ["Tous", "Science", "Bien-être humain", "Bien-être animal", "Lien", "Recette"];
-
-const FALLBACK_ARTICLES = [
-  { title:"3 mois d'Oméga-3 pour mieux dormir et réduire le stress", category:"Science", excerpt:"Une étude relayée par Science & Vie révèle qu'une cure de 3 mois d'Oméga-3 transforme votre équilibre mental et améliore le sommeil.", image_url:"https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80", slug:"omega-3-stress-sommeil-cure-3-mois", reading_time:6 },
-  { title:"Comment les animaux réduisent notre stress", category:"Lien", excerpt:"Découvrez pourquoi la présence d'un animal de compagnie est l'un des remèdes naturels les plus puissants contre le stress.", image_url:"https://images.unsplash.com/photo-1511044568932-338ceba5ad33?w=600&q=80", slug:"comment-les-animaux-reduisent-notre-stress", reading_time:5 },
-  { title:"Comment votre état émotionnel affecte votre chat", category:"Bien-être animal", excerpt:"Les chats sont des éponges émotionnelles. Découvrez comment votre humeur influence directement leur comportement.", image_url:"https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80", slug:"etat-emotionnel-affecte-chat", reading_time:4 },
-  { title:"Les bienfaits thérapeutiques de la présence animale", category:"Lien", excerpt:"La science confirme ce que les propriétaires d'animaux savent intuitivement : nos compagnons sont bons pour notre santé.", image_url:"https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=600&q=80", slug:"bienfaits-therapeutiques-presence-animale", reading_time:5 },
-  { title:"Nutrition optimale pour les chats seniors", category:"Bien-être animal", excerpt:"Les besoins nutritionnels de votre chat évoluent avec l'âge. Découvrez comment adapter son alimentation.", image_url:"https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=600&q=80", slug:"nutrition-chat-senior", reading_time:5 },
-  { title:"L'importance du sommeil pour la santé", category:"Bien-être humain", excerpt:"Le sommeil est un pilier fondamental de notre santé mentale et physique. Apprenez à optimiser vos nuits.", image_url:"https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600&q=80", slug:"importance-sommeil-sante", reading_time:6 },
-  { title:"Comprendre le langage corporel de votre chat", category:"Bien-être animal", excerpt:"Apprenez à décoder les signaux que votre chat vous envoie pour mieux communiquer avec lui.", image_url:"https://images.unsplash.com/photo-1574158622682-e40e69881006?w=600&q=80", slug:"langage-corporel-chat", reading_time:4 },
-  { title:"La méditation pour réduire le stress au quotidien", category:"Bien-être humain", excerpt:"Des études scientifiques confirment les effets de la méditation sur le cerveau et le système nerveux.", image_url:"https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=600&q=80", slug:"meditation-reduire-stress", reading_time:5 },
-  { title:"Le ronronnement du chat : bien plus qu'un son", category:"Science", excerpt:"Le ronronnement à 25-50 Hz favorise la régénération osseuse et réduit l'anxiété. Les mécanismes expliqués.", image_url:"https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?w=600&q=80", slug:"ronronnement-chat-bienfaits", reading_time:4 },
+const CATEGORIES = [
+  { value: "all", label: "Tous" },
+  { value: "human", label: "Bien-être humain" },
+  { value: "animal", label: "Bien-être animal" },
+  { value: "connection", label: "La connexion" },
 ];
 
 const ArticleCard = ({ article }) => (
@@ -70,28 +63,17 @@ const ArticleCard = ({ article }) => (
 );
 
 const BlogPage = () => {
-  const [articles, setArticles] = useState([]);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("Tous");
+  const [category, setCategory] = useState("all");
 
   useEffect(() => {
     document.title = "Blog — Harmonie Féline & Humaine";
-    const fetch_ = async () => {
-      try {
-        const r = await fetch(`${API}/articles?limit=50`);
-        if (r.ok) {
-          const data = await r.json();
-          if (data.length > 0) setArticles(data);
-        }
-      } catch (e) { console.error(e); }
-    };
-    fetch_();
   }, []);
 
-  const allArticles = articles.length > 0 ? articles : FALLBACK_ARTICLES;
+  const allArticles = editorialArticles;
 
   const filtered = allArticles.filter(a => {
-    const matchCat = category === "Tous" || a.category === category;
+    const matchCat = category === "all" || a.category === category;
     const matchSearch = a.title.toLowerCase().includes(search.toLowerCase()) ||
       (a.excerpt && a.excerpt.toLowerCase().includes(search.toLowerCase()));
     return matchCat && matchSearch;
@@ -123,13 +105,13 @@ const BlogPage = () => {
       <div className="bg-white border-b border-gray-100 px-5 md:px-8 py-3 sticky top-0 z-10">
         <div className="max-w-5xl mx-auto flex gap-2 overflow-x-auto pb-1">
           {CATEGORIES.map(cat => (
-            <button key={cat} onClick={() => setCategory(cat)}
+            <button key={cat.value} onClick={() => setCategory(cat.value)}
               className={`whitespace-nowrap text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${
-                category === cat
+                category === cat.value
                   ? "bg-emerald-700 text-white border-emerald-700"
                   : "bg-white text-gray-600 border-gray-200 hover:border-emerald-300 hover:text-emerald-700"
               }`}>
-              {cat}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -139,7 +121,7 @@ const BlogPage = () => {
         {filtered.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-gray-400 text-sm">Aucun article trouvé pour "{search}"</p>
-            <button onClick={() => { setSearch(""); setCategory("Tous"); }}
+            <button onClick={() => { setSearch(""); setCategory("all"); }}
               className="mt-3 text-xs text-emerald-600 underline">
               Réinitialiser la recherche
             </button>
