@@ -1,8 +1,26 @@
-User-agent: *
+# Harmonie Joy — directives d’exploration
+User-agent: Googlebot
 Allow: /
-Allow: /ads.txt
 
 User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: *
 Allow: /
 
 Sitemap: https://www.harmoniejoy.net/sitemap.xml

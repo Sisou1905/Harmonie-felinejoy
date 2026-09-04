@@ -1,0 +1,19 @@
+# Harmonie Joy
+> Média francophone indépendant consacré au bien-être humain, au bien-être félin et à la relation respectueuse entre humains et chats. Les articles sont informatifs, sourcés et ne remplacent pas un avis médical ou vétérinaire.
+
+## Guides éditoriaux
+- [Rituel du soir pour mieux dormir](https://www.harmoniejoy.net/article/rituel-du-soir-pour-mieux-dormir-routine-30-minutes): Routine du soir réaliste de 30 minutes, avec conseils de santé publique et limites à connaître.
+- [Chat d’intérieur : signes d’ennui et enrichissement](https://www.harmoniejoy.net/article/chat-interieur-7-signes-ennui-routine-enrichissement-sure): Signes à observer, idées d’enrichissement progressives et critères de consultation vétérinaire.
+- [Vivre avec un chat au quotidien](https://www.harmoniejoy.net/article/vivre-avec-un-chat-au-quotidien-rituels-respectent-son-rythme): Rituels souples, lecture des signaux du chat et cohabitation respectueuse.
+
+## Pages de référence
+- [Accueil](https://www.harmoniejoy.net/): Présentation du média et accès aux dernières publications.
+- [À propos](https://www.harmoniejoy.net/a-propos): Méthode éditoriale, limites des contenus et transparence sur les liens partenaires.
+- [Politique de confidentialité](https://www.harmoniejoy.net/privacy): Informations sur les données, cookies et publicités.
+- [Mentions légales](https://www.harmoniejoy.net/legal): Éditeur, contact et hébergeur.
+
+## Principes éditoriaux
+- Sources externes identifiables pour les affirmations de santé humaine ou animale.
+- Aucun conseil ne doit être interprété comme un diagnostic, un traitement ou une promesse de résultat.
+- Les liens partenaires, lorsqu’ils existent, sont signalés.
+- Contact éditorial : contact@felinejoy.com
