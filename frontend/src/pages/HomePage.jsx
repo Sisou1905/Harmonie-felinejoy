@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Sparkles, ShoppingBag, ExternalLink, Bell, ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Sparkles, Bell } from "lucide-react";
 import { editorialArticles } from "../data/editorialArticles";
 
 const useSEO = () => {
@@ -13,8 +13,8 @@ const useSEO = () => {
       if (!el) { el = document.createElement("meta"); prop ? el.setAttribute("property", name) : el.setAttribute("name", name); document.head.appendChild(el); }
       el.setAttribute("content", content);
     };
-    setMeta("description", "Guides pratiques et sourcés sur le sommeil, le bien-être humain, le bien-être félin et la relation humain-animal.");
-    setMeta("keywords", "bien-être humain, bien-être animal, sommeil, chat d’intérieur, relation humain-chat, blog bien-être");
+    setMeta("description", "Guides pratiques et sourcés sur le sommeil, l’attention, l’apprentissage, le bien-être félin et la relation humain-animal.");
+    setMeta("keywords", "bien-être humain, attention, métacognition, bien-être animal, sommeil, chat d’intérieur, relation humain-chat");
     setMeta("og:title", "Harmonie Féline & Humaine | Blog Bien-être", true);
     setMeta("og:description", "Prendre soin de soi, comprendre son animal, chérir ce lien unique.", true);
     setMeta("og:type", "website", true);
@@ -100,76 +100,6 @@ const NewsletterCTA = () => {
   );
 };
 
-const TOLTÈQUES = [
-  { num:"01", jour:"Lundi", titre:"Que votre parole soit impeccable", court:"Parlez avec intégrité, ne dites que ce que vous pensez vraiment.", long:"La parole est une force créatrice. Chaque mot que vous prononcez façonne votre réalité. Parler avec impeccabilité signifie ne pas vous utiliser contre vous-même. Avec votre chat aussi : votre ton, votre énergie, votre sincérité — il les ressent tous.", couleur:"violet" },
-  { num:"02", jour:"Mardi", titre:"N'en faites pas une affaire personnelle", court:"Ce que les autres font est le reflet de leur propre réalité, pas de la vôtre.", long:"Quand quelqu'un vous critique ou agit mal, c'est le reflet de son monde intérieur — non du vôtre. Les chats incarnent cet accord naturellement : ils ne prennent rien personnellement. Ils vivent dans l'instant, sans ruminer.", couleur:"emerald" },
-  { num:"03", jour:"Mercredi", titre:"Ne faites pas de suppositions", court:"Demandez et exprimez ce que vous voulez vraiment. Évitez les malentendus.", long:"La plupart de nos souffrances naissent de suppositions. Nous inventons des histoires sur ce que les autres pensent. Avec votre chat, observez — ne supposez pas. Apprenez ses vrais signaux corporels.", couleur:"amber" },
-  { num:"04", jour:"Jeudi", titre:"Faites toujours de votre mieux", court:"Votre mieux change d'un instant à l'autre. Donnez-le toujours, sans vous juger.", long:"Votre mieux n'est pas le même quand vous êtes reposé ou épuisé. L'essentiel est d'agir — sans perfection, sans culpabilité. Chaque journée où vous prenez soin de vous ET de votre animal, c'est votre mieux.", couleur:"rose" },
-  { num:"05", jour:"Vendredi", titre:"Soyez sceptique mais apprenez à écouter", court:"Doutez, questionnez — mais restez ouvert à ce que vous ne savez pas encore.", long:"Le 5ème accord nous invite à questionner nos croyances limitantes sur notre santé et nos relations avec nos animaux. Écoutez votre corps. Écoutez votre chat. Ils savent souvent des choses que votre mental ignore.", couleur:"blue" },
-];
-
-const colorMap = {
-  violet: { bg:"bg-violet-50", border:"border-violet-200", num:"text-violet-100", titre:"text-violet-800", desc:"text-violet-600", badge:"bg-violet-100 text-violet-700" },
-  emerald: { bg:"bg-emerald-50", border:"border-emerald-200", num:"text-emerald-100", titre:"text-emerald-800", desc:"text-emerald-600", badge:"bg-emerald-100 text-emerald-700" },
-  amber: { bg:"bg-amber-50", border:"border-amber-200", num:"text-amber-100", titre:"text-amber-800", desc:"text-amber-600", badge:"bg-amber-100 text-amber-700" },
-  rose: { bg:"bg-rose-50", border:"border-rose-200", num:"text-rose-100", titre:"text-rose-800", desc:"text-rose-600", badge:"bg-rose-100 text-rose-700" },
-  blue: { bg:"bg-blue-50", border:"border-blue-200", num:"text-blue-100", titre:"text-blue-800", desc:"text-blue-600", badge:"bg-blue-100 text-blue-700" },
-};
-
-const ToltequesSection = () => {
-  const [openIndex, setOpenIndex] = useState(0);
-  return (
-    <section className="px-5 md:px-8 py-6 max-w-5xl mx-auto">
-      <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-10 h-10 rounded-full bg-violet-100 border border-violet-200 flex items-center justify-center text-lg flex-shrink-0">🌀</div>
-          <div>
-            <p className="text-xs font-bold tracking-widest uppercase text-violet-400">Sagesse de la semaine</p>
-            <h2 className="font-semibold text-violet-900 text-lg md:text-xl">Les 5 Accords Toltèques — 1 par jour</h2>
-          </div>
-          <span className="ml-auto text-xs text-violet-400 italic hidden md:block">Don Miguel Ruiz</span>
-        </div>
-        <div className="space-y-2">
-          {TOLTÈQUES.map((t, i) => {
-            const c = colorMap[t.couleur];
-            const isOpen = openIndex === i;
-            return (
-              <div key={i} className={`${c.bg} border ${c.border} rounded-2xl overflow-hidden transition-all duration-200`}>
-                <button onClick={() => setOpenIndex(isOpen ? -1 : i)}
-                  className="w-full flex items-center gap-3 p-4 text-left">
-                  <span className={`text-3xl font-light ${c.num} flex-shrink-0`}>{t.num}</span>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-0.5">
-                      <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${c.badge}`}>{t.jour}</span>
-                    </div>
-                    <p className={`text-sm font-semibold ${c.titre} leading-snug`}>{t.titre}</p>
-                    {!isOpen && <p className={`text-xs ${c.desc} mt-0.5 leading-snug line-clamp-1`}>{t.court}</p>}
-                  </div>
-                  <ChevronDown className={`w-4 h-4 ${c.desc} flex-shrink-0 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
-                </button>
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
-                      <div className="px-4 pb-4">
-                        <p className={`text-xs ${c.desc} leading-relaxed mb-3`}>{t.long}</p>
-                        <div className={`bg-white border ${c.border} rounded-xl p-3 text-xs ${c.titre} italic leading-relaxed`}>
-                          "{t.court}"
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
-        <p className="text-xs text-violet-300 mt-3 text-right italic">Inspiré de Don Miguel Ruiz · Les 4 Accords Toltèques</p>
-      </motion.div>
-    </section>
-  );
-};
-
 const HomePage = () => {
   useSEO();
 
@@ -204,13 +134,13 @@ const HomePage = () => {
               <span className="text-emerald-300">chérir ce lien unique</span>
             </h1>
             <p className="text-sm md:text-base text-white/80 max-w-lg leading-relaxed hidden md:block">
-              Des articles pratiques, sourcés et prudents pour mieux comprendre son quotidien et celui de son chat.
+              Des articles pratiques, sourcés et prudents sur le sommeil, l’attention, l’apprentissage et la vie avec un chat.
             </p>
           </motion.div>
         </div>
         <div className="bg-white px-5 md:px-8 pt-5 pb-6 max-w-5xl mx-auto">
           <p className="text-sm text-gray-500 leading-relaxed mb-4 max-w-2xl hidden md:block">
-            Un espace dédié au bien-être humain, à la santé animale, et à cette connexion profonde qui nous unit à nos compagnons félins.
+            Un espace dédié aux habitudes qui aident au quotidien, à l’apprentissage, au bien-être animal et à une cohabitation attentive avec nos compagnons félins.
           </p>
           <div className="grid grid-cols-3 gap-2 md:gap-4">
             {[
@@ -227,9 +157,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
-      {/* TOLTÈQUES */}
-      <ToltequesSection />
 
       {/* ARTICLES */}
       <section className="px-5 md:px-8 py-6 max-w-5xl mx-auto">
@@ -312,37 +239,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="bg-emerald-950 text-white px-5 md:px-8 py-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-6">
-            <div className="text-xl font-semibold mb-1">🌿 Harmonie Féline & Humaine</div>
-            <div className="text-sm text-emerald-300">Blog bien-être · Corps, animal & connexion</div>
-          </div>
-          <div className="grid grid-cols-3 gap-3 mb-6 max-w-md mx-auto text-center text-xs text-emerald-400">
-            <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
-            <Link to="/blog" className="hover:text-white transition-colors">Articles</Link>
-            <Link to="/bien-etre-humain" className="hover:text-white transition-colors">Bien-être</Link>
-          </div>
-          <div className="flex flex-col md:flex-row gap-3 md:justify-center md:max-w-sm md:mx-auto">
-            <a href="https://www.zinzino.com/2020929659/fr/fr-fr" target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-emerald-700 hover:bg-emerald-600 text-white py-3 px-6 rounded-xl text-sm font-semibold transition-colors">
-              <ExternalLink className="w-3.5 h-3.5" />Boutique Zinzino
-            </a>
-            <a href="https://felinejoycamy.myshopify.com" target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-500 text-white py-3 px-6 rounded-xl text-sm font-semibold transition-colors">
-              <ShoppingBag className="w-3.5 h-3.5" />Boutique Felinejoy
-            </a>
-          </div>
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <a href="https://www.tiktok.com/@sissoulily" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-white text-xs transition-colors">TikTok</a>
-            <span className="text-emerald-800">·</span>
-            <a href="https://www.instagram.com/sissou02" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:text-white text-xs transition-colors">Instagram</a>
-          </div>
-          <p className="text-center text-xs text-emerald-600 mt-4">2025 Harmonie Féline & Humaine · Tous droits réservés</p>
-        </div>
-      </footer>
 
     </div>
   );

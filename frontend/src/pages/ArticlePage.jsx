@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
+import remarkGfm from "remark-gfm";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Heart, Bookmark, Share2, Calendar, User, ExternalLink, BookOpen } from "lucide-react";
@@ -93,6 +94,9 @@ const ArticlePage = () => {
   useEffect(() => {
     if (article) {
       document.title = `${article.title} | Harmonie Féline & Humaine`;
+      const socialImage = article.image_url?.startsWith("/")
+        ? `https://www.harmoniejoy.net${article.image_url}`
+        : article.image_url || "";
       
       // Set meta description
       let metaDesc = document.querySelector('meta[name="description"]');
@@ -132,7 +136,7 @@ const ArticlePage = () => {
         ogImage.setAttribute("property", "og:image");
         document.head.appendChild(ogImage);
       }
-      ogImage.setAttribute("content", article.image_url || "");
+      ogImage.setAttribute("content", socialImage);
 
       const canonicalUrl = `https://www.harmoniejoy.net/article/${article.slug}`;
       let canonical = document.querySelector('link[rel="canonical"]');
@@ -155,7 +159,7 @@ const ArticlePage = () => {
       setMeta('meta[property="og:url"]', { property: 'og:url' }, canonicalUrl);
       setMeta('meta[name="twitter:title"]', { name: 'twitter:title' }, article.title);
       setMeta('meta[name="twitter:description"]', { name: 'twitter:description' }, article.excerpt);
-      setMeta('meta[name="twitter:image"]', { name: 'twitter:image' }, article.image_url);
+      setMeta('meta[name="twitter:image"]', { name: 'twitter:image' }, socialImage);
 
       const schemaId = 'article-schema';
       let schema = document.getElementById(schemaId);
@@ -170,7 +174,7 @@ const ArticlePage = () => {
         '@type': 'Article',
         headline: article.title,
         description: article.excerpt,
-        image: article.image_url ? [article.image_url] : [],
+        image: socialImage ? [socialImage] : [],
         datePublished: article.created_at,
         dateModified: article.updated_at || article.created_at,
         author: { '@type': 'Person', name: article.author || 'Harmonie Joy' },
@@ -329,7 +333,7 @@ const ArticlePage = () => {
               <div className="flex items-center gap-6 text-text-muted text-sm">
                 <span className="flex items-center gap-2">
                   <User className="h-4 w-4" />
-                  {"Sissou"}
+                  {article.author || "Rédaction Harmonie Joy"}
                 </span>
                 <span className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
@@ -404,11 +408,12 @@ const ArticlePage = () => {
             {/* Article Content */}
            <div className="article-content prose prose-lg max-w-none">
   <ReactMarkdown
+    remarkPlugins={[remarkGfm]}
     rehypePlugins={[rehypeRaw]}
     components={{
       a: ({ href, children }) => (
         <a href={href} target="_blank" rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 py-2 rounded-xl transition-colors no-underline my-1">
+          className="text-emerald-700 underline underline-offset-2 hover:text-emerald-900 font-medium">
           {children}
         </a>
       ),

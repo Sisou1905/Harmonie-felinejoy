@@ -1,14 +1,8 @@
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Heart, Mail, ArrowUpRight } from "lucide-react";
+import { Mail } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  const shopLinks = [
-    { name: "Feline Joy", url: "https://www.felinejoycamy.myshopify.com", description: "Accessoires & T-shirts chats — lien partenaire", emoji: "🐱" },
-    { name: "Zinzino", url: "https://www.zinzino.com/2020929659/fr/fr-fr", description: "Lien partenaire", emoji: "🌿" }
-  ];
 
   const quickLinks = [
     { name: "Accueil", path: "/" },
@@ -34,7 +28,7 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-text-muted text-sm leading-relaxed mb-6">
-              Votre guide holistique pour le bien-etre humain et animal.
+              Des guides français, pratiques et sourcés sur le bien-être quotidien, l’apprentissage, le chat d’intérieur et la relation humain-animal.
             </p>
           </div>
 
@@ -52,16 +46,9 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Liens partenaires</h4>
-            <ul className="space-y-4">
-              {shopLinks.map((shop) => (
-                <li key={shop.url}>
-                  <a href={shop.url} target="_blank" rel="noopener noreferrer" className="text-text-muted hover:text-primary text-sm">
-                    {shop.name} - {shop.description}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Notre méthode</h4>
+            <p className="text-text-muted text-sm leading-relaxed">Chaque guide indique ses sources lorsque le sujet le demande et rappelle les limites de l’information générale.</p>
+            <Link to="/a-propos" className="inline-block mt-3 text-sm text-primary hover:text-primary-dark transition-colors">Lire la méthode éditoriale</Link>
           </div>
 
           <div>
@@ -88,7 +75,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <p className="mt-5 text-xs text-text-muted leading-relaxed max-w-3xl">Certains liens vers des boutiques sont des liens partenaires susceptibles de donner lieu à une commission. Ils sont distincts des contenus éditoriaux et ne constituent pas un avis médical ou vétérinaire.</p>
+        <p className="mt-5 text-xs text-text-muted leading-relaxed max-w-3xl">Les contenus sont informatifs et ne remplacent pas un avis médical, vétérinaire ou professionnel individualisé.</p>
 
       </div>
     </footer>

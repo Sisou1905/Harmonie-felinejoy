@@ -26,11 +26,30 @@ def render_inline(value: str) -> str:
     return re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", safe)
 
 
+def table_cells(line: str) -> list[str]:
+    return [cell.strip() for cell in line.strip().strip("|").split("|")]
+
+
+def render_table(lines: list[str]) -> str:
+    headers = table_cells(lines[0])
+    body = [table_cells(line) for line in lines[2:] if line.strip()]
+    thead = "".join(f"<th>{render_inline(cell)}</th>" for cell in headers)
+    rows = "\n".join(
+        "<tr>" + "".join(f"<td>{render_inline(cell)}</td>" for cell in row) + "</tr>"
+        for row in body
+    )
+    return f'<div class="table-wrap"><table><thead><tr>{thead}</tr></thead><tbody>{rows}</tbody></table></div>'
+
+
 def render_markdown(value: str) -> str:
     blocks: list[str] = []
     for block in value.split("\n\n"):
         block = block.strip()
         if not block:
+            continue
+        lines = block.splitlines()
+        if len(lines) >= 2 and lines[0].lstrip().startswith("|") and set(lines[1].replace("|", "").replace(":", "").replace("-", "").strip()) == set():
+            blocks.append(render_table(lines))
             continue
         if block.startswith("## "):
             blocks.append(f"<h2>{render_inline(block[3:])}</h2>")
@@ -57,17 +76,21 @@ def page_for(article: dict) -> str:
     title = article["title"]
     description = article["excerpt"]
     image = article["image_url"]
+    metadata_image = f"{SITE_URL}{image}" if image.startswith("/") else image
+    published_date = (article.get("created_at") or PUBLICATION_DATE).split("T")[0]
+    modified_date = (article.get("updated_at") or article.get("created_at") or PUBLICATION_DATE).split("T")[0]
+    author = article.get("author") or "Rédaction Harmonie Joy"
     word_count = len(re.findall(r"\w+", article["content"], flags=re.UNICODE))
     schema = {
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": title,
         "description": description,
-        "image": [image],
-        "datePublished": PUBLICATION_DATE,
-        "dateModified": PUBLICATION_DATE,
+        "image": [metadata_image],
+        "datePublished": published_date,
+        "dateModified": modified_date,
         "inLanguage": "fr-FR",
-        "author": {"@type": "Organization", "name": "Harmonie Joy"},
+        "author": {"@type": "Organization", "name": author},
         "publisher": {"@type": "Organization", "name": "Harmonie Joy", "url": SITE_URL},
         "mainEntityOfPage": {"@type": "WebPage", "@id": url},
         "wordCount": word_count,
@@ -92,20 +115,20 @@ def page_for(article: dict) -> str:
   <meta property="og:title" content="{html.escape(title, quote=True)}">
   <meta property="og:description" content="{html.escape(description, quote=True)}">
   <meta property="og:url" content="{url}">
-  <meta property="og:image" content="{html.escape(image, quote=True)}">
-  <meta property="article:published_time" content="{PUBLICATION_DATE}">
+  <meta property="og:image" content="{html.escape(metadata_image, quote=True)}">
+  <meta property="article:published_time" content="{published_date}">
   <meta name="twitter:card" content="summary_large_image">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2771964189463944" crossorigin="anonymous"></script>
   <script type="application/ld+json">{schema_json}</script>
   <style>
     :root {{ color-scheme: light; }} body {{ margin: 0; color: #26332f; background: #f9fbfa; font: 18px/1.7 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
-    header {{ background: #e8f2ec; border-bottom: 1px solid #d2e3d8; }} .wrap {{ max-width: 820px; margin: 0 auto; padding: 24px; }} nav {{ font-size: .92rem; }} nav a {{ color: #276a52; margin-right: 16px; text-decoration: none; }} article {{ background: #fff; }} h1 {{ color: #183d30; font: 600 clamp(2rem, 5vw, 3.2rem)/1.15 Georgia, serif; margin: 24px 0 14px; }} h2 {{ color: #205841; font: 600 1.6rem/1.25 Georgia, serif; margin: 42px 0 10px; }} h3 {{ color: #205841; margin: 30px 0 6px; }} p {{ margin: 0 0 20px; }} a {{ color: #0b6d50; }} .meta {{ color: #60746b; font-size: .92rem; }} .hero {{ width: 100%; max-height: 420px; object-fit: cover; border-radius: 16px; margin: 14px 0 28px; }} aside {{ border-left: 4px solid #72a889; background: #eff7f1; padding: 16px 18px; margin: 28px 0; }} .sources {{ background: #eff7f1; border-radius: 16px; padding: 20px 26px; margin-top: 40px; }} footer {{ color: #587064; font-size: .9rem; border-top: 1px solid #dbe8e0; }}
+    header {{ background: #e8f2ec; border-bottom: 1px solid #d2e3d8; }} .wrap {{ max-width: 820px; margin: 0 auto; padding: 24px; }} nav {{ font-size: .92rem; }} nav a {{ color: #276a52; margin-right: 16px; text-decoration: none; }} article {{ background: #fff; }} h1 {{ color: #183d30; font: 600 clamp(2rem, 5vw, 3.2rem)/1.15 Georgia, serif; margin: 24px 0 14px; }} h2 {{ color: #205841; font: 600 1.6rem/1.25 Georgia, serif; margin: 42px 0 10px; }} h3 {{ color: #205841; margin: 30px 0 6px; }} p {{ margin: 0 0 20px; }} a {{ color: #0b6d50; }} .meta {{ color: #60746b; font-size: .92rem; }} .hero {{ width: 100%; max-height: 420px; object-fit: cover; border-radius: 16px; margin: 14px 0 28px; }} aside {{ border-left: 4px solid #72a889; background: #eff7f1; padding: 16px 18px; margin: 28px 0; }} .table-wrap {{ overflow-x: auto; margin: 26px 0; }} table {{ width: 100%; border-collapse: collapse; font-size: .94rem; }} th {{ background: #e8f2ec; color: #205841; text-align: left; }} th, td {{ border: 1px solid #d2e3d8; padding: 10px; vertical-align: top; }} .sources {{ background: #eff7f1; border-radius: 16px; padding: 20px 26px; margin-top: 40px; }} footer {{ color: #587064; font-size: .9rem; border-top: 1px solid #dbe8e0; }}
   </style>
 </head>
 <body>
   <header><div class="wrap"><nav aria-label="Navigation principale"><a href="/">Harmonie Joy</a><a href="/blog">Articles</a><a href="/bien-etre-humain">Bien-être humain</a><a href="/bien-etre-animal">Bien-être animal</a><a href="/connexion">Relation humain-chat</a><a href="/a-propos">À propos</a></nav></div></header>
   <article><div class="wrap">
-    <p class="meta">Publié le 4 septembre 2026 · Harmonie Joy · {html.escape(article['category'])} · {tags}</p>
+    <p class="meta">Publié le {published_date} · {html.escape(author)} · {html.escape(article['category'])} · {tags}</p>
     <h1>{html.escape(title)}</h1>
     <p><strong>{html.escape(description)}</strong></p>
     <img class="hero" src="{html.escape(image, quote=True)}" alt="{html.escape(title, quote=True)}">

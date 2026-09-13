@@ -1,10 +1,14 @@
 # Harmonie Joy
-> Média francophone indépendant consacré au bien-être humain, au bien-être félin et à la relation respectueuse entre humains et chats. Les articles sont informatifs, sourcés et ne remplacent pas un avis médical ou vétérinaire.
+> Média francophone indépendant consacré au bien-être humain, à l’attention et à l’apprentissage, au bien-être félin et à la relation respectueuse entre humains et chats. Les articles sont informatifs, sourcés et ne remplacent pas un avis médical ou vétérinaire.
 
 ## Guides éditoriaux
 - [Rituel du soir pour mieux dormir](https://www.harmoniejoy.net/article/rituel-du-soir-pour-mieux-dormir-routine-30-minutes): Routine du soir réaliste de 30 minutes, avec conseils de santé publique et limites à connaître.
 - [Chat d’intérieur : signes d’ennui et enrichissement](https://www.harmoniejoy.net/article/chat-interieur-7-signes-ennui-routine-enrichissement-sure): Signes à observer, idées d’enrichissement progressives et critères de consultation vétérinaire.
 - [Vivre avec un chat au quotidien](https://www.harmoniejoy.net/article/vivre-avec-un-chat-au-quotidien-rituels-respectent-son-rythme): Rituels souples, lecture des signaux du chat et cohabitation respectueuse.
+- [Métacognition : une méthode simple](https://www.harmoniejoy.net/article/metacognition-methode-simple-mieux-apprendre): Méthode Prévoir, Observer, Ajuster et carnet des faux acquis pour tester une stratégie d’apprentissage.
+- [Récupération active : carnet des faux acquis](https://www.harmoniejoy.net/article/recuperation-active-carnet-faux-acquis): Révision par rappel, correction et suivi de la calibration entre confiance et résultat.
+- [Concentration et pauses](https://www.harmoniejoy.net/article/concentration-pauses-seance-travail-realiste): Cycle de travail ciblé, rappel actif et ajustement personnel du rythme de pause.
+- [Journal d’observation du chat](https://www.harmoniejoy.net/article/journal-observation-chat-rendez-vous-veterinaire): Fiche descriptive pour préparer une consultation vétérinaire sans interpréter ni diagnostiquer.
 
 ## Pages de référence
 - [Accueil](https://www.harmoniejoy.net/): Présentation du média et accès aux dernières publications.

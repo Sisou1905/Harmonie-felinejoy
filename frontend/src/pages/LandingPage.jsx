@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, Sparkles, BookOpen, ExternalLink } from "lucide-react";
 import { Button } from "../components/ui/button";
 import ArticleCard from "../components/ArticleCard";
-import ProductSpotlight from "../components/ProductSpotlight";
 import { API } from "../App";
 
 const LandingPage = () => {
@@ -277,14 +276,6 @@ const LandingPage = () => {
         </section>
       )}
 
-      {/* Product Spotlight */}
-      <section className="section-spacing">
-        <div className="container-custom">
-          <div className="max-w-xl mx-auto">
-            <ProductSpotlight type={pageData.related_category === "animal" ? "cats" : "supplements"} />
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
