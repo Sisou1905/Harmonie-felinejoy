@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail } from "lucide-react";
+import { ExternalLink, Mail } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -52,7 +52,21 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Contact</h4>
+            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Boutiques et contact</h4>
+            <ul className="space-y-3 mb-5">
+              <li>
+                <a href="https://www.zinzino.com/2020929659/fr/fr-fr" target="_blank" rel="sponsored noopener noreferrer" className="inline-flex items-center gap-2 text-text-muted hover:text-primary text-sm transition-colors">
+                  <ExternalLink className="h-4 w-4" />
+                  Boutique Zinzino
+                </a>
+              </li>
+              <li>
+                <a href="https://felinejoycamy.myshopify.com" target="_blank" rel="sponsored noopener noreferrer" className="inline-flex items-center gap-2 text-text-muted hover:text-primary text-sm transition-colors">
+                  <ExternalLink className="h-4 w-4" />
+                  Boutique Feline Joy
+                </a>
+              </li>
+            </ul>
             <a href="mailto:contact@felinejoy.com" className="flex items-center gap-3 text-text-muted hover:text-primary text-sm">
               <Mail className="h-5 w-5" />
               contact@felinejoy.com
@@ -75,7 +89,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <p className="mt-5 text-xs text-text-muted leading-relaxed max-w-3xl">Les contenus sont informatifs et ne remplacent pas un avis médical, vétérinaire ou professionnel individualisé.</p>
+        <p className="mt-5 text-xs text-text-muted leading-relaxed max-w-3xl">Les liens vers Zinzino et Feline Joy sont des liens commerciaux distincts des articles éditoriaux et peuvent donner lieu à une commission. Les contenus sont informatifs et ne remplacent pas un avis médical, vétérinaire ou professionnel individualisé.</p>
 
       </div>
     </footer>
