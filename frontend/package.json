@@ -61,7 +61,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "python3 scripts/render-static-articles.py && craco build",
+    "build": "python3 scripts/add_adsense_depth_articles.py && python3 scripts/render-static-articles.py && python3 scripts/generate-sitemap.py && craco build",
     "test": "craco test"
   },
   "browserslist": {

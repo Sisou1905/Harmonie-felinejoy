@@ -16,6 +16,9 @@ const AboutPage = () => {
       <p>Chaque publication part d’une question précise. Nous distinguons les faits établis, les gestes simples à tester et les situations dans lesquelles il faut demander l’avis d’un professionnel. Les références externes sont indiquées lorsque nous nous appuyons sur des recommandations publiques, des travaux universitaires ou des ressources scientifiques. Un lecteur peut ainsi retrouver l’origine d’une affirmation importante.</p>
       <p>Nous corrigeons volontiers une imprécision. Pour signaler une erreur factuelle, une source obsolète ou un lien qui ne fonctionne plus, utilisez l’adresse de contact ci-dessous en indiquant l’URL de la page concernée.</p>
 
+      <h2>Ce que vous trouverez — et ce que vous ne trouverez pas</h2>
+      <p>Harmonie Joy publie des méthodes simples, des check-lists et des questions utiles pour mieux observer une situation ou préparer une conversation avec un professionnel. Le site ne vend pas de solution miracle, ne pose pas de diagnostic et ne demande pas de modifier un traitement. Lorsqu’une information est incertaine, dépend d’une situation personnelle ou appelle une consultation, nous le précisons clairement.</p>
+
       <h2>Indépendance et liens partenaires</h2>
       <p>Harmonie Joy peut percevoir une commission lorsqu’un lecteur effectue un achat après avoir suivi certains liens partenaires. Cette possibilité est signalée à proximité du lien concerné. Elle ne finance pas un avis médical ou vétérinaire et ne change pas notre méthode de sélection éditoriale.</p>
 
