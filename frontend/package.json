@@ -61,7 +61,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "python3 scripts/render-static-articles.py && craco build",
     "test": "craco test"
   },
   "browserslist": {

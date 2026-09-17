@@ -1,8 +1,135 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/articles",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/articles/",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/burnout-detection-precoce-signes-prevention",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/chronobiologie-heure-lever-cortisol",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/votre-cerveau-est-epuise-meme-quand-vous-ne-faites-rien-comprendre-et-inverser-le-stress-chronique-grace-a-la-neuroplasticite",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/feng-shui-bien-etre-transformer-espace-serenite",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/cryotherapie-faciale-froid-peau-60-secondes",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/test-sources-001",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/cryotherapie-faciale-froid-peau",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/rituel-soir-anti-stress-sommeil-profond-diffuseur",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/rituel-soir-anti-stress-sommeil-profond",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/chambre-sabote-sommeil-solutions-projecteur",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/test-cryoth-001",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/article/chambre-sabote-sommeil-solutions",
+      "destination": "/blog",
+      "statusCode": 301
+    }
+  ],
+  "headers": [
+    {
+      "source": "/admin",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/dashboard",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/login",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/auth/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/search",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/guide/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ],
   "rewrites": [
     {
       "source": "/article/:slug",
       "destination": "/article/:slug/index.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/blog/index.html"
+    },
+    {
+      "source": "/bien-etre-humain",
+      "destination": "/bien-etre-humain/index.html"
+    },
+    {
+      "source": "/bien-etre-animal",
+      "destination": "/bien-etre-animal/index.html"
+    },
+    {
+      "source": "/connexion",
+      "destination": "/connexion/index.html"
+    },
+    {
+      "source": "/a-propos",
+      "destination": "/a-propos/index.html"
+    },
+    {
+      "source": "/legal",
+      "destination": "/legal/index.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/privacy/index.html"
     },
     {
       "source": "/(.*)",
