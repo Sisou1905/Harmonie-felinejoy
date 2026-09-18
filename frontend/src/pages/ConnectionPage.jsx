@@ -8,9 +8,9 @@ const ConnectionPage = () => {
   const articles = editorialArticles.filter((article) => article.category === "connection");
 
   useEffect(() => {
-    document.title = "La Connexion Humain-Animal | Harmonie Féline & Humaine";
+    document.title = "La Connexion Humain-Animal | Harmonie Joy";
     return () => {
-      document.title = "Harmonie Féline & Humaine | Blog Bien-être";
+      document.title = "Harmonie Joy | Blog Bien-être";
     };
   }, []);
 

@@ -193,6 +193,12 @@ def page_for(article: dict) -> str:
     title = article["title"]
     description = article["excerpt"]
     image = article["image_url"]
+    category_labels = {
+        "human": "Bien-être humain",
+        "animal": "Bien-être félin",
+        "connection": "Relation humain-chat",
+    }
+    category_label = category_labels.get(article.get("category"), "Guide pratique")
     metadata_image = f"{SITE_URL}{image}" if image.startswith("/") else image
     published_date = (article.get("created_at") or DEFAULT_DATE).split("T")[0]
     modified_date = (article.get("updated_at") or article.get("created_at") or DEFAULT_DATE).split("T")[0]
@@ -219,7 +225,7 @@ def page_for(article: dict) -> str:
     content = render_markdown(article["content"])
     tags = ", ".join(html.escape(tag) for tag in article["tags"])
     body = f'''
-<p class="eyebrow">Publié le {format_date(published_date)} · {html.escape(author)} · {html.escape(article['category'])}</p>
+<p class="eyebrow">Publié le {format_date(published_date)} · {html.escape(author)} · {html.escape(category_label)}</p>
 <h1>{html.escape(title)}</h1>
 <p class="intro"><strong>{html.escape(description)}</strong></p>
 <img class="hero" src="{html.escape(image, quote=True)}" alt="{html.escape(title, quote=True)}">

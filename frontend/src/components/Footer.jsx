@@ -6,10 +6,11 @@ const Footer = () => {
 
   const quickLinks = [
     { name: "Accueil", path: "/" },
+    { name: "Tous les articles", path: "/blog" },
     { name: "Bien-etre Humain", path: "/bien-etre-humain" },
     { name: "Bien-etre Animal", path: "/bien-etre-animal" },
     { name: "La Connexion", path: "/connexion" },
-    { name: "Recherche", path: "/search" }
+    { name: "À propos", path: "/a-propos" }
   ];
 
   return (
@@ -52,18 +53,18 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Boutiques et contact</h4>
+            <h4 className="font-heading text-base font-semibold text-text-main mb-6">Liens partenaires et contact</h4>
             <ul className="space-y-3 mb-5">
               <li>
                 <a href="https://www.zinzino.com/2020929659/fr/fr-fr" target="_blank" rel="sponsored noopener noreferrer" className="inline-flex items-center gap-2 text-text-muted hover:text-primary text-sm transition-colors">
                   <ExternalLink className="h-4 w-4" />
-                  Boutique Zinzino
+                  Boutique Zinzino (lien partenaire)
                 </a>
               </li>
               <li>
                 <a href="https://felinejoycamy.myshopify.com" target="_blank" rel="sponsored noopener noreferrer" className="inline-flex items-center gap-2 text-text-muted hover:text-primary text-sm transition-colors">
                   <ExternalLink className="h-4 w-4" />
-                  Boutique Feline Joy
+                  Boutique Feline Joy (lien partenaire)
                 </a>
               </li>
             </ul>
@@ -89,7 +90,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <p className="mt-5 text-xs text-text-muted leading-relaxed max-w-3xl">Les liens vers Zinzino et Feline Joy sont des liens commerciaux distincts des articles éditoriaux et peuvent donner lieu à une commission. Les contenus sont informatifs et ne remplacent pas un avis médical, vétérinaire ou professionnel individualisé.</p>
+        <p className="mt-5 text-xs text-text-muted leading-relaxed max-w-3xl">Les liens vers Zinzino et Feline Joy sont des liens commerciaux distincts des articles éditoriaux et peuvent donner lieu à une commission. Ils ne conditionnent pas le contenu des guides. Les contenus sont informatifs et ne remplacent pas un avis médical, vétérinaire ou professionnel individualisé.</p>
 
       </div>
     </footer>

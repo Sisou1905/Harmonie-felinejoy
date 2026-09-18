@@ -67,7 +67,7 @@ const BlogPage = () => {
   const [category, setCategory] = useState("all");
 
   useEffect(() => {
-    document.title = "Blog — Harmonie Féline & Humaine";
+    document.title = "Blog — Harmonie Joy";
   }, []);
 
   const allArticles = editorialArticles;
@@ -138,7 +138,7 @@ const BlogPage = () => {
       </div>
 
       <div className="bg-emerald-950 text-white px-5 py-6 text-center">
-        <p className="text-xs text-emerald-400">🌿 Harmonie Féline & Humaine · Nouveaux articles chaque semaine</p>
+        <p className="text-xs text-emerald-400">🌿 Harmonie Joy · Nouveaux articles chaque semaine</p>
         <Link to="/" className="text-xs text-emerald-300 hover:text-white mt-2 inline-block transition-colors">
           Retour à l'accueil
         </Link>

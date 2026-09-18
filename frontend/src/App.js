@@ -28,7 +28,7 @@ import Footer from "./components/Footer";
 import Newsletter from "./components/Newsletter";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-export const API = `${BACKEND_URL}/api`;
+export const API = BACKEND_URL ? `${BACKEND_URL}/api` : "";
 
 // Auth Context
 const AuthContext = createContext(null);
@@ -46,6 +46,11 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const checkAuth = useCallback(async () => {
+    if (!API) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
     try {
       const response = await fetch(`${API}/auth/me`, {
         credentials: "include",
@@ -73,6 +78,7 @@ const AuthProvider = ({ children }) => {
   }, [checkAuth]);
 
   const login = () => {
+    if (!API) return;
     const redirectUrl = window.location.origin + "/auth/callback";
     window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
   };

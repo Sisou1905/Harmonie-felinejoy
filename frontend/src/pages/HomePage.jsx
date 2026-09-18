@@ -6,7 +6,7 @@ import { editorialArticles } from "../data/editorialArticles";
 
 const useSEO = () => {
   useEffect(() => {
-    document.title = "Harmonie Féline & Humaine | Blog Bien-être humain, animal & connexion";
+    document.title = "Harmonie Joy | Guides bien-être humain et félin";
     const setMeta = (name, content, prop = false) => {
       const sel = prop ? `meta[property="${name}"]` : `meta[name="${name}"]`;
       let el = document.querySelector(sel);
@@ -15,8 +15,8 @@ const useSEO = () => {
     };
     setMeta("description", "Guides pratiques et sourcés sur le sommeil, l’attention, l’apprentissage, le bien-être félin et la relation humain-animal.");
     setMeta("keywords", "bien-être humain, attention, métacognition, bien-être animal, sommeil, chat d’intérieur, relation humain-chat");
-    setMeta("og:title", "Harmonie Féline & Humaine | Blog Bien-être", true);
-    setMeta("og:description", "Prendre soin de soi, comprendre son animal, chérir ce lien unique.", true);
+    setMeta("og:title", "Harmonie Joy | Guides bien-être humain et félin", true);
+    setMeta("og:description", "Des guides pratiques et sourcés sur le sommeil, l’attention, l’apprentissage et la vie avec un chat.", true);
     setMeta("og:type", "website", true);
     setMeta("og:url", "https://www.harmoniejoy.net/", true);
     setMeta("og:image", "https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1200&q=85", true);
@@ -126,7 +126,7 @@ const HomePage = () => {
           <motion.div initial={{ opacity:0,y:20 }} animate={{ opacity:1,y:0 }} transition={{ duration:0.7 }}
             className="absolute bottom-0 left-0 right-0 p-6 md:p-16 max-w-5xl">
             <span className="inline-block bg-white/15 backdrop-blur-sm border border-white/30 text-white text-xs font-semibold tracking-widest uppercase px-3 py-1.5 rounded-full mb-4">
-              Blog Bien-être · Harmonie Féline & Humaine
+              Harmonie Joy · Guides pratiques et sourcés
             </span>
             <h1 className="text-3xl md:text-5xl font-semibold text-white leading-tight mb-3" style={{ textShadow:"0 2px 16px rgba(0,0,0,0.4)" }}>
               Prendre soin de soi<br />
@@ -162,8 +162,8 @@ const HomePage = () => {
       <section className="px-5 md:px-8 py-6 max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <p className="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-0.5">Articles & Éveil</p>
-            <h2 className="text-lg md:text-2xl font-semibold text-emerald-800">Recherches, conseils & rituels</h2>
+            <p className="text-xs font-bold tracking-widest uppercase text-emerald-400 mb-0.5">Guides Harmonie Joy</p>
+            <h2 className="text-lg md:text-2xl font-semibold text-emerald-800">Des repères utiles pour le quotidien</h2>
           </div>
           <Link to="/blog" className="text-xs text-emerald-600 font-semibold flex items-center gap-1 hover:text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full transition-colors">
             Tout voir <ArrowRight className="w-3 h-3" />

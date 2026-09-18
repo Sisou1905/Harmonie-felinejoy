@@ -17,7 +17,7 @@ const AnimalWellnessPage = () => {
   return (
     <>
       <Helmet>
-        <title>Bien-être Animal | Harmonie Féline & Humaine</title>
+        <title>Bien-être Animal | Harmonie Joy</title>
         <meta
           name="description"
           content="Tout sur le bien-être de votre chat : comportement félin, nutrition adaptée, soins vétérinaires et conseils pour un chat heureux et en bonne santé."

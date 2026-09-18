@@ -38,7 +38,7 @@ const LandingPage = () => {
   useEffect(() => {
     if (pageData) {
       // Set title
-      document.title = `${pageData.meta_title || pageData.title || "Guide"} | Harmonie Féline & Humaine`;
+      document.title = `${pageData.meta_title || pageData.title || "Guide"} | Harmonie Joy`;
       
       // Set meta description
       let metaDesc = document.querySelector('meta[name="description"]');
@@ -55,14 +55,14 @@ const LandingPage = () => {
       }
       metaKeywords.setAttribute("content", pageData.keywords?.join(", ") || "");
     } else if (loading) {
-      document.title = "Chargement... | Harmonie Féline & Humaine";
+      document.title = "Chargement... | Harmonie Joy";
     } else if (error) {
-      document.title = "Page non trouvée | Harmonie Féline & Humaine";
+      document.title = "Page non trouvée | Harmonie Joy";
     }
     
     // Cleanup
     return () => {
-      document.title = "Harmonie Féline & Humaine | Blog Bien-être";
+      document.title = "Harmonie Joy | Blog Bien-être";
     };
   }, [pageData, loading, error]);
 

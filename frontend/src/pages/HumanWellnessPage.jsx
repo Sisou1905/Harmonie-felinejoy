@@ -17,7 +17,7 @@ const HumanWellnessPage = () => {
   return (
     <>
       <Helmet>
-        <title>Bien-être Humain | Harmonie Féline & Humaine</title>
+        <title>Bien-être Humain | Harmonie Joy</title>
         <meta
           name="description"
           content="Découvrez nos articles sur la méditation, le sommeil, la nutrition et la gestion du stress. Des conseils scientifiques pour votre bien-être quotidien."

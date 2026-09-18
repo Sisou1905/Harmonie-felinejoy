@@ -1,24 +1,12 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../App";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, User, LogOut, Bookmark, ChevronDown, Search, Settings, Sparkles } from "lucide-react";
-import { Button } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Menu, X } from "lucide-react";
 import LanguageSelector from "./LanguageSelector";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { user, login, logout } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const navItems = [
     { name: "Accueil", path: "/", icon: "🏠" },
@@ -77,76 +65,7 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center gap-3">
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate("/search")}
-                className="rounded-full hover:bg-secondary-light text-text-muted w-10 h-10 p-0"
-                data-testid="search-btn"
-              >
-                <Search className="h-5 w-5" />
-              </Button>
-            </motion.div>
-
             <LanguageSelector />
-
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="flex items-center gap-2 px-3 py-2 rounded-full bg-primary-light/30 hover:bg-primary-light border-2 border-transparent hover:border-primary/20 transition-all"
-                    data-testid="user-menu-trigger"
-                  >
-                    <Avatar className="h-8 w-8 ring-2 ring-primary/20">
-                      <AvatarImage src={user.picture} alt={user.name} />
-                      <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-white text-sm font-bold">
-                        {user.name?.charAt(0)?.toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <span className="hidden sm:inline text-sm font-semibold text-text-main">
-                      {user.name?.split(" ")[0]}
-                    </span>
-                    <ChevronDown className="h-4 w-4 text-text-muted" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-52 rounded-2xl p-2 shadow-float border-primary-light">
-                  <DropdownMenuItem asChild className="rounded-xl py-3">
-                    <Link to="/dashboard" className="flex items-center gap-3" data-testid="dashboard-link">
-                      <span className="text-lg">💾</span>
-                      <span>Mes favoris</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="rounded-xl py-3">
-                    <Link to="/admin" className="flex items-center gap-3" data-testid="admin-link">
-                      <span className="text-lg">⚙️</span>
-                      <span>Administration</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="my-2" />
-                  <DropdownMenuItem
-                    onClick={logout}
-                    className="text-red-500 focus:text-red-600 rounded-xl py-3"
-                    data-testid="logout-btn"
-                  >
-                    <span className="text-lg mr-3">👋</span>
-                    Déconnexion
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-                <Button
-                  onClick={login}
-                  className="btn-primary btn-playful text-sm flex items-center gap-2 shadow-float"
-                  data-testid="login-btn"
-                >
-                  <User className="h-4 w-4" />
-                  Connexion
-                </Button>
-              </motion.div>
-            )}
 
             <motion.button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

@@ -97,7 +97,7 @@ const SearchPage = () => {
   return (
     <>
       <Helmet>
-        <title>Recherche | Harmonie Féline & Humaine</title>
+        <title>Recherche | Harmonie Joy</title>
         <meta name="description" content="Recherchez des articles sur le bien-être humain, animal et la connexion entre les deux." />
       </Helmet>
 

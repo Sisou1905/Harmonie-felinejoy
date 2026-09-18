@@ -4,14 +4,12 @@ import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Heart, Bookmark, Share2, Calendar, User, ExternalLink, BookOpen } from "lucide-react";
+import { ArrowLeft, Calendar, User, ExternalLink, BookOpen } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
-import { toast } from "sonner";
-import CommentSection from "../components/CommentSection";
-import { API, useAuth } from "../App";
+import { API } from "../App";
 import { editorialArticleBySlug } from "../data/editorialArticles";
 
 const ArticlePage = () => {
@@ -19,10 +17,6 @@ const ArticlePage = () => {
   const editorialArticle = editorialArticleBySlug[slug];
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [liked, setLiked] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
-  const { user, login } = useAuth();
 
   const categoryNames = {
     human: "Bien-être Humain",
@@ -39,7 +33,11 @@ const ArticlePage = () => {
   const fetchArticle = useCallback(async () => {
     if (editorialArticle) {
       setArticle(editorialArticle);
-      setLikesCount(0);
+      setLoading(false);
+      return;
+    }
+
+    if (!API) {
       setLoading(false);
       return;
     }
@@ -49,7 +47,6 @@ const ArticlePage = () => {
       if (response.ok) {
         const data = await response.json();
         setArticle(data);
-        setLikesCount(data.likes_count || 0);
       }
     } catch (error) {
       console.error("Failed to fetch article:", error);
@@ -58,42 +55,14 @@ const ArticlePage = () => {
     }
   }, [slug, editorialArticle]);
 
-  const fetchInteractionStatus = useCallback(async () => {
-    if (!article?.article_id) return;
-    
-    try {
-      const [likeRes, bookmarkRes] = await Promise.all([
-        fetch(`${API}/articles/${article.article_id}/like-status`, { credentials: "include" }),
-        fetch(`${API}/articles/${article.article_id}/bookmark-status`, { credentials: "include" }),
-      ]);
-
-      if (likeRes.ok) {
-        const likeData = await likeRes.json();
-        setLiked(likeData.liked);
-      }
-      if (bookmarkRes.ok) {
-        const bookmarkData = await bookmarkRes.json();
-        setBookmarked(bookmarkData.bookmarked);
-      }
-    } catch (error) {
-      console.error("Failed to fetch interaction status:", error);
-    }
-  }, [article?.article_id]);
-
   useEffect(() => {
     fetchArticle();
   }, [fetchArticle]);
 
-  useEffect(() => {
-    if (article) {
-      fetchInteractionStatus();
-    }
-  }, [article, fetchInteractionStatus]);
-
   // Update document title and meta tags
   useEffect(() => {
     if (article) {
-      document.title = `${article.title} | Harmonie Féline & Humaine`;
+      document.title = `${article.title} | Harmonie Joy`;
       const socialImage = article.image_url?.startsWith("/")
         ? `https://www.harmoniejoy.net${article.image_url}`
         : article.image_url || "";
@@ -188,76 +157,14 @@ const ArticlePage = () => {
       }
       robots.setAttribute('content', editorialArticle ? 'index,follow,max-image-preview:large' : 'noindex,follow');
     } else if (loading) {
-      document.title = "Chargement... | Harmonie Féline & Humaine";
+      document.title = "Chargement... | Harmonie Joy";
     }
     
     // Cleanup
     return () => {
-      document.title = "Harmonie Féline & Humaine | Blog Bien-être";
+      document.title = "Harmonie Joy | Guides bien-être humain et félin";
     };
   }, [article, loading, editorialArticle]);
-
-  const handleLike = async () => {
-    if (!user) {
-      toast.error("Connectez-vous pour aimer cet article");
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API}/articles/${article.article_id}/like`, {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setLiked(data.liked);
-        setLikesCount((prev) => (data.liked ? prev + 1 : prev - 1));
-        toast.success(data.liked ? "Article aimé !" : "Like retiré");
-      }
-    } catch (error) {
-      toast.error("Erreur lors de l'action");
-    }
-  };
-
-  const handleBookmark = async () => {
-    if (!user) {
-      toast.error("Connectez-vous pour sauvegarder cet article");
-      return;
-    }
-
-    try {
-      const response = await fetch(`${API}/articles/${article.article_id}/bookmark`, {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setBookmarked(data.bookmarked);
-        toast.success(data.bookmarked ? "Article sauvegardé !" : "Retiré des favoris");
-      }
-    } catch (error) {
-      toast.error("Erreur lors de l'action");
-    }
-  };
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: article.title,
-          text: article.excerpt,
-          url: window.location.href,
-        });
-      } catch (error) {
-        console.log("Share cancelled");
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      toast.success("Lien copié !");
-    }
-  };
 
   if (loading) {
     return (
@@ -323,12 +230,12 @@ const ArticlePage = () => {
         {/* Content */}
         <div className="container-custom py-12">
           <div className="max-w-3xl mx-auto">
-            {/* Meta & Actions */}
+            {/* Publication details */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex flex-wrap items-center justify-between gap-4 mb-10 pb-6 border-b border-border"
+              className="flex flex-wrap items-center gap-4 mb-10 pb-6 border-b border-border"
             >
               <div className="flex items-center gap-6 text-text-muted text-sm">
                 <span className="flex items-center gap-2">
@@ -343,36 +250,6 @@ const ArticlePage = () => {
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleLike}
-                  className={`rounded-full ${liked ? "text-red-500" : "text-text-muted"}`}
-                  data-testid="like-btn"
-                >
-                  <Heart className={`h-5 w-5 mr-1 ${liked ? "fill-current" : ""}`} />
-                  {likesCount}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleBookmark}
-                  className={`rounded-full ${bookmarked ? "text-primary" : "text-text-muted"}`}
-                  data-testid="bookmark-btn"
-                >
-                  <Bookmark className={`h-5 w-5 ${bookmarked ? "fill-current" : ""}`} />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleShare}
-                  className="rounded-full text-text-muted"
-                  data-testid="share-btn"
-                >
-                  <Share2 className="h-5 w-5" />
-                </Button>
-              </div>
             </motion.div>
 
             {/* Excerpt */}
@@ -458,8 +335,10 @@ const ArticlePage = () => {
               </motion.div>
             )}
 
-            {/* Comments */}
-            <CommentSection articleId={article.article_id} />
+            <section className="mt-12 border-t border-border pt-8 text-sm text-text-muted">
+              <h3 className="font-heading text-lg font-semibold text-text-main mb-2">Une question sur ce guide ?</h3>
+              <p>Pour signaler une source obsolète, une imprécision ou un lien défaillant, écrivez à <a className="text-primary underline" href="mailto:contact@felinejoy.com">contact@felinejoy.com</a> en indiquant l’URL de la page. Pour une situation personnelle de santé humaine ou animale, demandez conseil au professionnel compétent.</p>
+            </section>
           </div>
         </div>
       </article>
