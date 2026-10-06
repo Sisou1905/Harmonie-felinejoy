@@ -202,7 +202,9 @@ def page_for(article: dict) -> str:
     metadata_image = f"{SITE_URL}{image}" if image.startswith("/") else image
     published_date = (article.get("created_at") or DEFAULT_DATE).split("T")[0]
     modified_date = (article.get("updated_at") or article.get("created_at") or DEFAULT_DATE).split("T")[0]
-    author = article.get("author") or "Rédaction Harmonie Joy"
+    author = article.get("author")
+    if not author or author == "Rédaction Harmonie Joy":
+        author = "Sissou, fondatrice d’Harmonie Joy"
     word_count = len(re.findall(r"\w+", article["content"], flags=re.UNICODE))
     schema = {
         "@context": "https://schema.org",
@@ -213,7 +215,11 @@ def page_for(article: dict) -> str:
         "datePublished": published_date,
         "dateModified": modified_date,
         "inLanguage": "fr-FR",
-        "author": {"@type": "Organization", "name": author},
+        "author": {
+            "@type": "Person",
+            "name": author,
+            "url": canonical_url("/a-propos"),
+        },
         "publisher": {"@type": "Organization", "name": "Harmonie Joy", "url": SITE_URL},
         "mainEntityOfPage": {"@type": "WebPage", "@id": article_url(article)},
         "wordCount": word_count,
@@ -298,10 +304,12 @@ def static_information_pages() -> dict[str, str]:
         "/a-propos": information_page(
             "/a-propos",
             "À propos de Harmonie Joy",
-            "La méthode éditoriale, les limites des contenus et la transparence commerciale de Harmonie Joy.",
+            "La fondatrice, la méthode éditoriale, les limites des contenus et la transparence commerciale de Harmonie Joy.",
             '''<p class="eyebrow">Harmonie Joy</p><h1>À propos de Harmonie Joy</h1>
 <p class="intro">Harmonie Joy est un média indépendant consacré aux habitudes de bien-être humain, à l’attention et à l’apprentissage, au bien-être félin et à une cohabitation attentive avec les chats.</p>
-<h2>Notre méthode éditoriale</h2><p>Chaque publication part d’une question précise. Nous distinguons les faits établis, les gestes simples à tester et les situations qui demandent un professionnel. Lorsque le sujet s’y prête, les références externes sont affichées afin que le lecteur puisse retrouver l’origine d’une affirmation importante.</p>
+<h2>Qui écrit sur Harmonie Joy ?</h2><p><strong>Sissou est la fondatrice d’Harmonie Joy.</strong> Elle partage un parcours personnel avec plusieurs maladies chroniques : diabète, hypothyroïdie, syndrome des ovaires polykystiques et troubles fonctionnels intestinaux. Ce vécu l’a amenée à chercher des repères, à tester avec prudence des habitudes du quotidien, des compléments et différentes méthodes, et à apprendre à distinguer une information utile d’une promesse séduisante.</p>
+<p>Cette expérience personnelle explique les questions abordées sur le site, mais elle ne constitue pas une expertise médicale. Un retour de vécu est toujours présenté comme tel : il ne prouve pas qu’une méthode, un complément ou une routine conviendra à une autre personne. Les décisions de santé, les traitements, les doses et les changements de suivi médical se discutent avec un médecin, un pharmacien ou le professionnel compétent.</p>
+<h2>Notre méthode éditoriale</h2><p>Chaque guide part d’une question concrète : une difficulté du quotidien, une observation de vie avec un chat ou une question rencontrée au cours d’un parcours personnel. Nous séparons les références vérifiables, les gestes simples à tester, les retours d’expérience et les situations qui demandent un professionnel. Lorsque le sujet s’y prête, les références externes sont affichées afin que le lecteur puisse retrouver l’origine d’une affirmation importante.</p>
 <p>Les contenus sont informatifs. Ils ne remplacent ni un diagnostic, ni une consultation avec un médecin, un vétérinaire ou un autre professionnel qualifié. Nous ne présentons pas un produit, un complément ou une pratique comme un traitement.</p>
 <h2>Indépendance et liens commerciaux</h2><p>Harmonie Joy peut percevoir une commission lorsqu’un lecteur réalise un achat après avoir suivi certains liens commerciaux. Ces liens sont signalés, restent distincts des articles éditoriaux et ne déterminent pas le choix ou le contenu d’un guide.</p>
 <h2>Corriger une information</h2><p>Pour signaler une imprécision, une source obsolète ou un lien défaillant, écrivez à <a href="mailto:contact@felinejoy.com">contact@felinejoy.com</a> en indiquant l’URL concernée.</p>''',

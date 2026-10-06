@@ -8,12 +8,16 @@ const AboutPage = () => {
 
       <p>Harmonie Joy est un média indépendant consacré aux habitudes de bien-être humain, à l’attention et à l’apprentissage, au bien-être félin et aux gestes qui facilitent une cohabitation attentive. Les sujets abordés vont du sommeil et des routines quotidiennes à l’environnement du chat d’intérieur et à la relation humain-animal.</p>
 
+      <h2>Qui écrit sur Harmonie Joy ?</h2>
+      <p><strong>Sissou est la fondatrice d’Harmonie Joy.</strong> Elle partage un parcours personnel avec plusieurs maladies chroniques : diabète, hypothyroïdie, syndrome des ovaires polykystiques et troubles fonctionnels intestinaux. Ce vécu l’a amenée à chercher des repères, à tester avec prudence des habitudes du quotidien, des compléments et différentes méthodes, et à apprendre à distinguer une information utile d’une promesse séduisante.</p>
+      <p>Cette expérience personnelle explique les questions abordées sur le site, mais elle ne constitue pas une expertise médicale. Un retour de vécu est toujours présenté comme tel : il ne prouve pas qu’une méthode, un complément ou une routine conviendra à une autre personne. Les décisions de santé, les traitements, les doses et les changements de suivi médical se discutent avec un médecin, un pharmacien ou le professionnel compétent.</p>
+
       <h2>Notre méthode éditoriale</h2>
-      <p>Nous privilégions les conseils réalisables dans la vie courante et les sources identifiables. Lorsqu’un article traite de santé humaine ou animale, il indique ses références et rappelle les limites de l’information générale. Un article ne remplace ni un diagnostic, ni une consultation avec un médecin, un vétérinaire ou un autre professionnel qualifié.</p>
+      <p>Chaque guide part d’une question concrète : une difficulté du quotidien, une observation de vie avec un chat ou une question rencontrée au cours d’un parcours personnel. Nous séparons les références vérifiables, les gestes simples à tester et les retours d’expérience. Lorsqu’un article traite de santé humaine ou animale, il indique ses références et rappelle les limites de l’information générale. Un article ne remplace ni un diagnostic, ni une consultation avec un médecin, un vétérinaire ou un autre professionnel qualifié.</p>
       <p>Nous ne présentons pas un produit, un complément ou une pratique comme un traitement. Les situations inhabituelles, persistantes ou inquiétantes doivent être discutées avec un professionnel de santé adapté.</p>
 
       <h2>Comment un guide est préparé</h2>
-      <p>Chaque publication part d’une question précise. Nous distinguons les faits établis, les gestes simples à tester et les situations dans lesquelles il faut demander l’avis d’un professionnel. Les références externes sont indiquées lorsque nous nous appuyons sur des recommandations publiques, des travaux universitaires ou des ressources scientifiques. Un lecteur peut ainsi retrouver l’origine d’une affirmation importante.</p>
+      <p>Chaque publication part d’une question précise. Nous distinguons les faits établis, les gestes simples à tester, les observations personnelles et les situations dans lesquelles il faut demander l’avis d’un professionnel. Les références externes sont indiquées lorsque nous nous appuyons sur des recommandations publiques, des travaux universitaires ou des ressources scientifiques. Un lecteur peut ainsi retrouver l’origine d’une affirmation importante.</p>
       <p>Nous corrigeons volontiers une imprécision. Pour signaler une erreur factuelle, une source obsolète ou un lien qui ne fonctionne plus, utilisez l’adresse de contact ci-dessous en indiquant l’URL de la page concernée.</p>
 
       <h2>Ce que vous trouverez — et ce que vous ne trouverez pas</h2>

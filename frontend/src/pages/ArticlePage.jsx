@@ -17,6 +17,9 @@ const ArticlePage = () => {
   const editorialArticle = editorialArticleBySlug[slug];
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
+  const authorName = article?.author && article.author !== "Rédaction Harmonie Joy"
+    ? article.author
+    : "Sissou, fondatrice d’Harmonie Joy";
 
   const categoryNames = {
     human: "Bien-être Humain",
@@ -146,7 +149,7 @@ const ArticlePage = () => {
         image: socialImage ? [socialImage] : [],
         datePublished: article.created_at,
         dateModified: article.updated_at || article.created_at,
-        author: { '@type': 'Person', name: article.author || 'Harmonie Joy' },
+        author: { '@type': 'Person', name: authorName, url: 'https://www.harmoniejoy.net/a-propos' },
         mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl }
       });
       let robots = document.querySelector('meta[name="robots"]');
@@ -164,7 +167,7 @@ const ArticlePage = () => {
     return () => {
       document.title = "Harmonie Joy | Guides bien-être humain et félin";
     };
-  }, [article, loading, editorialArticle]);
+  }, [article, loading, editorialArticle, authorName]);
 
   if (loading) {
     return (
@@ -240,7 +243,7 @@ const ArticlePage = () => {
               <div className="flex items-center gap-6 text-text-muted text-sm">
                 <span className="flex items-center gap-2">
                   <User className="h-4 w-4" />
-                  {article.author || "Rédaction Harmonie Joy"}
+                  {authorName}
                 </span>
                 <span className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
